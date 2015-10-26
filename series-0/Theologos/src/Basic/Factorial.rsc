@@ -1,4 +1,4 @@
-module Factorial
+module Basic::Factorial
 
 // Version 1, hmm hello Haskell, conditional expression
 public int fac(int N) = N <= 0 ? 1 : N * fac(N-1);

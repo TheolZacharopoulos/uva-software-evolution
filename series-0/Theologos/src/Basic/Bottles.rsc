@@ -1,4 +1,4 @@
-module Bottles
+module Basic::Bottles
 
 import IO;
 

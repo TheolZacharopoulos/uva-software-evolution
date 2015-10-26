@@ -1,4 +1,4 @@
-module Even
+module Basic::Even
 
 import IO;
 

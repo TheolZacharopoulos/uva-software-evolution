@@ -1,4 +1,4 @@
-module BubbleSort
+module Basic::BubbleSort
 
 import List;
 import IO;

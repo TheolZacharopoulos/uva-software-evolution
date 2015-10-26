@@ -1,4 +1,5 @@
-module Hello
+module Basic::Hello
+
 import IO;
 
 void helloPeople() {
