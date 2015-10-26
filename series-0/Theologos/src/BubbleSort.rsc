@@ -89,6 +89,7 @@ public default list[int] sort4(list[int] x) = x;
 test bool sorted4(list[int] lst) = isSorted(sort4(lst));
 
 // finally, sort 5 inlines the condition into a when:
+// uses tail recursion to reach a fixed point instead of a while loop.
 public list[int] sort5([*int nums1, int p, *int nums2, int q, *int nums3]) 
   = sort5([*nums1, q, *nums2, p, *nums3])
   when p > q; 
