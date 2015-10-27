@@ -7,8 +7,8 @@ module Language::ExpLayout
  *   and source code comments.
  * - Strings that are parsed according to the normal (non-lexical) 
  *   syntax can contain layout characters between each element.
- *  - Which 'layout' (whitespace and/or source code comments) will be 
- *    accepted has to be defined explicitly by the grammar writer.
+ * - Which 'layout' (whitespace and/or source code comments) will be 
+ *   accepted has to be defined explicitly by the grammar writer.
  */
 
 // Using the layout definition, we define that the Whitespace 
