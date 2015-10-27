@@ -39,6 +39,9 @@ public str capAll2(str S) {
     return visit(S) {
         // visit all words in the sentence
         // replace them by a capitalized version
+        
+        // i, case sensitive.
+        // ^, starts with
         case /^<word:\w+>/i => capitalize(word)
     };
 }
