@@ -26,8 +26,8 @@ public Hand H = hand([two(hearts()), jack(diamonds()), six(hearts()), ace(spades
 // Count frequencies of constructors
 
 public map[str,int] count(node N){      
-  freq = ();                            
-  visit(N){                             
+  freq = ();
+  visit(N){
     case node M: { name = getName(M);   
                    freq[name] ? 0 += 1; 
                  }
