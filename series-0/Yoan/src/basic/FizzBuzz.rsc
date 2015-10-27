@@ -1,4 +1,4 @@
-module FizzBuzz
+module basic::FizzBuzz
 
 import IO;
 import List;

@@ -1,4 +1,4 @@
-module Quine
+module basic::Quine
 
 import IO;
 import String;

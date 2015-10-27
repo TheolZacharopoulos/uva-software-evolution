@@ -1,4 +1,4 @@
-module Evens
+module basic::Evens
 
 import IO;
 import List;

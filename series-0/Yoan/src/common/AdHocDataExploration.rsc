@@ -1,4 +1,4 @@
-module AdHocDataExploration
+module common::AdHocDataExploration
 
 import IO;
 import List;

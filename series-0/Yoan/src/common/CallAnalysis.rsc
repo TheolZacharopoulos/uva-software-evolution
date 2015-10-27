@@ -1,4 +1,4 @@
-module CallAnalysis
+module common::CallAnalysis
 
 import Set;
 import Relation;

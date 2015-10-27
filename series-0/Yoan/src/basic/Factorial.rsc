@@ -1,4 +1,4 @@
-module Factorial
+module basic::Factorial
 
 import IO;
 

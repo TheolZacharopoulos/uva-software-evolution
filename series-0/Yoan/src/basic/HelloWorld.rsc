@@ -1,4 +1,4 @@
-module HelloWorld
+module basic::HelloWorld
 
 import IO;
 
