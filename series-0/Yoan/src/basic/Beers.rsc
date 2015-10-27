@@ -1,4 +1,4 @@
-module Beers
+module basic::Beers
 
 import IO;
 

@@ -1,4 +1,4 @@
-module Bubbles
+module basic::Bubbles
 
 import IO;
 import List;
