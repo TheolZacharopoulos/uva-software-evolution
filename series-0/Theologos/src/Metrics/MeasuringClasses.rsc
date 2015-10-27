@@ -64,3 +64,9 @@ map[loc, real] getFieldsMethodsRatio(M3 model) {
 
 // get the methods:
 set[loc] getMethods(M3 model) = methods(model);
+
+// The source code of the method:
+str getMethodSource(loc method) = readFile(method);
+
+// The number of the words in a method
+int numOfWordInMethod(str methodSrc) = (0 | it + 1 | /\W+/ := methodSrc);
