@@ -6,14 +6,18 @@ class CommentsHell { // You have to count this, sorry.
 	
 	// Dont forget to avoid that!
 	
-	/**
+	/** Yes there is
 	 * a comment here, the line under this should be counted though.
 	 */ public CommentsHell() {
 		 
 		 /** This line should be counted also. */ System.out.println("Hello");
 		 
 		 System.out.println("World"); /** 
-		 * The above too. 
+		 * Count the above too. 
 		 */
+
+		 /** Hey. */
+		 
+		 /** Oh right. */ System.out.println("!!!"); /** right right.... */
 	 }
 }
