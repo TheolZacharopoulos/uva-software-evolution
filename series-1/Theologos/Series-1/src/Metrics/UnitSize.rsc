@@ -16,6 +16,6 @@ private set[loc] getModelMethods(M3 model) {
 }
 
 public map[loc, int] getTotalLinesPerUnit(M3 model) {
-    // @TODO: Remove declaration and open / close bracket
+    // @TODO: Remove method declaration, open / closed bracket.
     return (method: countLinesOfCode(method) | method <- getModelMethods(model));
 }

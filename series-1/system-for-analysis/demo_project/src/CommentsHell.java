@@ -12,12 +12,12 @@ class CommentsHell { // You have to count this, sorry.
 		 
 		 /** This line should be counted also. */ System.out.println("Hello");
 		 
-		 System.out.println("World"); /** 
-		 * Count the above too. 
+		 System.out.println("World"); /** Count this. 
+		 * Dont count this.
 		 */
 
-		 /** Hey. */
+		 /** Hey, Don't. */
 		 
-		 /** Oh right. */ System.out.println("!!!"); /** right right.... */
+		 /** Oh right count this. */ System.out.println("!!!"); /** right right.... */
 	 }
 }
