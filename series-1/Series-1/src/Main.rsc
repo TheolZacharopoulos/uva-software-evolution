@@ -7,6 +7,8 @@ import IO;
 import Configurations;
 import Metrics::Volume;
 import Metrics::UnitSize;
+import Metrics::Ranking;
+import Metrics::Ranking::Volume;
 
 /**
  * Create a new model from eclipse project.
@@ -21,11 +23,14 @@ public void main() {
     loc projectLocation = getProjectLocation();
     M3 model = getModel(projectLocation);
     
+    totalLinesOfCode = getLinesTotalOfCode(model);
     // Volume
     println("===================================================");
     println("Calculating the Volume metric");
     iprintln("Lines of code (LOC) per module (class): < getTotalLinesPerModule(model) >");
-    iprintln("Total lines of code (LOC): < getLinesTotalOfCode(model) >");
+    iprintln("Total lines of code (LOC): < totalLinesOfCode >");
+    iprintln("Lines of code (LOC) rank: < stringifyRank(getVolumeRank(totalLinesOfCode)) >");
+    
     
     // Units
     println("===================================================");
