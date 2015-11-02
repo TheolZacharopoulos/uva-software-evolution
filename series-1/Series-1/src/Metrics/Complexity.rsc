@@ -41,8 +41,10 @@ public map[loc, CyclomaticComplexity] getComplexity(M3 model) {
 // http://tutor.rascal-mpl.org/Rascal/Rascal.html#/Rascal/Libraries/lang/java/m3/AST/Declaration/Declaration.html
 CyclomaticComplexity cyclomaticComplexity(Declaration methodAst) {
 
-    // Match method with implementation
-    if (\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl) := methodAst) {
+    // Match method with implementation, or contructor.
+    if (\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl) := methodAst ||
+        \constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl) := methodAst) 
+    {
         int result = 1;
         visit (impl) {
             case \if(Expression condition, Statement thenBranch): result += 1; // if then
