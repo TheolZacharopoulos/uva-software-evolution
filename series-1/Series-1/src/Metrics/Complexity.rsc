@@ -42,23 +42,23 @@ public map[loc, CyclomaticComplexity] getComplexity(M3 model) {
 CyclomaticComplexity cyclomaticComplexity(Declaration methodAst) {
 
     // Match method with implementation, or contructor.
-    if (\method(Type \return, str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl) := methodAst ||
-        \constructor(str name, list[Declaration] parameters, list[Expression] exceptions, Statement impl) := methodAst) 
+    if (\method(_, _, _, _, Statement impl) := methodAst ||
+        \constructor(_, _, _, Statement impl) := methodAst) 
     {
         int result = 1;
         visit (impl) {
-            case \if(Expression condition, Statement thenBranch): result += 1; // if then
-            case \if(Expression condition, Statement thenBranch, Statement elseBranch): result += 1; // if then else
-            case \case(Expression expression): result += 1; // case
-            case \defaultCase(): result +=1; // default case.
-            case \conditional(Expression expression, Expression thenBranch, Expression elseBranch): result += 1; // ? :
-            case /^&&$/: result += 1; // &&
-            case /^\|\|$/: result += 1; // ||
-            case \while(Expression condition, Statement body): result += 1; // while
-            case \do(Statement body, Expression condition): result += 1; // do
-            case \for(list[Expression] initializers, Expression condition, list[Expression] updaters, Statement body): result += 1; // for condition
-            case \for(list[Expression] initializers, list[Expression] updaters, Statement body): result += 1; // for
-            case \catch(Declaration exception, Statement body): result += 1; // catch
+            case \if(_, _): result += 1;        // if then
+            case \if(_, _, _): result += 1;     // if then else
+            case \case(_): result += 1;         // case
+            case \defaultCase(): result +=1;    // default case.
+            case \conditional(_, _, _): result += 1; // ? :
+            case /^&&$/: result += 1;           // &&
+            case /^\|\|$/: result += 1;         // ||
+            case \while(_, _): result += 1;     // while
+            case \do(_, _): result += 1;        // do
+            case \for(_, _, _, _): result += 1; // for condition
+            case \for(_, _, _): result += 1;    // for
+            case \catch(_, _): result += 1;     // catch
         }
         return result;
     }
