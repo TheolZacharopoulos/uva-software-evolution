@@ -1,6 +1,6 @@
 module Metrics::Risk::Complexity
 
-import Metrics::Risk;
+import Metrics::Risk::AbstractRisk;
 import Metrics::Complexity;
 
 private RiskDefinition definition = (

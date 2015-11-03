@@ -18,11 +18,13 @@ import Metrics::LinesOfCode;
 import IO;
   
 alias CyclomaticComplexity = int;
+alias MethodLoc = loc;
+alias MethodComplexityMap = map[MethodLoc, CyclomaticComplexity];
 
-public map[loc, CyclomaticComplexity] getComplexity(M3 model) {
-    map[loc, CyclomaticComplexity] methodsComplexity = ();
+public MethodComplexityMap getComplexity(M3 model) {
+    MethodComplexityMap methodsComplexity = ();
     
-    set[loc] methods = methods(model);
+    set[MethodLoc] methods = methods(model);
     for (method <- methods) {
         Declaration methodAst = getMethodASTEclipse(method, model=model);
         CyclomaticComplexity complexity = cyclomaticComplexity(methodAst);
