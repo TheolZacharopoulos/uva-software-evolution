@@ -7,7 +7,7 @@ import IO;
 import Configurations;
 import Metrics::Volume;
 import Metrics::UnitSize;
-import Metrics::Ranking;
+import Metrics::Ranking::AbstractRanking;
 import Metrics::Ranking::Volume;
 
 /**
