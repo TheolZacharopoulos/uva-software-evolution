@@ -43,9 +43,14 @@ private list[Line] getAllLinesFromModel(M3 model) {
 }
 
 alias Index = int;
-private list[index] findSameLine(list[Line] lines, Line lineToFind) {
+private list[Index] findSameLine(list[Line] lines, Line lineToFind) {
     // TODO: binary search, return the index
     return []; // not found
+}
+
+private list[Line] getBlock(list[Line] lines, int \index, int duplicationThresehold)
+{
+    return lines[\index .. (\index + duplicationThresehold)];
 }
 
 public NumberOfDuplicates detectDuplicates(M3 model) {
@@ -85,4 +90,12 @@ public NumberOfDuplicates detectDuplicates(M3 model) {
     }
     
     return 0;
+}
+
+test bool getBlockTest() {
+    lines = ["test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8"];
+    startIndex = 3; // test4
+    thresehold = 4; // test8
+    
+    return ["test4", "test5", "test6", "test7"] == getBlock(lines, startIndex, thresehold);
 }
