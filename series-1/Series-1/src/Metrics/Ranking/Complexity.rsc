@@ -38,37 +38,38 @@ public RiskPercentageMap getRiskPercentageMap(MethodComplexityMap complexityMap)
     return methodRiskPercentageMap;
 }
 
-private RiskSchema riskRankDefinition = (
+public RiskSchema riskRankDefinition = (
     VeryHigh(): (
-        Moderate(): <0, 24>,
+        Moderate(): <0, 25>,
         Complex(): <0, 0>,
         Unstable(): <0, 0>
     ),
     High(): (
-        Moderate(): <0, 29>,
+        Moderate(): <0, 30>,
         Complex(): <0, 4>,
         Unstable(): <0, 0>
     ),
     Medium(): (
-        Moderate(): <0, 39>,
-        Complex(): <0, 9>,
+        Moderate(): <0, 40>,
+        Complex(): <0, 10>,
         Unstable(): <0, 0>
     ),
     Low(): (
-        Moderate(): <0, 49>,
-        Complex(): <0, 14>,
-        Unstable(): <0, 4>
+        Moderate(): <0, 50>,
+        Complex(): <0, 15>,
+        Unstable(): <0, 5>
     )
 );
 
+// TODO IMPROVE THIS FUNCTION
 public Rank getComplexityRank(RiskPercentageMap riskMap)
 {
-    for (rank <- [r | r <- [VeryHigh(), High(), Medium(), Low()]]) {
+    for (rank <- [VeryHigh(), High(), Medium(), Low()]) {
         riskRangesMap = riskRankDefinition[rank];
         
         hasMatch = true;
         
-        for (risk <- [r | r <- riskRangesMap]) {
+        for (risk <- riskRangesMap) {
             range \range = riskRangesMap[risk];
             riskPercentage = toInt(riskMap[risk]);
             
@@ -84,3 +85,15 @@ public Rank getComplexityRank(RiskPercentageMap riskMap)
     
     return VeryLow();
 }
+
+// TODO move tests
+test bool t1() = getComplexityRank( (Moderate():0.0, Complex():0.0, Unstable():0.0) ) == VeryHigh();
+test bool t2() = getComplexityRank( (Moderate():0.0, Complex():1.0, Unstable():0.0) ) == High();
+test bool t3() = getComplexityRank( (Moderate():0.0, Complex():0.0, Unstable():1.0) ) == Low();
+test bool t4() = getComplexityRank( (Moderate():0.0, Complex():6.0, Unstable():0.0) ) == Medium();
+test bool t5() = getComplexityRank( (Moderate():25.0, Complex():0.0, Unstable():0.0) ) == VeryHigh();
+test bool t6() = getComplexityRank( (Moderate():26.0, Complex():0.0, Unstable():0.0) ) == High();
+test bool t7() = getComplexityRank( (Moderate():30.0, Complex():0.0, Unstable():0.0) ) == High();
+test bool t8() = getComplexityRank( (Moderate():31.0, Complex():0.0, Unstable():0.0) ) == Medium();
+test bool t9() = getComplexityRank( (Moderate():40.0, Complex():0.0, Unstable():0.0) ) == Medium();
+test bool tA() = getComplexityRank( (Moderate():41.0, Complex():0.0, Unstable():0.0) ) == Low();
