@@ -10,6 +10,7 @@ import Metrics::UnitSize;
 import Metrics::Ranking::AbstractRanking;
 import Metrics::Ranking::Volume;
 import Metrics::Complexity;
+import Metrics::Duplication2;
 import Metrics::Ranking::Complexity;
 import Metrics::Risk::AbstractRisk;
 import util::Math;
@@ -33,12 +34,11 @@ public void main() {
     println("Calculating the Volume metric");
     iprintln("Lines of code (LOC) per module (class): < getTotalLinesPerModule(model) >");
     iprintln("Total lines of code (LOC): < totalLinesOfCode >");
-    iprintln("Lines of code (LOC) rank: < stringifyRank(getVolumeRank(totalLinesOfCode)) >");
-    
-    complexityMap = getComplexity(model);
-    RiskPercentageMap riskPercentageMap = getRiskPercentageMap(complexityMap);
+    iprintln("Lines of code (LOC) rank: < stringifyRank(getVolumeRank(totalLinesOfCode)) >");    
     
     // Complexity
+    complexityMap = getComplexity(model);
+    RiskPercentageMap riskPercentageMap = getRiskPercentageMap(complexityMap);
     println("===================================================");
     println("Calculating the risk ranking");
     println("Complexity rating is <stringifyRank(getComplexityRank(riskPercentageMap))>");
@@ -47,5 +47,9 @@ public void main() {
     println("===================================================");
     println("Calculating the Units size metric");
     iprintln("Lines of code (LOC) per unit (method): < getTotalLinesPerUnit(model) >"); 
-      
+    
+    // Duplication
+    println("===================================================");
+    println("Calculating the Duplication metric: ");
+    println("Code duplications: <detectDuplicates(model)>");
 }
