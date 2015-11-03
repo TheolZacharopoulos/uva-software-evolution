@@ -11,9 +11,78 @@ module Metrics::Duplication
  * Apart from removing leading spaces, the duplication we measure is 
  * an exact string matching duplication.
  */
- 
+
+import IO;
+import String;
+import lang::java::m3::Core;
+import lang::java::jdt::m3::Core;
+
 import Configurations;
+import Metrics::LinesOfCode;
 import Metrics::Utils::SourceCleaner;
 
-int DuplThreshold = getDuplicationThreshold();
+alias NumberOfDuplicates = int;
+alias LineDuplicates = map[Line lineSrc, int lineIndex];
 
+int DUPLICATION_THRESHOLD = getDuplicationThreshold();
+
+private list[Line] getAllLinesFromModel(M3 model) {
+    //set[loc] classes = classes(model);
+    
+    // For testing
+    set[loc] classes = {|java+class:///Clone1|, |java+class:///Clone2|};
+    
+    list[Line] allLines = [];
+    
+    for (class <- classes) {
+        list [Line] classLines = getLocationLines(class);
+        allLines += classLines;
+    }
+    
+    return [trim(line) | line <- allLines];
+}
+
+alias Index = int;
+private list[index] findSameLine(list[Line] lines, Line lineToFind) {
+    // TODO: binary search, return the index
+    return []; // not found
+}
+
+public NumberOfDuplicates detectDuplicates(M3 model) {
+    list[Line] lines = getAllLinesFromModel(model);
+    
+    //int duplicatedLines = 0;
+    int duplicates = 0;
+    //LineDuplicates duplicates = ();
+    
+    for (currentIndex <- index(lines)) {
+        // current line
+        line = lines[currentIndex];
+        
+        // initilize detection index
+        //duplicates[line] = 1;
+        
+        // get a block of (6) lines for the original index.
+        list[Line] originalBlock = getBlock(lines, currentIndex, DUPLICATION_THRESHOLD);
+            
+        // get the indexes for of the first same line
+        list[Index] lineFoundIndexes = findSameLine(lines, line);
+        
+        // remove the current index from the list of duplicated indexes. 
+        lineFoundIndexes = lineFoundIndexes - currentIndex;
+        
+        // loop over indexes
+        for (index <- lineFoundIndexes) {
+        
+            // get a block of (6) lines after the index given.
+            list[Line] block = getBlock(lines, index, DUPLICATION_THRESHOLD);
+            
+            if (originalBlock == block) {
+                duplicates ++;                       
+            }
+        }
+        println(" \> <line>");
+    }
+    
+    return 0;
+}

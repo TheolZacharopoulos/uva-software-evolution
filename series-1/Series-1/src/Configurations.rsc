@@ -9,10 +9,10 @@ private loc hsqlProjectLocation     = |project://hsqldb_src|;
  * Get a project location.
  * @return a project location.
  */
-loc getProjectLocation() = demoProjectLocation;
+public loc getProjectLocation() = demoProjectLocation;
 
 /**
  * Get the duplication threshold.
  * @return the duplication threshold.
  */
-int getDuplicationThreshold = 6;
+public int getDuplicationThreshold() = 6;

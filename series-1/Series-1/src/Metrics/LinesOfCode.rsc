@@ -20,14 +20,17 @@ private Source getLocationSrc(loc location) {
     return readFile(location);
 }
 
+public list[Line] getLocationLines(loc location) {
+    Source originalSource = getLocationSrc(location);
+    Source cleanedSource  = cleanSource(originalSource);
+    return [line | line <- split("\n", cleanedSource)];
+}
+
 /**
  * Returns the number of (valid) lines in the specific location.
  * @param location, the location to get the source from
  * @returns the number of valid lines. 
  */
 public int countLinesOfCode(loc location) {
-    Source originalSource = getLocationSrc(location);
-    Source cleanedSource  = cleanSource(originalSource);
-
-    return size([line | line <- split("\n", cleanedSource)]);
+    return size(getLocationLines(location));
 }
