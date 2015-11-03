@@ -1,8 +1,9 @@
 module Metrics::AbstractMetricMapping
 
 import Exception;
+import IO;
 
-alias range = tuple[int top, int bottom];
+alias range = tuple[int bottom, int top];
 
 private &Entity findInMapUsingRange(int \value, map[&Entity, range] definition, &Entity defaultValue, int minRange) throws IlligalArgument
 {
@@ -12,7 +13,7 @@ private &Entity findInMapUsingRange(int \value, map[&Entity, range] definition, 
 
     for (entity <- [r | r <- definition]) {
         defRange = definition[entity];
-        if (\value in [defRange.bottom .. defRange.top]) {
+        if (\value in [defRange.bottom .. defRange.top + 1]) {
             return entity;
         }
     }

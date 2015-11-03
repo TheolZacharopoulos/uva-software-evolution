@@ -5,9 +5,9 @@ import Exception;
 import Type;
 
 private RankDefinition exampleDefinition = (
-    VeryHigh(): <0, 66>,
-    High(): <66, 246>,
-    Medium(): <246, 665>,
+    VeryHigh(): <0, 65>,
+    High(): <66, 245>,
+    Medium(): <246, 664>,
     Low(): <655, 1310>
 );
 
