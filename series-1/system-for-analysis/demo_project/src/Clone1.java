@@ -1,14 +1,8 @@
 class Clone1 {
-	public void cloneMethod() {
-		int i;
-		final int n = 10;
-		
-		for(i=0;i<n;i++) {
-			if (i % 2 == 0) {
-				System.out.print("Even");
-			} else {
-				System.out.print("Odd");
-			}
-		}
-	}
-}
+	public void cloneMethod1() { 
+		if (2 % 2 == 0) {            //1  
+			System.out.print("Even");//2 
+			System.out.print("Even");//3 
+		}                            //4  
+	}                                //5 
+}                                    //6
