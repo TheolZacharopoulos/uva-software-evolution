@@ -1,7 +1,7 @@
 module Metrics::Ranking::Volume
 
 import Metrics::Volume;
-import Metrics::Ranking;
+import Metrics::Ranking::AbstractRanking;
 
 private RankDefinition definition = (
     VeryHigh(): <0, 66>,

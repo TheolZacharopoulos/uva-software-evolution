@@ -1,4 +1,4 @@
-module Metrics::Ranking
+module Metrics::Ranking::AbstractRanking
 
 extend Metrics::AbstractMetricMapping;
 

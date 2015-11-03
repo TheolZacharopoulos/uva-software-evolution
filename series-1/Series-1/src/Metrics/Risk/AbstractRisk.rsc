@@ -1,4 +1,4 @@
-module Metrics::Risk
+module Metrics::Risk::AbstractRisk
 
 extend Metrics::AbstractMetricMapping;
 import List;

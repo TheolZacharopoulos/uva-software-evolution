@@ -1,4 +1,4 @@
-module Metrics::Ranking::Complexity
+module Metrics::Risk::Complexity
 
 import Metrics::Risk;
 import Metrics::Complexity;

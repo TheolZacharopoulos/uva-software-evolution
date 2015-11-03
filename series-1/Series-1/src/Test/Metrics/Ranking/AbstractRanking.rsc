@@ -1,6 +1,6 @@
-module Test::Metrics::Ranking
+module Test::Metrics::Ranking::AbstractRanking
 
-import Metrics::Ranking;
+import Metrics::Ranking::AbstractRanking;
 import Exception;
 import Type;
 

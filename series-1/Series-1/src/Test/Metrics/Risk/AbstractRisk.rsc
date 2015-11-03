@@ -1,6 +1,6 @@
-module Test::Metrics::Risk
+module Test::Metrics::Risk::AbstractRisk
 
-import Metrics::Risk;
+import Metrics::Risk::AbstractRisk;
 import Exception;
 import Type;
 
