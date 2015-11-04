@@ -43,25 +43,35 @@ private list[Line] getBlock(list[Line] lines, int \index, int duplicationThreseh
     return lines[\index .. (\index + duplicationThresehold)];
 }
 
-public NumberOfDuplicates detectDuplicates(M3 model) {
-    list[Line] lines = getAllLinesFromModel(model);    
+private NumberOfDuplicates detectDuplicatesInLines(list[Line] lines) {
     NumberOfDuplicates duplicatesNum = 0;
     list[Line] duplicatedLines = [];
+    int currentIndex = 0;
     
-    for (currentIndex <- [0..size(lines)]) {        
-        // Construct duplication pattern
-        list[Line] blockToCheck = getBlock(lines, currentIndex, DUPLICATION_THRESHOLD);            
+    while (currentIndex <= size(lines)) {
+    
+        // Construct a pattern of size DUPLICATION_THRESHOLD, to check fir duplication.
+        list[Line] blockToCheck = getBlock(lines, currentIndex, DUPLICATION_THRESHOLD);      
         duplPattern = ("" | it + blockLine | blockLine <- blockToCheck);
         
         // Search if the pattern exists in the lines.
         if (duplPattern in duplicatedLines) {
-            println(" <duplicatesNum> : <duplPattern>");                
+            println(" <duplicatesNum+1> : <duplPattern>");
+            // Increase the duplicates                
             duplicatesNum += 1;
+            // Jump to the next block.
+            currentIndex += DUPLICATION_THRESHOLD-1;
         }        
-        // append the duplication pattern
+        // append the pattern to the lines
         duplicatedLines += duplPattern;
-    }
+        currentIndex += 1; // next index
+    }   
     return duplicatesNum;
 }
 
-// TODO: TESTS
+// TODO: Tests
+
+public NumberOfDuplicates detectDuplicates(M3 model) {
+    list[Line] lines = getAllLinesFromModel(model);    
+    return detectDuplicatesInLines(lines);
+}
