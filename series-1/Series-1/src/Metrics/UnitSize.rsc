@@ -11,6 +11,9 @@ import lang::java::jdt::m3::Core;
 
 import Metrics::LinesOfCode;
 
-public map[loc, int] getTotalLinesPerUnit(M3 model) {
+alias UnitSize = int;
+alias MethodUnitSizeMap = map[loc, UnitSize];
+
+public MethodUnitSizeMap getTotalLinesPerUnit(M3 model) {
     return (method: countLinesOfCode(method) | method <- methods(model));
 }

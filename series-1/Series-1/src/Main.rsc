@@ -17,6 +17,7 @@ import Metrics::UnitInterfacing;
 import Metrics::Ranking::AbstractRanking;
 import Metrics::Ranking::VolumeRanking;
 import Metrics::Ranking::ComplexityRanking;
+import Metrics::Ranking::UnitSizeRanking;
 
 import Metrics::Risk::AbstractRisk;
 
@@ -42,16 +43,21 @@ public void main() {
     
     // Complexity
     complexityMap = getComplexity(model);
-    RiskPercentageMap riskPercentageMap = getRiskPercentageMap(complexityMap);
+    RiskPercentageMap ccRiskPercentageMap = getRiskPercentageMap(complexityMap);
     println("===================================================");
     println("Calculating the risk ranking");
-    println("Complexity rating is <stringifyRank(getComplexityRank(riskPercentageMap))>");
+    println("Complexity rank is <stringifyRank(getComplexityRank(ccRiskPercentageMap))>");
+    println("Complexity risk profile is:");
+    iprintln(ccRiskPercentageMap);
     
-    // Units
+    // Unit Size
+    unitSizeMap = getTotalLinesPerUnit(model);
+    RiskPercentageMap usRiskPercentageMap = getRiskPercentageMap(unitSizeMap);
     println("===================================================");
     println("Calculating the Units size metric");
-    println("Lines of code (LOC) per unit (method):");
-    iprintln(getTotalLinesPerUnit(model)); 
+    println("Unit Size rank is <stringifyRank(getUnitSizeRank(usRiskPercentageMap))>");
+    println("Unit Size risk profile is:");
+    iprintln(usRiskPercentageMap);     
     
     // Duplication
     println("===================================================");

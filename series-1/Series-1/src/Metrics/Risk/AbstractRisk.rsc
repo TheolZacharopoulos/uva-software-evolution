@@ -16,12 +16,10 @@ public Risk getRisk(int \value, RiskDefinition definition) throws IllegalArgumen
 }
 
 public str stringifyRisk(Risk r) {
-    map[Risk, str] RiskToStringMap = (
+    return (
         Simple(): "simple, without much risk",
         Moderate(): "more complex, moderate risk",
         Complex(): "complex, high risk",
         Unstable(): "untestable, very high risk"
-    );
-    
-    return RiskToStringMap[r];
+    )[r];
 }

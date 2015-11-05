@@ -18,13 +18,11 @@ public Rank getRank(int \value, RankDefinition definition) throws IllegalArgumen
 }
 
 public str stringifyRank(Rank r) {
-    map[Rank, str] rankToStringMap = (
+    return (
         VeryHigh(): "++",
         High(): "+",
         Medium(): "o",
         Low(): "-",
         VeryLow(): "--"
-    );
-    
-    return rankToStringMap[r];
+    )[r];
 }

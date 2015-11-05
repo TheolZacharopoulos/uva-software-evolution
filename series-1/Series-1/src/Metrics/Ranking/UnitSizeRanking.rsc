@@ -1,9 +1,11 @@
-module Metrics::Ranking::ComplexityRanking
+module Metrics::Ranking::UnitSizeRanking
+
+// TODO: ABstract this together with the Complexity Ranking.
 
 import Metrics::Ranking::AbstractRanking;
 import Metrics::Risk::AbstractRisk;
-import Metrics::Risk::ComplexityRisk;
-import Metrics::Complexity;
+import Metrics::Risk::UnitSizeRisk;
+import Metrics::UnitSize;
 import Metrics::LinesOfCode;
 import Map;
 import List;
@@ -13,13 +15,13 @@ import IO;
 alias RiskPercentageMap = map[Risk, real];
 alias RiskSchema = map[Rank, map[Risk, range]];
 
-public RiskPercentageMap getRiskPercentageMap(MethodComplexityMap complexityMap) {
-    int overallLOC = sum([countLinesOfCode(method)| method <- domain(complexityMap)]);
+public RiskPercentageMap getRiskPercentageMap(MethodUnitSizeMap unitSizeMap) {
+    int overallLOC = sum([countLinesOfCode(method)| method <- domain(unitSizeMap)]);
     
     map[Risk, int] methodRiskLOCMap = ();
     
     for (method <- [r | r <- complexityMap]) {
-        risk = getCyclomaticComplexityRisk(complexityMap[method]);
+        risk = getUnitSizeRisk(complexityMap[method]);
         linesOfCodeForMethod = countLinesOfCode(method);
         methodRiskLOCMap[risk] ? 0 += linesOfCodeForMethod;
     }
@@ -38,6 +40,7 @@ public RiskPercentageMap getRiskPercentageMap(MethodComplexityMap complexityMap)
     return methodRiskPercentageMap;
 }
 
+// TODO Find the right rankings.
 public RiskSchema riskRankDefinition = (
     VeryHigh(): (
         Moderate(): <0, 25>,
@@ -62,7 +65,8 @@ public RiskSchema riskRankDefinition = (
 );
 
 // TODO IMPROVE THIS FUNCTION
-public Rank getComplexityRank(RiskPercentageMap riskMap) {
+public Rank getUnitSizeRank(RiskPercentageMap riskMap)
+{
     for (rank <- [VeryHigh(), High(), Medium(), Low()]) {
         riskRangesMap = riskRankDefinition[rank];
         
@@ -86,13 +90,13 @@ public Rank getComplexityRank(RiskPercentageMap riskMap) {
 }
 
 // TODO move tests
-test bool t1() = getComplexityRank( (Moderate():0.0, Complex():0.0, Unstable():0.0) ) == VeryHigh();
-test bool t2() = getComplexityRank( (Moderate():0.0, Complex():1.0, Unstable():0.0) ) == High();
-test bool t3() = getComplexityRank( (Moderate():0.0, Complex():0.0, Unstable():1.0) ) == Low();
-test bool t4() = getComplexityRank( (Moderate():0.0, Complex():6.0, Unstable():0.0) ) == Medium();
-test bool t5() = getComplexityRank( (Moderate():25.0, Complex():0.0, Unstable():0.0) ) == VeryHigh();
-test bool t6() = getComplexityRank( (Moderate():26.0, Complex():0.0, Unstable():0.0) ) == High();
-test bool t7() = getComplexityRank( (Moderate():30.0, Complex():0.0, Unstable():0.0) ) == High();
-test bool t8() = getComplexityRank( (Moderate():31.0, Complex():0.0, Unstable():0.0) ) == Medium();
-test bool t9() = getComplexityRank( (Moderate():40.0, Complex():0.0, Unstable():0.0) ) == Medium();
-test bool tA() = getComplexityRank( (Moderate():41.0, Complex():0.0, Unstable():0.0) ) == Low();
+test bool t1() = getUnitSizeRank( (Moderate():0.0, Complex():0.0, Unstable():0.0) ) == VeryHigh();
+test bool t2() = getUnitSizeRank( (Moderate():0.0, Complex():1.0, Unstable():0.0) ) == High();
+test bool t3() = getUnitSizeRank( (Moderate():0.0, Complex():0.0, Unstable():1.0) ) == Low();
+test bool t4() = getUnitSizeRank( (Moderate():0.0, Complex():6.0, Unstable():0.0) ) == Medium();
+test bool t5() = getUnitSizeRank( (Moderate():25.0, Complex():0.0, Unstable():0.0) ) == VeryHigh();
+test bool t6() = getUnitSizeRank( (Moderate():26.0, Complex():0.0, Unstable():0.0) ) == High();
+test bool t7() = getUnitSizeRank( (Moderate():30.0, Complex():0.0, Unstable():0.0) ) == High();
+test bool t8() = getUnitSizeRank( (Moderate():31.0, Complex():0.0, Unstable():0.0) ) == Medium();
+test bool t9() = getUnitSizeRank( (Moderate():40.0, Complex():0.0, Unstable():0.0) ) == Medium();
+test bool tA() = getUnitSizeRank( (Moderate():41.0, Complex():0.0, Unstable():0.0) ) == Low();
