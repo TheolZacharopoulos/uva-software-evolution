@@ -40,7 +40,6 @@ public RiskPercentageMap getRiskPercentageMap(MethodUnitSizeMap unitSizeMap) {
     return methodRiskPercentageMap;
 }
 
-// TODO Find the right rankings.
 public RiskSchema riskRankDefinition = (
     VeryHigh(): (
         Moderate(): <0, 25>,
@@ -65,8 +64,7 @@ public RiskSchema riskRankDefinition = (
 );
 
 // TODO IMPROVE THIS FUNCTION
-public Rank getUnitSizeRank(RiskPercentageMap riskMap)
-{
+public Rank getUnitSizeRank(RiskPercentageMap riskMap) {
     for (rank <- [VeryHigh(), High(), Medium(), Low()]) {
         riskRangesMap = riskRankDefinition[rank];
         
