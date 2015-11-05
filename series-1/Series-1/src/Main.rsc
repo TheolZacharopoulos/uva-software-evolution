@@ -37,7 +37,6 @@ public void main() {
     totalLinesOfCode = getLinesTotalOfCode(model);
     println("===================================================");
     println("Calculating the Volume metric");
-    iprintln("Lines of code (LOC) per module (class): < getTotalLinesPerModule(model) >");
     iprintln("Total lines of code (LOC): < totalLinesOfCode >");
     iprintln("Lines of code (LOC) rank: < stringifyRank(getVolumeRank(totalLinesOfCode)) >");    
     

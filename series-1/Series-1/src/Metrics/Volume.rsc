@@ -14,14 +14,14 @@ import Metrics::LinesOfCode;
  * to maintain. In particular, higher volume causes lower analysability (the system is harder to understand).
  */
  
-private set[loc] getModelClasses(M3 model) {
-    return classes(model);
+private set[loc] getCompulationUnits(M3 model) {
+    return { compLoc | <compLoc, compSrc> <- model@declarations, isCompilationUnit(compLoc)};
 }
 
 public map[loc, int] getTotalLinesPerModule(M3 model) {
-    return (class: countLinesOfCode(class) | class <- getModelClasses(model));
+    return (compUnit: countLinesOfCode(compUnit) | compUnit <- getCompulationUnits(model));
 }
 
 public int getLinesTotalOfCode(M3 model) {
-    return sum([countLinesOfCode(class) | class <- getModelClasses(model)]);
+    return sum([countLinesOfCode(compUnit) | compUnit <- getCompulationUnits(model)]);
 }
