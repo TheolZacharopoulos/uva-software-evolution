@@ -46,8 +46,7 @@ public test bool shouldGetVeryLowRank() {
     return rank == VeryLow();
 }
 
-public test bool shouldThrowExceptionOnNegativeValue()
-{
+public test bool shouldThrowExceptionOnNegativeValue() {
     int exampleNumber = -1;
     
     try getRank(exampleNumber, exampleDefinition);

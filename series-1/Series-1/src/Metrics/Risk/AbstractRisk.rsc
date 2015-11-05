@@ -7,12 +7,12 @@ import Exception;
 data Risk = Simple()
          | Moderate()
          | Complex()
-         | Unstable();
+         | Untestable();
 
 alias RiskDefinition = map[Risk, range];
 
 public Risk getRisk(int \value, RiskDefinition definition) throws IllegalArgument {
-    return findInMapUsingRange(\value, definition, Unstable(), 1);
+    return findInMapUsingRange(\value, definition, Untestable(), 1);
 }
 
 public str stringifyRisk(Risk r) {
@@ -20,6 +20,6 @@ public str stringifyRisk(Risk r) {
         Simple(): "simple, without much risk",
         Moderate(): "more complex, moderate risk",
         Complex(): "complex, high risk",
-        Unstable(): "untestable, very high risk"
+        Untestable(): "untestable, very high risk"
     )[r];
 }

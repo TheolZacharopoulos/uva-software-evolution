@@ -38,8 +38,7 @@ public test bool shouldGetUnstableRisk() {
     return Risk == Unstable();
 }
 
-public test bool shouldThrowExceptionOnWrongValue()
-{
+public test bool shouldThrowExceptionOnWrongValue() {
     int exampleNumber = 0;
     
     try getRisk(exampleNumber, exampleDefinition);
