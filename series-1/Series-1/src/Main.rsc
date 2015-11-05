@@ -50,7 +50,8 @@ public void main() {
     // Units
     println("===================================================");
     println("Calculating the Units size metric");
-    iprintln("Lines of code (LOC) per unit (method): < getTotalLinesPerUnit(model) >"); 
+    println("Lines of code (LOC) per unit (method):");
+    iprintln(getTotalLinesPerUnit(model)); 
     
     // Duplication
     println("===================================================");
@@ -60,5 +61,6 @@ public void main() {
     // Unit Interfacing
     println("===================================================");
     println("Calculating the Unit Interfacing metric: ");
-    iprintln("Unit Parameters size: <getUnitInterfacing(model)>");
+    println("Unit Parameters size: ");
+    iprintln(getUnitInterfacing(model)); 
 }
