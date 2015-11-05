@@ -2,5 +2,5 @@
 
 Software evolution course for UvA MSc Software Engineering
 
-- Zacharopulos Theologos
+- Zacharopoulos Theologos
 - Yoan-Alexander Grigorov
