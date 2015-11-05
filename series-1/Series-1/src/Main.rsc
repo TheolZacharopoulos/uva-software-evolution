@@ -12,6 +12,7 @@ import Metrics::Volume;
 import Metrics::UnitSize;
 import Metrics::Complexity;
 import Metrics::Duplication;
+import Metrics::UnitInterfacing;
 
 import Metrics::Ranking::AbstractRanking;
 import Metrics::Ranking::VolumeRanking;
@@ -56,4 +57,9 @@ public void main() {
     println("===================================================");
     println("Calculating the Duplication metric: ");
     println("Code duplications: <detectDuplicates(model)>");
+    
+    // Unit Interfacing
+    println("===================================================");
+    println("Calculating the Unit Interfacing metric: ");
+    iprintln("Unit Parameters size: <getUnitInterfacing(model)>");
 }
