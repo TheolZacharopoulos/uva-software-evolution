@@ -1,8 +1,8 @@
-module Metrics::Ranking::Complexity
+module Metrics::Ranking::ComplexityRanking
 
 import Metrics::Ranking::AbstractRanking;
 import Metrics::Risk::AbstractRisk;
-import Metrics::Risk::Complexity;
+import Metrics::Risk::ComplexityRisk;
 import Metrics::Complexity;
 import Metrics::LinesOfCode;
 import Map;

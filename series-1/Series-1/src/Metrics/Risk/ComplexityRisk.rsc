@@ -1,4 +1,4 @@
-module Metrics::Risk::Complexity
+module Metrics::Risk::ComplexityRisk
 
 import Metrics::Risk::AbstractRisk;
 import Metrics::Complexity;

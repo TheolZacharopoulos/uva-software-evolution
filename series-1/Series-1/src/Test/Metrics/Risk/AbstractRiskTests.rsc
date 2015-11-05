@@ -1,4 +1,4 @@
-module Test::Metrics::Risk::AbstractRisk
+module Test::Metrics::Risk::AbstractRiskTests
 
 import Metrics::Risk::AbstractRisk;
 import Exception;

@@ -1,4 +1,4 @@
-module Test::Metrics::Ranking::AbstractRanking
+module Test::Metrics::Ranking::AbstractRankingTests
 
 import Metrics::Ranking::AbstractRanking;
 import Exception;

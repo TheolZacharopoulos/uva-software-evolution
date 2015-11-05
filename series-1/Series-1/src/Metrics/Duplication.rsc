@@ -14,6 +14,7 @@ module Metrics::Duplication
 
 import IO;
 import String;
+import List;
 import lang::java::m3::Core;
 import lang::java::jdt::m3::Core;
 
@@ -27,11 +28,7 @@ alias LineDuplicates = map[Line lineSrc, int lineIndex];
 int DUPLICATION_THRESHOLD = getDuplicationThreshold();
 
 private list[Line] getAllLinesFromModel(M3 model) {
-    //set[loc] classes = classes(model);
-    
-    // For testing
-    set[loc] classes = {|java+class:///Clone1|, |java+class:///Clone2|};
-    
+    set[loc] classes = classes(model);
     list[Line] allLines = [];
     
     for (class <- classes) {
@@ -42,60 +39,39 @@ private list[Line] getAllLinesFromModel(M3 model) {
     return [trim(line) | line <- allLines];
 }
 
-alias Index = int;
-private list[Index] findSameLine(list[Line] lines, Line lineToFind) {
-    // TODO: binary search, return the index
-    return []; // not found
-}
-
-private list[Line] getBlock(list[Line] lines, int \index, int duplicationThresehold)
-{
+private list[Line] getBlock(list[Line] lines, int \index, int duplicationThresehold) {
     return lines[\index .. (\index + duplicationThresehold)];
 }
 
-public NumberOfDuplicates detectDuplicates(M3 model) {
-    list[Line] lines = getAllLinesFromModel(model);
+private NumberOfDuplicates detectDuplicatesInLines(list[Line] lines) {
+    NumberOfDuplicates duplicatesNum = 0;
+    list[Line] duplicatedLines = [];
+    int currentIndex = 0;
     
-    //int duplicatedLines = 0;
-    int duplicates = 0;
-    //LineDuplicates duplicates = ();
+    while (currentIndex <= size(lines)) {
     
-    for (currentIndex <- index(lines)) {
-        // current line
-        line = lines[currentIndex];
+        // Construct a pattern of size DUPLICATION_THRESHOLD, to check fir duplication.
+        list[Line] blockToCheck = getBlock(lines, currentIndex, DUPLICATION_THRESHOLD);      
+        duplPattern = ("" | it + blockLine | blockLine <- blockToCheck);
         
-        // initilize detection index
-        //duplicates[line] = 1;
-        
-        // get a block of (6) lines for the original index.
-        list[Line] originalBlock = getBlock(lines, currentIndex, DUPLICATION_THRESHOLD);
-            
-        // get the indexes for of the first same line
-        list[Index] lineFoundIndexes = findSameLine(lines, line);
-        
-        // remove the current index from the list of duplicated indexes. 
-        lineFoundIndexes = lineFoundIndexes - currentIndex;
-        
-        // loop over indexes
-        for (index <- lineFoundIndexes) {
-        
-            // get a block of (6) lines after the index given.
-            list[Line] block = getBlock(lines, index, DUPLICATION_THRESHOLD);
-            
-            if (originalBlock == block) {
-                duplicates ++;                       
-            }
-        }
-        println(" \> <line>");
-    }
-    
-    return 0;
+        // Search if the pattern exists in the lines.
+        if (duplPattern in duplicatedLines) {
+            println(" <duplicatesNum+1> : <duplPattern>");
+            // Increase the duplicates                
+            duplicatesNum += 1;
+            // Jump to the next block.
+            currentIndex += DUPLICATION_THRESHOLD-1;
+        }        
+        // append the pattern to the lines
+        duplicatedLines += duplPattern;
+        currentIndex += 1; // next index
+    }   
+    return duplicatesNum;
 }
 
-test bool getBlockTest() {
-    lines = ["test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8"];
-    startIndex = 3; // test4
-    thresehold = 4; // test8
-    
-    return ["test4", "test5", "test6", "test7"] == getBlock(lines, startIndex, thresehold);
+// TODO: Tests
+
+public NumberOfDuplicates detectDuplicates(M3 model) {
+    list[Line] lines = getAllLinesFromModel(model);    
+    return detectDuplicatesInLines(lines);
 }

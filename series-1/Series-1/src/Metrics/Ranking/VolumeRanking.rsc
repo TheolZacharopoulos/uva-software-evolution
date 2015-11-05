@@ -1,4 +1,4 @@
-module Metrics::Ranking::Volume
+module Metrics::Ranking::VolumeRanking
 
 import Metrics::Volume;
 import Metrics::Ranking::AbstractRanking;

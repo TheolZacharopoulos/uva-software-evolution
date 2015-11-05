@@ -1,19 +1,23 @@
 module Main
 
+import IO;
+import util::Math;
+
 import lang::java::m3::Core;
 import lang::java::jdt::m3::Core;
-import IO;
 
 import Configurations;
+
 import Metrics::Volume;
 import Metrics::UnitSize;
-import Metrics::Ranking::AbstractRanking;
-import Metrics::Ranking::Volume;
 import Metrics::Complexity;
-import Metrics::Duplication2;
-import Metrics::Ranking::Complexity;
+import Metrics::Duplication;
+
+import Metrics::Ranking::AbstractRanking;
+import Metrics::Ranking::VolumeRanking;
+import Metrics::Ranking::ComplexityRanking;
+
 import Metrics::Risk::AbstractRisk;
-import util::Math;
 
 /**
  * Create a new model from eclipse project.

@@ -5,8 +5,7 @@ import IO;
 
 alias range = tuple[int bottom, int top];
 
-private &Entity findInMapUsingRange(int \value, map[&Entity, range] definition, &Entity defaultValue, int minRange) throws IlligalArgument
-{
+private &Entity findInMapUsingRange(int \value, map[&Entity, range] definition, &Entity defaultValue, int minRange) throws IllegalArgument {
     if (\value < minRange) {
         throw IllegalArgument("Value should be a positive number");
     }
