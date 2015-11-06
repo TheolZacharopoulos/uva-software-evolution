@@ -20,8 +20,8 @@ public RiskPercentageMap getRiskPercentageMap(MethodUnitSizeMap unitSizeMap) {
     
     map[Risk, int] methodRiskLOCMap = ();
     
-    for (method <- [r | r <- complexityMap]) {
-        risk = getUnitSizeRisk(complexityMap[method]);
+    for (method <- [r | r <- unitSizeMap]) {
+        risk = getUnitSizeRisk(unitSizeMap[method]);
         linesOfCodeForMethod = countLinesOfCode(method);
         methodRiskLOCMap[risk] ? 0 += linesOfCodeForMethod;
     }
