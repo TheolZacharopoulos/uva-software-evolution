@@ -18,6 +18,7 @@ import Metrics::Ranking::AbstractRanking;
 import Metrics::Ranking::VolumeRanking;
 import Metrics::Ranking::ComplexityRanking;
 import Metrics::Ranking::UnitSizeRanking;
+import Metrics::Ranking::DuplicationRanking;
 
 import Metrics::Risk::AbstractRisk;
 
@@ -60,9 +61,11 @@ public void main() {
     iprintln(usRiskPercentageMap);     
     
     // Duplication
+    codeDuplications = detectDuplicates(model);
     println("===================================================");
     println("Calculating the Duplication metric: ");
-    println("Code duplications: <detectDuplicates(model)>");
+    println("Code duplications: <codeDuplications>");
+    println("Code duplication rank is: <stringifyRank(getDuplicationRank(totalLinesOfCode, codeDuplications))>");
     
     // Unit Interfacing
     println("===================================================");
