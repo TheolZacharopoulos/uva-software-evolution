@@ -1,7 +1,5 @@
 module Metrics::Ranking::UnitSizeRanking
 
-// TODO: ABstract this together with the Complexity Ranking.
-
 import Metrics::Ranking::AbstractRanking;
 import Metrics::Risk::AbstractRisk;
 import Metrics::Risk::UnitSizeRisk;
@@ -12,9 +10,7 @@ import List;
 import util::Math;
 import IO;
 
-alias RiskPercentageMap = map[Risk, real];
-alias RiskSchema = map[Rank, map[Risk, range]];
-
+// TODO: Abstract this together with the Complexity Ranking.
 public RiskPercentageMap getRiskPercentageMap(MethodUnitSizeMap unitSizeMap) {
     int overallLOC = sum([countLinesOfCode(method)| method <- domain(unitSizeMap)]);
     
@@ -63,29 +59,7 @@ public RiskSchema riskRankDefinition = (
     )
 );
 
-// TODO IMPROVE THIS FUNCTION
-public Rank getUnitSizeRank(RiskPercentageMap riskMap) {
-    for (rank <- [VeryHigh(), High(), Medium(), Low()]) {
-        riskRangesMap = riskRankDefinition[rank];
-        
-        hasMatch = true;
-        
-        for (risk <- riskRangesMap) {
-            range \range = riskRangesMap[risk];
-            riskPercentage = toInt(riskMap[risk]);
-            
-            if (riskPercentage notin [\range.bottom .. \range.top + 1]) {
-                hasMatch = false;
-            }
-        }
-        
-        if (hasMatch) {
-            return rank;
-        }
-    }
-    
-    return VeryLow();
-}
+public Rank getUnitSizeRank(RiskPercentageMap riskMap) = getRankFromRisk(riskMap, riskRankDefinition);
 
 // TODO move tests
 test bool t1() = getUnitSizeRank( (Moderate():0.0, Complex():0.0, Untestable():0.0) ) == VeryHigh();

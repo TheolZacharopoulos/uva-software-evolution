@@ -15,6 +15,5 @@ private RankDefinition definition = (
 
 Rank getDuplicationRank(int volume, int numberOfDuplicates) {
     duplicationRate = ((toReal(getDuplicationThreshold()) * toReal(numberOfDuplicates))/volume)*100;
-    //println("<duplicationRate>%");
     return getRank(toInt(duplicationRate), definition);
 }

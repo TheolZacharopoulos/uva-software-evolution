@@ -10,4 +10,6 @@ private RankDefinition definition = (
     Low(): <655000, 1310000>
 );
 
-Rank getVolumeRank(int linesOfCode) = getRank(linesOfCode, definition);
+Rank getVolumeRank(int linesOfCode) {
+    return getRank(linesOfCode, definition);
+}

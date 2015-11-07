@@ -10,9 +10,6 @@ import List;
 import util::Math;
 import IO;
 
-alias RiskPercentageMap = map[Risk, real];
-alias RiskSchema = map[Rank, map[Risk, range]];
-
 public RiskPercentageMap getRiskPercentageMap(MethodComplexityMap complexityMap) {
     int overallLOC = sum([countLinesOfCode(method)| method <- domain(complexityMap)]);
     
@@ -61,29 +58,7 @@ public RiskSchema riskRankDefinition = (
     )
 );
 
-// TODO IMPROVE THIS FUNCTION
-public Rank getComplexityRank(RiskPercentageMap riskMap) {
-    for (rank <- [VeryHigh(), High(), Medium(), Low()]) {
-        riskRangesMap = riskRankDefinition[rank];
-        
-        hasMatch = true;
-        
-        for (risk <- riskRangesMap) {
-            range \range = riskRangesMap[risk];
-            riskPercentage = toInt(riskMap[risk]);
-            
-            if (riskPercentage notin [\range.bottom .. \range.top + 1]) {
-                hasMatch = false;
-            }
-        }
-        
-        if (hasMatch) {
-            return rank;
-        }
-    }
-    
-    return VeryLow();
-}
+public Rank getComplexityRank(RiskPercentageMap riskMap) = getRankFromRisk(riskMap, riskRankDefinition);
 
 // TODO move tests
 test bool t1() = getComplexityRank( (Moderate():0.0, Complex():0.0, Untestable():0.0) ) == VeryHigh();
