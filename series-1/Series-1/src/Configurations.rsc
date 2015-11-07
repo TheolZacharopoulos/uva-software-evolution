@@ -16,3 +16,7 @@ public loc getProjectLocation() = demoProjectLocation;
  * @return the duplication threshold.
  */
 public int getDuplicationThreshold() = 6;
+
+public set[loc] getTestFrameWorksBaseClasses() = {
+    |java+class:///junit/framework/TestCase|    // JUnit Test Framework.
+};
