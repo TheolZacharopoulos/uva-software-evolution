@@ -13,6 +13,7 @@ import Metrics::UnitSize;
 import Metrics::Complexity;
 import Metrics::Duplication;
 import Metrics::UnitInterfacing;
+import Metrics::TestQuality;
 
 import Metrics::Ranking::AbstractRanking;
 import Metrics::Ranking::VolumeRanking;
@@ -71,5 +72,10 @@ public void main() {
     println("===================================================");
     println("Calculating the Unit Interfacing metric: ");
     println("Unit Parameters size: ");
-    iprintln(getUnitInterfacing(model)); 
+    iprintln(getUnitInterfacing(model));
+    
+    // Tests Quality
+    println("===================================================");
+    println("Calculating the Test Quality metric: ");
+    println("Unit Testing coverage: <getUnitTestingCoverage(model)>%");
 }
