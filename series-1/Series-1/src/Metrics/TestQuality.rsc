@@ -51,11 +51,11 @@ set[loc] getInvokedMethods(M3 model) {
                 isTestableMethod(invokedMethod, model)}; // the method that invoked is testable;
 }
 
-public int getUnitTestingCoverage(M3 model) {
+public real getUnitTestingCoverage(M3 model) {
     int allNotTestingMethods = size(getNotTestingMethods(model));
     int invokedFromTestsMethods = size(getInvokedMethods(model));
     
-    return toInt((toReal(invokedFromTestsMethods) / toReal(allNotTestingMethods)) * 100);
+    return ((toReal(invokedFromTestsMethods) / toReal(allNotTestingMethods)) * 100);
 }
 
 private int countAssertionsInMethod(loc method, M3 model) {

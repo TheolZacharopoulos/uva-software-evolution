@@ -77,6 +77,6 @@ public void main() {
     // Tests Quality
     println("===================================================");
     println("Calculating the Test Quality metric: ");
-    println("Unit Testing coverage: <getUnitTestingCoverage(model)>%");
+    println("Unit Testing coverage: <getUnitTestingCoverage(model)> %");
     println("Assertions number: <getAssertionsNumber(model)>");
 }
