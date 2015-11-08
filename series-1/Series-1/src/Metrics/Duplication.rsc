@@ -56,7 +56,7 @@ private NumberOfDuplicates detectDuplicatesInLines(list[Line] lines) {
         
         // Search if the pattern exists in the lines.
         if (duplPattern in duplicatedLines) {
-            println(" <duplicatesNum+1> : <duplPattern>");
+            //println(" <duplicatesNum+1> : <duplPattern>");
             // Increase the duplicates                
             duplicatesNum += 1;
             // Jump to the next block.
