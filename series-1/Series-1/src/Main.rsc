@@ -65,7 +65,7 @@ public void main() {
     codeDuplications = detectDuplicates(model);
     println("===================================================");
     println("Calculating the Duplication metric: ");
-    println("Code duplications: <codeDuplications>");
+    println("Code duplicates: <codeDuplications>");
     println("Code duplication rank is: <stringifyRank(getDuplicationRank(totalLinesOfCode, codeDuplications))>");
     
     // Unit Interfacing
@@ -78,4 +78,5 @@ public void main() {
     println("===================================================");
     println("Calculating the Test Quality metric: ");
     println("Unit Testing coverage: <getUnitTestingCoverage(model)>%");
+    println("Assertions number: <getAssertionsNumber(model)>");
 }

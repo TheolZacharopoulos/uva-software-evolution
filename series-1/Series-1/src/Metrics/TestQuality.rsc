@@ -25,29 +25,8 @@ private bool isTestableMethod(loc method, M3 model) {
     Declaration methodAst = getMethodASTEclipse(method, model=model);
         
     // Match methods with implementation.
-    if (\method(_, _, _, _, Statement impl) := methodAst) return true;
-    
+    if (\method(_, _, _, _, Statement impl) := methodAst) return true;    
     return false;
-}
-
-// TODO: traverse the AST for method calls 
-set[loc invocations] getMethodInvocations(loc method, M3 model) {
-    Declaration methodAst = getMethodASTEclipse(method, model=model);
-    
-    // Match method with implementation, or contructor.
-    if (\method(_, _, _, _, Statement impl) := methodAst ||
-        \constructor(_, _, _, Statement impl) := methodAst) {
-        set[loc] invocations = {};
-        
-        if (\block(list[Statement] statements) := impl) {
-            for (st <- statements) {
-                // TODO TRAVERSE for method calls.
-                iprintln(st);
-            }
-        }
-        return invocations;
-    }
-    return {};
 }
 
 set[loc] getTestingMethods(M3 model) {
@@ -55,12 +34,15 @@ set[loc] getTestingMethods(M3 model) {
     return {testMethod | testClass <- testClasses, testMethod <- methods(model, testClass)};
 }
 
+set[loc] getNotTestingMethods(M3 model) {
+    set[loc] testMethods = getTestingMethods(model);                                    
+    return { m | m <- methods(model), m notin testMethods};
+}
+
 set[loc] getInvokedMethods(M3 model) {
     set[loc] testClasses = getAllTestClasses(model, getTestFrameWorksBaseClasses());    
     set[loc] testMethods = getTestingMethods(model);
-                                    
-    // TODO: model@methodInvocation works only for static methods. 
-    // getMethodInvocations in progress.
+
     return {invokedMethod | 
                 <methodInvokes, invokedMethod> <- model@methodInvocation,
                 methodInvokes in testMethods,   // the method that invokes is a test method
@@ -69,14 +51,37 @@ set[loc] getInvokedMethods(M3 model) {
                 isTestableMethod(invokedMethod, model)}; // the method that invoked is testable;
 }
 
-set[loc] getNotTestingMethods(M3 model) {
-    set[loc] testMethods = getTestingMethods(model);                                    
-    return { m | m <- methods(model), m notin testMethods};
-}
-
 public int getUnitTestingCoverage(M3 model) {
     int allNotTestingMethods = size(getNotTestingMethods(model));
     int invokedFromTestsMethods = size(getInvokedMethods(model));
     
     return toInt((toReal(invokedFromTestsMethods) / toReal(allNotTestingMethods)) * 100);
+}
+
+private int countAssertionsInMethod(loc method, M3 model) {
+    Declaration methodAst = getMethodASTEclipse(method, model=model);
+    int assertNum = 0;
+    
+    if (\method(_, _, _, _, Statement impl) := methodAst ||
+        \constructor(_, _, _, Statement impl) := methodAst) 
+    {   
+        visit (impl) {
+            case \assert(Expression expression): assertNum += 1;
+            case \assert(Expression expression, Expression message): assertNum += 1;
+            case \methodCall(bool isSuper, str name, list[Expression] arguments): {
+                if (/assert/ := name) assertNum += 1;
+            }
+            case \methodCall(bool isSuper, Expression receiver, str name, list[Expression] arguments): {
+                if (/assert/ := name) assertNum += 1;
+            } 
+        }
+    }
+    return assertNum;
+}
+
+public int getAssertionsNumber(M3 model) {
+    set[loc] testingMethods = getTestingMethods(model);
+    int assertSum = 0;
+    for (method <- testingMethods) assertSum += countAssertionsInMethod(method, model);    
+    return assertSum;
 }
