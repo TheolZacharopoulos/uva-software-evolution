@@ -28,7 +28,8 @@ public MethodComplexityMap getComplexity(M3 model) {
     for (method <- methods) {
         Declaration methodAst = getMethodASTEclipse(method, model=model);
         CyclomaticComplexity complexity = cyclomaticComplexity(methodAst);
-        methodsComplexity += (method:complexity);     
+        // get only the implemented units.
+        if (complexity > 0) methodsComplexity += (method:complexity);     
     }
     return methodsComplexity;
 }
