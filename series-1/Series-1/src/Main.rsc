@@ -20,11 +20,13 @@ import Metrics::Ranking::VolumeRanking;
 import Metrics::Ranking::ComplexityRanking;
 import Metrics::Ranking::UnitSizeRanking;
 import Metrics::Ranking::UnitTestCoverageRanking;
+import Metrics::Ranking::UnitInterfacingRanking;
 import Metrics::Ranking::DuplicationRanking;
 
 import Metrics::Risk::AbstractRisk;
 import Metrics::Risk::ComplexityRisk;
 import Metrics::Risk::UnitSizeRisk;
+import Metrics::Risk::UnitInterfacingRisk;
 
 /**
  * Create a new model from eclipse project.
@@ -72,10 +74,12 @@ public void main() {
     println("Code duplication rank is: <stringifyRank(getDuplicationRank(totalLinesOfCode, codeDuplications))>");
     
     // Unit Interfacing
+    RiskPercentageMap interfacingRiskPercentageMap = getRiskPercentageMap(unitSizeMap, getUnitInterfacingRisk);
     println("===================================================");
     println("Calculating the Unit Interfacing metric: ");
-    println("Unit Parameters size: ");
-    iprintln(getUnitInterfacing(model));
+    println("Unit interfacing rank is <stringifyRank(getUnitInterfacingRank(interfacingRiskPercentageMap))>");
+    println("Unit interfacing risk profile is:");
+    iprintln(interfacingRiskPercentageMap);
     
     // Tests Quality
     coverage = getUnitTestingCoverage(model);

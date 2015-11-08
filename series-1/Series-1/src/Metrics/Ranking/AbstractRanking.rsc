@@ -34,7 +34,6 @@ public str stringifyRank(Rank r) {
     )[r];
 }
 
-// TODO: IMPROVE THIS FUNCTION
 public Rank getRankFromRisk(RiskPercentageMap riskMap, RiskSchema riskRankDefinition) {
     for (rank <- [VeryHigh(), High(), Medium(), Low()]) {
         riskRangesMap = riskRankDefinition[rank];
