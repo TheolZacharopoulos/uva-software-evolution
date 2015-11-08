@@ -6,15 +6,13 @@ import IO;
 alias range = tuple[int bottom, int top];
 
 private &Entity findInMapUsingRange(int \value, map[&Entity, range] definition, &Entity defaultValue, int minRange) throws IllegalArgument {
+    
     if (\value < minRange) {
-        throw IllegalArgument("Value should be a positive number");
+        throw IllegalArgument("Value minimum range is <minRange>");
     }
-
-    for (entity <- [r | r <- definition]) {
-        defRange = definition[entity];
-        if (\value in [defRange.bottom .. defRange.top + 1]) {
-            return entity;
-        }
+    
+    for (entity <- definition, \value in [definition[entity].bottom .. definition[entity].top + 1]) {
+        return entity;
     }
     
     return defaultValue;
