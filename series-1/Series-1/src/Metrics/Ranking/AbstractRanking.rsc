@@ -3,6 +3,7 @@ module Metrics::Ranking::AbstractRanking
 extend Metrics::AbstractMetricMapping;
 
 import Metrics::Risk::AbstractRisk;
+import Metrics::LinesOfCode;
 import List;
 import Exception;
 import Map;
@@ -17,7 +18,7 @@ data Rank = VeryLow()
 
 alias RankDefinition = map[Rank, range];
 alias RiskPercentageMap = map[Risk, real];
-alias RiskSchema = map[Rank, map[Risk, range]];
+alias RiskSchema = map[Rank, map[Risk, int]];
 
 public Rank getRank(int \value, RankDefinition definition) throws IllegalArgument {
     return findInMapUsingRange(\value, definition, VeryLow(), 0);
@@ -41,10 +42,10 @@ public Rank getRankFromRisk(RiskPercentageMap riskMap, RiskSchema riskRankDefini
         hasMatch = true;
         
         for (risk <- riskRangesMap) {
-            range \range = riskRangesMap[risk];
+            thresehold = riskRangesMap[risk];
             riskPercentage = toInt(riskMap[risk]);
             
-            if (riskPercentage notin [\range.bottom .. \range.top + 1]) {
+            if (riskPercentage notin [0 .. thresehold + 1]) {
                 hasMatch = false;
             }
         }
@@ -55,4 +56,30 @@ public Rank getRankFromRisk(RiskPercentageMap riskMap, RiskSchema riskRankDefini
     }
     
     return VeryLow();
+}
+
+
+public RiskPercentageMap getRiskPercentageMap(map[loc, int] valuesMap, riskResolver) {
+    int overallLOC = sum([countLinesOfCode(method) | method <- domain(valuesMap)]);
+    
+    map[Risk, int] methodRiskLOCMap = ();
+    
+    for (method <- [r | r <- valuesMap]) {
+        risk = riskResolver(valuesMap[method]);
+        linesOfCodeForMethod = countLinesOfCode(method);
+        methodRiskLOCMap[risk] ? 0 += linesOfCodeForMethod;
+    }
+    
+    RiskPercentageMap methodRiskPercentageMap = (
+        Simple(): 0.0,
+        Moderate(): 0.0,
+        Complex(): 0.0,
+        Untestable(): 0.0
+    );
+    
+    for (risk <- [r | r <- methodRiskLOCMap]) {
+        methodRiskPercentageMap[risk] = (toReal(methodRiskLOCMap[risk]) / toReal(overallLOC)) * 100;
+    }
+    
+    return methodRiskPercentageMap;
 }

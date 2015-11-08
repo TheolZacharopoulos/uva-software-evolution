@@ -19,9 +19,12 @@ import Metrics::Ranking::AbstractRanking;
 import Metrics::Ranking::VolumeRanking;
 import Metrics::Ranking::ComplexityRanking;
 import Metrics::Ranking::UnitSizeRanking;
+import Metrics::Ranking::UnitTestCoverageRanking;
 import Metrics::Ranking::DuplicationRanking;
 
 import Metrics::Risk::AbstractRisk;
+import Metrics::Risk::ComplexityRisk;
+import Metrics::Risk::UnitSizeRisk;
 
 /**
  * Create a new model from eclipse project.
@@ -45,7 +48,7 @@ public void main() {
     
     // Complexity
     complexityMap = getComplexity(model);
-    RiskPercentageMap ccRiskPercentageMap = getRiskPercentageMap(complexityMap);
+    RiskPercentageMap ccRiskPercentageMap = getRiskPercentageMap(complexityMap, getCyclomaticComplexityRisk);
     println("===================================================");
     println("Calculating the risk ranking");
     println("Complexity rank is <stringifyRank(getComplexityRank(ccRiskPercentageMap))>");
@@ -54,12 +57,12 @@ public void main() {
     
     // Unit Size
     unitSizeMap = getTotalLinesPerUnit(model);
-    RiskPercentageMap usRiskPercentageMap = getRiskPercentageMap(unitSizeMap);
+    RiskPercentageMap usRiskPercentageMap = getRiskPercentageMap(unitSizeMap, getUnitSizeRisk);
     println("===================================================");
     println("Calculating the Units size metric");
     println("Unit Size rank is <stringifyRank(getUnitSizeRank(usRiskPercentageMap))>");
     println("Unit Size risk profile is:");
-    iprintln(usRiskPercentageMap);     
+    iprintln(usRiskPercentageMap);
     
     // Duplication
     codeDuplications = detectDuplicates(model);
@@ -75,8 +78,10 @@ public void main() {
     iprintln(getUnitInterfacing(model));
     
     // Tests Quality
+    coverage = getUnitTestingCoverage(model);
     println("===================================================");
     println("Calculating the Test Quality metric: ");
-    println("Unit Testing coverage: <getUnitTestingCoverage(model)> %");
+    println("Unit Testing coverage: <coverage> %");
     println("Assertions number: <getAssertionsNumber(model)>");
+    println("Unit Testing coverage: <getUnitTestCoverageRank(coverage)>");
 }
