@@ -9,4 +9,4 @@ private RiskDefinition definition = (
     Complex(): <21, 50>
 );
 
-Risk getCyclomaticComplexityRisk(CyclomaticComplexity cc) = getRisk(cc, definition);
+Risk getCyclomaticComplexityRisk(CyclomaticComplexity cc) = getRisk(cc, definition, 1);

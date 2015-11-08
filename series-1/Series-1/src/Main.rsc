@@ -74,12 +74,13 @@ public void main() {
     println("Code duplication rank is: <stringifyRank(getDuplicationRank(totalLinesOfCode, codeDuplications))>");
     
     // Unit Interfacing
-    RiskPercentageMap interfacingRiskPercentageMap = getRiskPercentageMap(unitSizeMap, getUnitInterfacingRisk);
+    UnitInterfacingMap unitInterfacingMap = getUnitInterfacing(model);
+    RiskPercentageMap unitInterRiskPercentageMap = getRiskPercentageMap(unitInterfacingMap, getUnitInterfacingRisk);
     println("===================================================");
-    println("Calculating the Unit Interfacing metric: ");
-    println("Unit interfacing rank is <stringifyRank(getUnitInterfacingRank(interfacingRiskPercentageMap))>");
-    println("Unit interfacing risk profile is:");
-    iprintln(interfacingRiskPercentageMap);
+    println("Calculating the Unit intefacing metric");
+    println("Unit Interfacing rank is <stringifyRank(getUnitInterfacingRank(unitInterRiskPercentageMap))>");
+    println("Unit Interfacing risk profile is:");
+    iprintln(unitInterRiskPercentageMap);
     
     // Tests Quality
     coverage = getUnitTestingCoverage(model);

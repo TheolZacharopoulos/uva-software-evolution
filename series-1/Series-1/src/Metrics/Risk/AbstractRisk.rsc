@@ -11,8 +11,8 @@ data Risk = Simple()
 
 alias RiskDefinition = map[Risk, range];
 
-public Risk getRisk(int \value, RiskDefinition definition) throws IllegalArgument {
-    return findInMapUsingRange(\value, definition, Untestable(), 1);
+public Risk getRisk(int \value, RiskDefinition definition, int minVal) throws IllegalArgument {
+    return findInMapUsingRange(\value, definition, Untestable(), minVal);
 }
 
 public str stringifyRisk(Risk r) {

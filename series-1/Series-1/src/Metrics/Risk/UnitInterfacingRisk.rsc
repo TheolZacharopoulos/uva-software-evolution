@@ -9,4 +9,4 @@ private RiskDefinition definition = (
     Complex(): <6, 7>
 );
 
-Risk getUnitInterfacingRisk(int paramsNumber) = getRisk(paramsNumber, definition);
+Risk getUnitInterfacingRisk(int unitParams) = getRisk(unitParams, definition, 0);

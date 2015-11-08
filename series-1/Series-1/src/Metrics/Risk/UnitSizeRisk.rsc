@@ -9,4 +9,4 @@ private RiskDefinition definition = (
     Complex(): <51, 100>
 );
 
-Risk getUnitSizeRisk(int unitSize) = getRisk(unitSize, definition);
+Risk getUnitSizeRisk(int unitSize) = getRisk(unitSize, definition, 1);
