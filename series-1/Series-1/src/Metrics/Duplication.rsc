@@ -15,6 +15,7 @@ module Metrics::Duplication
 import IO;
 import String;
 import List;
+import Map;
 import lang::java::m3::Core;
 import lang::java::jdt::m3::Core;
 
@@ -45,7 +46,10 @@ private list[Line] getBlock(list[Line] lines, int \index, int duplicationThreseh
 
 private NumberOfDuplicates detectDuplicatesInLines(list[Line] lines) {
     NumberOfDuplicates duplicatesNum = 0;
-    list[list[Line]] duplicatedLines = [];
+    map[int startIndex, list[Line] block] duplicatedLines = ();
+    
+    map[int startIndex, list[Line] block] blocksRepository = ();
+    
     int currentIndex = 0;
     
     while (currentIndex <= size(lines)) {
@@ -54,20 +58,71 @@ private NumberOfDuplicates detectDuplicatesInLines(list[Line] lines) {
         list[Line] blockToCheck = getBlock(lines, currentIndex, DUPLICATION_THRESHOLD);
         
         // Search if the pattern exists in the lines.
-        if (blockToCheck in duplicatedLines) {
+        if (blockToCheck in range(duplicatedLines)) {
             // Increase the duplicates                
             duplicatesNum += 1;
             // Jump to the next block.
+            blocksRepository[currentIndex] = blockToCheck;
             currentIndex += DUPLICATION_THRESHOLD-1;
+            
         }        
         // append the pattern to the lines
-        duplicatedLines += [blockToCheck];
+        duplicatedLines[currentIndex] = blockToCheck;
         currentIndex += 1; // next index
     }   
+    
+    
+    map[int, map[int startIndex, list[Line] block]] duplicatingBlocksMap = ();
+    list[int] blacklist = [];
+    
+    for (startIndex <- blocksRepository) {
+        block = blocksRepository[startIndex];
+        for (duplicateIndex <- duplicatedLines) {
+            if (block == duplicatedLines[duplicateIndex] && duplicateIndex != startIndex && duplicateIndex notin blacklist) {
+                blacklist += duplicateIndex;
+                duplicatingBlocksMap[startIndex] ? (duplicateIndex:block) += (duplicateIndex:block);
+            }
+        }
+    }    
+    
+    map[int, int] originalIndexMargin = ();
+    
+    
+    
+    for (originalStartIndex <- duplicatingBlocksMap) {
+        margin = 1;
+        
+        // originalBlock = blocksRepository[originalStartIndex] + extraLine;
+        originalBlock = expandBlock(lines, originalStartIndex, margin);
+            
+        duplicates = duplicatingBlocksMap[originalStartIndex];
+        
+        for (duplicateStartIndex <- duplicates) {
+        
+            expandedDuplicate = expandBlock(lines, duplicateStartIndex, margin);
+            
+            if (expandedDuplicate == originalBlock) {
+                margin += 1;
+            } else {
+                break;
+            }
+        }
+        
+        originalIndexMargin[originalStartIndex] = margin;
+    }
+    
+    println("=============HERE============");
+    iprintln(originalIndexMargin);
+    println("=============ENDHERE============");
+    
     return duplicatesNum;
 }
 
-
+public list[Line] expandBlock(list[Line] overallLines, int startIndex, int margin)
+{
+    end = startIndex + DUPLICATION_THRESHOLD + margin;
+    return overallLines[startIndex..end];
+}
 
 // TODO: Tests
 

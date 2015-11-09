@@ -5,7 +5,8 @@ class Clone4 {
 		System.out.print("30");
 		System.out.print("40");
 		System.out.print("50");
-		System.out.print("60");
+        System.out.print("60");
+        System.out.print("70");
 	}
 	
 	public void clonePrint2() {
