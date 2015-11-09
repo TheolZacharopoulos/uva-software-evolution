@@ -45,29 +45,29 @@ private list[Line] getBlock(list[Line] lines, int \index, int duplicationThreseh
 
 private NumberOfDuplicates detectDuplicatesInLines(list[Line] lines) {
     NumberOfDuplicates duplicatesNum = 0;
-    list[Line] duplicatedLines = [];
+    list[list[Line]] duplicatedLines = [];
     int currentIndex = 0;
     
     while (currentIndex <= size(lines)) {
     
         // Construct a pattern of size DUPLICATION_THRESHOLD, to check fir duplication.
-        list[Line] blockToCheck = getBlock(lines, currentIndex, DUPLICATION_THRESHOLD);      
-        duplPattern = ("" | it + blockLine | blockLine <- blockToCheck);
+        list[Line] blockToCheck = getBlock(lines, currentIndex, DUPLICATION_THRESHOLD);
         
         // Search if the pattern exists in the lines.
-        if (duplPattern in duplicatedLines) {
-            //println(" <duplicatesNum+1> : <duplPattern>");
+        if (blockToCheck in duplicatedLines) {
             // Increase the duplicates                
             duplicatesNum += 1;
             // Jump to the next block.
             currentIndex += DUPLICATION_THRESHOLD-1;
         }        
         // append the pattern to the lines
-        duplicatedLines += duplPattern;
+        duplicatedLines += [blockToCheck];
         currentIndex += 1; // next index
     }   
     return duplicatesNum;
 }
+
+
 
 // TODO: Tests
 
