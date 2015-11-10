@@ -45,15 +45,15 @@ public MethodComplexityMap getComplexity(M3 model) {
 CyclomaticComplexity cyclomaticComplexity(Declaration methodAst) {
 
     // Match method with implementation, or contructor.
-    if (\method(_, _, _, _, Statement impl) := methodAst ||
-        \constructor(_, _, _, Statement impl) := methodAst) 
+    if (\method(_, str name, _, _, Statement impl) := methodAst ||
+        \constructor(str name, _, _, Statement impl) := methodAst) 
     {
         int result = 1;
+        
         visit (impl) {
             case \if(_, _): result += 1;        // if then
             case \if(_, _, _): result += 1;     // if then else
             case \case(_): result += 1;         // case
-            case \defaultCase(): result +=1;    // default case.
             case \conditional(_, _, _): result += 1; // ? :
             case \infix(_, /^\|\|$/, _): result += 1; // operator = &&
             case \infix(_, /^&&$/, _): result += 1;  // operator = ||
