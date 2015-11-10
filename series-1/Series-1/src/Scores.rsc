@@ -60,21 +60,21 @@ map[Characteristic, StarNumber] getTotalScores(MetricRanking metricRanking) {
 
 Rank getOverallMaintainability(MetricRanking metricRanking) {
     map[Characteristic, StarNumber] totalScores = getTotalScores(metricRanking);
-    return rangifyStar(sum(range(totalScores)) / size(totalScores));
+    return rankifyStar(sum(range(totalScores)) / size(totalScores));
 }
 
-public void displayScore(MetricRanking metricRanking) {
-    map[Characteristic, StarNumber] totalScore = getScore(metricRanking);
+public void displayScores(MetricRanking metricRanking) {
+    map[Characteristic, StarNumber] totalScore = getTotalScores(metricRanking);
     
-    print("               ");
-    print("|");
-    for (metric <- MetricCharMap) {
-        print("<metric>|");
-        
+    for (metric <- metricRanking) {
+        print("<metric> : <stringifyRank(metricRanking[metric])>\n\t<for (char <- MetricCharMap[metric]) {> <char> : <stringifyRank(rankifyStar(getStarsForMetric(metric, metricRanking[metric])[char]))> <}>
+               '");
     }
-    println("");
     
-    //for (characteristic <- totalScore) {
-    //    println("<characteristic>");
-    //}
+    println("==================================");
+    println("Total Scores:");
+    for (char <- totalScore) println("<char> : <stringifyRank(rankifyStar(totalScore[char]))>");
+    println("==================================");
+    println("Overall Maintainability: <stringifyRank(getOverallMaintainability(metricRanking))>");
+    println("==================================");
 }

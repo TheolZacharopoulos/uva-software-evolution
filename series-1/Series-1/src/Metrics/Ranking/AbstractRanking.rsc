@@ -26,7 +26,7 @@ public Rank getRank(int \value, RankDefinition definition) throws IllegalArgumen
     return findInMapUsingRange(\value, definition, VeryLow(), 0);
 }
 
-public Rank rangifyStar(StarNumber stars) {
+public Rank rankifyStar(StarNumber stars) {
     // Handle edge cases.
     if (stars > 4) return VeryHigh();
     if (stars < 0) return VeryLow();

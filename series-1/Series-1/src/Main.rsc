@@ -108,8 +108,5 @@ public void main() {
     println("===================================================");
     println("===================================================");
     println("Total Scores:");
-    map[Characteristic, StarNumber] totalScores = getTotalScores(metricRankings);
-    iprintln(totalScores);
-    println("Overall mainainability:");
-    iprintln(getOverallMaintainability(metricRankings));
+    displayScores(metricRankings);
 }
