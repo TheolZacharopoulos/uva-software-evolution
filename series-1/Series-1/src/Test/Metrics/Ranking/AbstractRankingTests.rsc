@@ -14,42 +14,42 @@ private RankDefinition exampleDefinition = (
 public test bool shouldGetVeryHighRank() {
     int exampleNumber = 5;
 
-    Rank rank = getRank(exampleNumber, exampleDefinition);
+    Rank rank = getRank(exampleNumber, exampleDefinition, 0);
     return rank == VeryHigh();
 }
 
 public test bool shouldGetHighRank() {
     int exampleNumber = 70;
 
-    Rank rank = getRank(exampleNumber, exampleDefinition);
+    Rank rank = getRank(exampleNumber, exampleDefinition, 0);
     return rank == High();
 }
 
 public test bool shouldGetMediumRank() {
     int exampleNumber = 250;
 
-    Rank rank = getRank(exampleNumber, exampleDefinition);
+    Rank rank = getRank(exampleNumber, exampleDefinition, 0);
     return rank == Medium();
 }
 
 public test bool shouldGetLowRank() {
     int exampleNumber = 700;
 
-    Rank rank = getRank(exampleNumber, exampleDefinition);
+    Rank rank = getRank(exampleNumber, exampleDefinition, 0);
     return rank == Low();
 }
 
 public test bool shouldGetVeryLowRank() {
     int exampleNumber = 2000;
 
-    Rank rank = getRank(exampleNumber, exampleDefinition);
+    Rank rank = getRank(exampleNumber, exampleDefinition, 0);
     return rank == VeryLow();
 }
 
 public test bool shouldThrowExceptionOnNegativeValue() {
     int exampleNumber = -1;
     
-    try getRank(exampleNumber, exampleDefinition);
+    try getRank(exampleNumber, exampleDefinition, 0);
     catch: return true;
     
     return false;

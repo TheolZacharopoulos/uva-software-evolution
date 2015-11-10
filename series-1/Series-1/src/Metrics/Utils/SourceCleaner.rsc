@@ -10,7 +10,7 @@ alias Source = str;
  * @param source, the input source.
  * @return the source without the single line comments.
  */ 
-private Source removeSingleLineComments(Source source) {
+Source removeSingleLineComments(Source source) {
     return visit(source) {
         case /^[ \t\n]*\/\/.*/ => ""   
     };
@@ -21,7 +21,7 @@ private Source removeSingleLineComments(Source source) {
  * @param source, the input source.
  * @return the source without the multi line comments.
  */ 
-private Source removeMultiLineComments(Source source) {
+Source removeMultiLineComments(Source source) {
     return visit(source) {
         case /\/\*[\s\S]*?\*\// => ""  
     };
@@ -32,7 +32,7 @@ private Source removeMultiLineComments(Source source) {
  * @param source, the input source.
  * @return the source without the empty lines.
  */ 
-private Source removeEmptyLines(Source source) {
+Source removeEmptyLines(Source source) {
     return visit(source) {
         case /^\n[ \t\n]*\n/ => "\n"  
     };

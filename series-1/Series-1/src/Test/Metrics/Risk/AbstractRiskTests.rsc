@@ -13,35 +13,35 @@ private RiskDefinition exampleDefinition = (
 public test bool shouldGetSimpleRisk() {
     int exampleNumber = 5;
 
-    Risk Risk = getRisk(exampleNumber, exampleDefinition);
+    Risk Risk = getRisk(exampleNumber, exampleDefinition, 0);
     return Risk == Simple();
 }
 
 public test bool shouldGetModerateRisk() {
     int exampleNumber = 12;
 
-    Risk Risk = getRisk(exampleNumber, exampleDefinition);
+    Risk Risk = getRisk(exampleNumber, exampleDefinition, 0);
     return Risk == Moderate();
 }
 
 public test bool shouldGetComplexRisk() {
     int exampleNumber = 22;
 
-    Risk Risk = getRisk(exampleNumber, exampleDefinition);
+    Risk Risk = getRisk(exampleNumber, exampleDefinition, 0);
     return Risk == Complex();
 }
 
 public test bool shouldGetUnstableRisk() {
     int exampleNumber = 60;
 
-    Risk Risk = getRisk(exampleNumber, exampleDefinition);
+    Risk Risk = getRisk(exampleNumber, exampleDefinition, 0);
     return Risk == Unstable();
 }
 
 public test bool shouldThrowExceptionOnWrongValue() {
     int exampleNumber = 0;
     
-    try getRisk(exampleNumber, exampleDefinition);
+    try getRisk(exampleNumber, exampleDefinition, 0);
     catch: return true;
     
     return false;
