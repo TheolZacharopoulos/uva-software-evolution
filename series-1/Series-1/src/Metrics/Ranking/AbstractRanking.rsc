@@ -11,17 +11,43 @@ import util::Math;
 import IO;
 
 data Rank = VeryLow()
-         | Low()
-         | Medium()
-         | High()
-         | VeryHigh();
+          | Low()
+          | Medium()
+          | High()
+          | VeryHigh()
+          ;
 
 alias RankDefinition = map[Rank, range];
 alias RiskPercentageMap = map[Risk, real];
 alias RiskSchema = map[Rank, map[Risk, int]];
+alias StarNumber = int;
 
 public Rank getRank(int \value, RankDefinition definition) throws IllegalArgument {
     return findInMapUsingRange(\value, definition, VeryLow(), 0);
+}
+
+public Rank rangifyStar(StarNumber stars) {
+    // Handle edge cases.
+    if (stars > 4) return VeryHigh();
+    if (stars < 0) return VeryLow();
+     
+    return (
+        4: VeryHigh(),
+        3: High(),
+        2: Medium(),
+        1: Low(),
+        0: VeryLow()
+    )[stars];
+}
+
+public StarNumber starifyRank(Rank r) {
+    return (
+        VeryHigh(): 4,
+        High(): 3,
+        Medium(): 2,
+        Low(): 1,
+        VeryLow(): 0
+    )[r];
 }
 
 public str stringifyRank(Rank r) {
