@@ -68,12 +68,8 @@ private int countAssertionsInMethod(loc method, M3 model) {
         visit (impl) {
             case \assert(Expression expression): assertNum += 1;
             case \assert(Expression expression, Expression message): assertNum += 1;
-            case \methodCall(bool isSuper, str name, list[Expression] arguments): {
-                if (/assert/ := name) assertNum += 1;
-            }
-            case \methodCall(bool isSuper, Expression receiver, str name, list[Expression] arguments): {
-                if (/assert/ := name) assertNum += 1;
-            } 
+            case \methodCall(bool isSuper, /assert/, list[Expression] arguments): assertNum += 1;
+            case \methodCall(bool isSuper, Expression receiver, /assert/, list[Expression] arguments): assertNum += 1;
         }
     }
     return assertNum;
