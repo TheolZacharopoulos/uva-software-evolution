@@ -55,12 +55,13 @@ CyclomaticComplexity cyclomaticComplexity(Declaration methodAst) {
             case \case(_): result += 1;         // case
             case \defaultCase(): result +=1;    // default case.
             case \conditional(_, _, _): result += 1; // ? :
-            case /^&&$/: result += 1;           // &&
-            case /^\|\|$/: result += 1;         // ||
+            case \infix(_, /^\|\|$/, _): result += 1; // operator = &&
+            case \infix(_, /^&&$/, _): result += 1;  // operator = ||
             case \while(_, _): result += 1;     // while
             case \do(_, _): result += 1;        // do
             case \for(_, _, _, _): result += 1; // for condition
             case \for(_, _, _): result += 1;    // for
+            case \foreach(_, _, _): result += 1; // foreach
             case \catch(_, _): result += 1;     // catch
         }
         return result;
