@@ -53,27 +53,46 @@ CyclomaticComplexity cyclomaticComplexity(Declaration methodAst) {
         visit (impl) {
             case \if(\booleanLiteral(true), _): result += 0;  // if (true) then
             case \if(\booleanLiteral(false), _): result += 0; // if (false) then
+            case \if(\infix(\booleanLiteral(true), /^\|\|$/, _), _): result += 0; // if (true) then
+            case \if(\infix(_, /^\|\|$/, \booleanLiteral(true)), _): result += 0; // if (true) then
+            case \if(\infix(\booleanLiteral(false), /^&&$/, _), _): result += 0; // if (false) then
+            case \if(\infix(_, /^&&$/, \booleanLiteral(false)), _): result += 0; // if (false) then            
             case \if(_, _): result += 1;        // if () then
             
+            case \if(\booleanLiteral(true), _, _): result += 0;  // if (true) then else
+            case \if(\booleanLiteral(false), _, _): result += 0; // if (false) then else
+            case \if(\infix(\booleanLiteral(true), /^\|\|$/, _), _, _): result += 0; // if (true) then else
+            case \if(\infix(_, /^\|\|$/, \booleanLiteral(true)), _, _): result += 0; // if (true) then else
+            case \if(\infix(\booleanLiteral(false), /^&&$/, _), _, _): result += 0; // if (false) then else
+            case \if(\infix(_, /^&&$/, \booleanLiteral(false)), _, _): result += 0; // if (false) then else       
             case \if(_, _, _): result += 1;     // if then else
+            
             case \case(_): result += 1;         // case
             
             case \conditional(_, _, _): result += 1; // ? :
             
-            case \infix(true, /^\|\|$/, _): result += 0; // true || X
-            case \infix(_, /^\|\|$/, true): result += 0; // X || true
+            case \infix(\booleanLiteral(true), /^\|\|$/, _): result += 0; // true || X
+            case \infix(_, /^\|\|$/, \booleanLiteral(true)): result += 0; // X || true
             case \infix(_, /^\|\|$/, _): result += 1; // X || X
             
-            case \infix(false, /^&&$/, _): result += 0;  // false && X
-            case \infix(_, /^&&$/, false): result += 0;  // X && false
+            case \infix(\booleanLiteral(false), /^&&$/, _): result += 0;  // false && X
+            case \infix(_, /^&&$/, \booleanLiteral(false)): result += 0;  // X && false
             case \infix(_, /^&&$/, _): result += 1;  // X && X
             
-            case \while(true, _): result += 0;  // while true
-            case \while(false, _): result += 0; // while false
+            case \while(\booleanLiteral(true), _): result += 0;  // while (true)
+            case \while(\booleanLiteral(false), _): result += 0; // while (false)
+            case \while(\infix(\booleanLiteral(true), /^\|\|$/, _), _): result += 0; // while (true) 
+            case \while(\infix(_, /^\|\|$/, \booleanLiteral(true)), _): result += 0; // while (true) 
+            case \while(\infix(\booleanLiteral(false), /^&&$/, _), _): result += 0; // while (false) 
+            case \while(\infix(_, /^&&$/, \booleanLiteral(false)), _): result += 0; // while (false)             
             case \while(_, _): result += 1;     // while
             
-            case \do(_, true): result += 0;        // do true
-            case \do(_, false): result += 0;        // do false
+            case \do(_, \infix(\booleanLiteral(true), /^\|\|$/, _)): result += 0; // do (true) 
+            case \do(_, \infix(_, /^\|\|$/, \booleanLiteral(true))): result += 0; // do (true) 
+            case \do(_, \infix(\booleanLiteral(false), /^&&$/, _)): result += 0; // do (false) 
+            case \do(_, \infix(_, /^&&$/, \booleanLiteral(false))): result += 0; // do (false)             
+            case \do(_, \booleanLiteral(true)): result += 0;        // do (true)
+            case \do(_, \booleanLiteral(false)): result += 0;        // do (false) 
             case \do(_, _): result += 1;        // do
             
             case \for(_, _, _, _): result += 1; // for condition            

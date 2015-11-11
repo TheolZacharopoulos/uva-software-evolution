@@ -19,7 +19,10 @@ str CASE_STATEMENT_TEST = "caseStatement()";
 str COND_STATEMENT_TEST = "conditional()";
 
 str AND_STATEMENT_TEST = "andStatement()";
+str AND_FALSE_STATEMENT_TEST = "andFalseStatement()";
+
 str OR_STATEMENT_TEST = "orStatement()";
+str OR_TRUE_STATEMENT_TEST = "orTrueStatement()";
 
 str FOR_STATEMENT_TEST = "forStatement()";
 
@@ -72,10 +75,18 @@ test bool testConditionalStatement() =
 test bool testANDStatement() = 
     cyclomaticComplexity(getTestMethod(AND_STATEMENT_TEST)) == 3;
     
+// false &&    
+test bool testANDFalseStatement() = 
+    cyclomaticComplexity(getTestMethod(AND_FALSE_STATEMENT_TEST)) == 1;
+    
 // ||    
 test bool testORStatement() = 
     cyclomaticComplexity(getTestMethod(OR_STATEMENT_TEST)) == 3;
-    
+
+// true ||    
+test bool testORTrueStatement() = 
+    cyclomaticComplexity(getTestMethod(OR_TRUE_STATEMENT_TEST)) == 1;
+        
 // for    
 test bool testForStatement() = 
     cyclomaticComplexity(getTestMethod(FOR_STATEMENT_TEST)) == 2;

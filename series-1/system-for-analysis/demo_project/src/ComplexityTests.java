@@ -48,13 +48,25 @@ class ComplexityTests {
 	}
 	
 	public void andStatement() { // 1
-		if (1 < 2 && 2 <= 2) {				// 2, 3
+		if (1 < 2 && 2 <= 2) {				// 2
+			System.out.println("Hello");
+		} 
+	}
+	
+	public void andFalseStatement() { // 1
+		if (false && 2 <= 2) {				// 2
 			System.out.println("Hello");
 		} 
 	}
 	
 	public void orStatement() { // 1
-		if (1 < 2 || 2 <= 2) {				// 2, 3
+		if (1 < 2 || 2 <= 2) {				
+			System.out.println("Hello");
+		} 
+	}
+	
+	public void orTrueStatement() { // 1
+		if (true || 2 <= 2) {				
 			System.out.println("Hello");
 		} 
 	}
