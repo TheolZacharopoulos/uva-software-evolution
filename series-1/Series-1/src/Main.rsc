@@ -95,18 +95,18 @@ public void main() {
     iprintln(unitInterRiskPercentageMap);
     metricRankings[UnitInterfacing()] = unitInterfacingRank;
     
-    //// Tests Quality
-    //coverage = getUnitTestingCoverage(model);
-    //Rank testsQualityRank = getUnitTestCoverageRank(coverage);
-    //println("===================================================");
-    //println("Calculating the Test Quality metric: ");
-    //println("Unit Testing coverage: <coverage> %");
-    //println("Assertions number: <getAssertionsNumber(model)>");
-    //println("Unit Testing coverage: <getUnitTestCoverageRank(coverage)>");
+    // Tests Quality
+    coverage = getUnitTestingCoverage(model);
+    Rank testsQualityRank = getUnitTestCoverageRank(coverage);
+    println("===================================================");
+    println("Calculating the Test Quality metric: ");
+    println("Unit Testing coverage: <coverage> %");
+    println("Assertions number: <getAssertionsNumber(model)>");
+    println("Unit Testing coverage: <stringifyRank(testsQualityRank)>");
     //metricRankings[UnitTesting()] = testsQualityRank;
     
     println("===================================================");
-    println("===================================================");
     println("Total Scores:");
+    println("===================================================");
     displayScores(metricRankings);
 }

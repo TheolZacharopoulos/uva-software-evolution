@@ -4,6 +4,7 @@ import Metrics::Ranking::AbstractRanking;
 import IO;
 import Map;
 import Set;
+import util::Math;
 
 data Metric = Volume() 
             | ComplexityPerUnit() 
@@ -67,12 +68,14 @@ public void displayScores(MetricRanking metricRanking) {
     map[Characteristic, StarNumber] totalScore = getTotalScores(metricRanking);
     
     for (metric <- metricRanking) {
-        print("<metric> : <stringifyRank(metricRanking[metric])>\n\t<for (char <- MetricCharMap[metric]) {> <char> : <stringifyRank(rankifyStar(getStarsForMetric(metric, metricRanking[metric])[char]))> <}>
-               '");
+        print("* <metric> : <stringifyRank(metricRanking[metric])> <for (char <- MetricCharMap[metric]) {> 
+                    '\t @ <char> : <stringifyRank(rankifyStar(getStarsForMetric(metric, metricRanking[metric])[char]))> <}>
+               '\n");
     }
     
     println("==================================");
-    println("Total Scores:");
+    println("Characteristics Overview:");
+    println("==================================");
     for (char <- totalScore) println("<char> : <stringifyRank(rankifyStar(totalScore[char]))>");
     println("==================================");
     println("Overall Maintainability: <stringifyRank(getOverallMaintainability(metricRanking))>");
