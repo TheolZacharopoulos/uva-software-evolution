@@ -51,15 +51,32 @@ CyclomaticComplexity cyclomaticComplexity(Declaration methodAst) {
         int result = 1;
         
         visit (impl) {
-            case \if(_, _): result += 1;        // if then
+            case \if(\booleanLiteral(true), _): result += 0;  // if (true) then
+            case \if(\booleanLiteral(false), _): result += 0; // if (false) then
+            case \if(_, _): result += 1;        // if () then
+            
             case \if(_, _, _): result += 1;     // if then else
             case \case(_): result += 1;         // case
+            
             case \conditional(_, _, _): result += 1; // ? :
-            case \infix(_, /^\|\|$/, _): result += 1; // operator = &&
-            case \infix(_, /^&&$/, _): result += 1;  // operator = ||
+            
+            case \infix(true, /^\|\|$/, _): result += 0; // true || X
+            case \infix(_, /^\|\|$/, true): result += 0; // X || true
+            case \infix(_, /^\|\|$/, _): result += 1; // X || X
+            
+            case \infix(false, /^&&$/, _): result += 0;  // false && X
+            case \infix(_, /^&&$/, false): result += 0;  // X && false
+            case \infix(_, /^&&$/, _): result += 1;  // X && X
+            
+            case \while(true, _): result += 0;  // while true
+            case \while(false, _): result += 0; // while false
             case \while(_, _): result += 1;     // while
+            
+            case \do(_, true): result += 0;        // do true
+            case \do(_, false): result += 0;        // do false
             case \do(_, _): result += 1;        // do
-            case \for(_, _, _, _): result += 1; // for condition
+            
+            case \for(_, _, _, _): result += 1; // for condition            
             case \for(_, _, _): result += 1;    // for
             case \foreach(_, _, _): result += 1; // foreach
             case \catch(_, _): result += 1;     // catch
