@@ -1,3 +1,5 @@
+package metrics_tests;
+
 class ComplexityTests {
 	
 	public void ifStatement() { // 1
