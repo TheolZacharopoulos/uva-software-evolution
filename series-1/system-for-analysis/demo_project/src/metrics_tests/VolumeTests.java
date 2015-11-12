@@ -1,6 +1,6 @@
 package metrics_tests;
 
-class VolumeTests { 		// 1
+class VolumeTests { 		// 1    (class size = 10)
 	
 	/**
 	 * Constructor
@@ -11,7 +11,7 @@ class VolumeTests { 		// 1
 	}   					// 4
 	
 	// A comment here.
-	public static void commentsEverywhere() { // 5
+	public static void commentsEverywhere() { // 5  (unit size = 5)
 		/**
 		 * A nice if statement.
 		 */

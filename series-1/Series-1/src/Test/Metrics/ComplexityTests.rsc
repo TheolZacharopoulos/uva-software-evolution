@@ -34,8 +34,6 @@ str DO_STATEMENT_TEST = "doStatement()";
 
 str CATCH_STATEMENT_TEST = "catchStatement()";
 
-// TODO: The rest.
-
 Declaration getTestMethod(str methodName) {
     M3 model = createM3FromEclipseProject(getTestProjectLocation());
     loc classToTest = getOneFrom({cls | cls <- classes(model), cls.file == TEST_CLASS});
