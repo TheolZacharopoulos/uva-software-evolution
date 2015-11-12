@@ -39,8 +39,9 @@ map[Characteristic, StarNumber] getStarsForMetric(Metric metric, Rank metricRank
 
 alias MetricRanking = map[Metric, Rank];
 
-map[Characteristic, StarNumber] getTotalScores(MetricRanking metricRanking) {
+map[Characteristic, real] getTotalScores(MetricRanking metricRanking) {
     map[Characteristic, StarNumber] totalScore = ();
+    map[Characteristic, real] totalScoreAvg = ();
     
     scoresPerMetric = for (metric <- metricRanking) append(getStarsForMetric(metric, metricRanking[metric]));
    
@@ -53,19 +54,21 @@ map[Characteristic, StarNumber] getTotalScores(MetricRanking metricRanking) {
     }
     
     for (characteristic <- totalScore) {
-         totalScore[characteristic] = totalScore[characteristic] / characteristicsCounter[characteristic];
+         totalScoreAvg[characteristic] = 
+                toReal(totalScore[characteristic]) / toReal(characteristicsCounter[characteristic]);
     }
     
-    return totalScore;
+    return totalScoreAvg;
 }
 
 Rank getOverallMaintainability(MetricRanking metricRanking) {
-    map[Characteristic, StarNumber] totalScores = getTotalScores(metricRanking);
-    return rankifyStar(sum(range(totalScores)) / size(totalScores));
+    map[Characteristic, real] totalScores = getTotalScores(metricRanking);
+    real overallScore = toReal( toReal(sum(range(totalScores))) / toReal(size(totalScores)));
+    return rankifyStar(round(overallScore));
 }
 
 public void displayScores(MetricRanking metricRanking) {
-    map[Characteristic, StarNumber] totalScore = getTotalScores(metricRanking);
+    map[Characteristic, real] totalScore = getTotalScores(metricRanking);
     
     for (metric <- metricRanking) {
         print("* <metric> : <stringifyRank(metricRanking[metric])> <for (char <- MetricCharMap[metric]) {> 
@@ -76,7 +79,7 @@ public void displayScores(MetricRanking metricRanking) {
     println("==================================");
     println("Characteristics Overview:");
     println("==================================");
-    for (char <- totalScore) println("<char> : <stringifyRank(rankifyStar(totalScore[char]))>");
+    for (char <- totalScore) println("<char> : <stringifyRank(rankifyStar(round(totalScore[char])))>");
     println("==================================");
     println("Overall Maintainability: <stringifyRank(getOverallMaintainability(metricRanking))>");
     println("==================================");
