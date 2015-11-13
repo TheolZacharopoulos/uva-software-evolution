@@ -11,7 +11,7 @@ import Configurations;
 import Metrics::Volume;
 import Metrics::UnitSize;
 import Metrics::Complexity;
-import Metrics::Duplication;
+import Metrics::Duplication2;
 import Metrics::UnitInterfacing;
 import Metrics::TestQuality;
 
@@ -39,7 +39,7 @@ M3 getModel(loc eclipseProjectLocation) {
     return createM3FromEclipseProject(eclipseProjectLocation);
 }
 
-public void main() {
+public value main(list[str] args) {
     loc projectLocation = getProjectLocation();
     M3 model = getModel(projectLocation);
     MetricRanking metricRankings = ();
