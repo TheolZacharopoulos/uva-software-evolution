@@ -1,6 +1,6 @@
 module Test::Metrics::DuplicationTests
 
-import Metrics::Duplication2;
+import Metrics::Duplication;
 
 import lang::java::jdt::m3::AST;
 import lang::java::jdt::m3::Core;
