@@ -24,6 +24,8 @@ public loc getTestProjectLocation() = demoProjectLocation;
  */
 public int getDuplicationThreshold() = 6;
 
+public bool getVerboseLog() = false;
+
 public set[loc] getTestFrameWorksBaseClasses() = {
     |java+class:///junit/framework/TestCase|    // JUnit Test Framework.
 };
