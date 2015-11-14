@@ -57,21 +57,27 @@ bool isDuplicate(list[Line] lines, list[int] lineIndexes, int originalBlockStart
 
 int detectDuplicatesInLines(list[Line] lines) {
     
+    lineIndexingMap = toMap(zip(lines, index(lines)));
+    
     // count the number of duplicated indexes, including the original.
     return size({ originalIndex, duplIndex |    
                     
                     // get indexes for every line.
-                    lineSrcToLineIndexes := toMap(zip(lines, index(lines))),
+                    lineSrcToLineIndexes := lineIndexingMap,
+                    
+                    [*Line s, *Line duplication, *Line space, duplication, *Line e] := lines, size(duplication) >= 6,
                     
                     // get the lines, which have more than 1 indexes (potential duplicates).
-                    line <- lineSrcToLineIndexes, size(lineSrcToLineIndexes[line]) > 1,
+                    line <- duplication,
                     
                     // get the indexes, on a list so we can refer to them.
                     lineIndexes := toList(lineSrcToLineIndexes[line]),
                     
                     // loop over the original and duplicate blocks of the line indexes.
                     originalBlock <- upTill(size(lineIndexes)), 
+                    
                                     (lineIndexes[originalBlock] + DUPLICATION_THRESHOLD) <= size(lines),
+                    
                     duplBlock <- [(originalBlock + 1) .. size(lineIndexes)], 
                                     (lineIndexes[duplBlock] + DUPLICATION_THRESHOLD) <= size(lines),
                                 
