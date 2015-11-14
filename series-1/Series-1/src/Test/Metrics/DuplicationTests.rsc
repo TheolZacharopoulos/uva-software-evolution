@@ -1,6 +1,6 @@
 module Test::Metrics::DuplicationTests
 
-import Metrics::Duplication;
+import Metrics::Duplication2;
 
 import lang::java::jdt::m3::AST;
 import lang::java::jdt::m3::Core;
@@ -36,7 +36,7 @@ list[Line] getTestLines() {
     ]; // 42 duplicated.
 }
 
-test bool testDuplicationFromFile() = 
+test bool testDuplicationFromList() = 
     detectDuplicatesInLines(getTestLines()) == 42;
 
 test bool testDuplicationFromFile() = 
