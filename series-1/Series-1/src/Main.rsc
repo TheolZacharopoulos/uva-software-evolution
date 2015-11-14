@@ -11,7 +11,7 @@ import Configurations;
 import Metrics::Volume;
 import Metrics::UnitSize;
 import Metrics::Complexity;
-import Metrics::Duplication2;
+import Metrics::Duplication;
 import Metrics::UnitInterfacing;
 import Metrics::TestQuality;
 
