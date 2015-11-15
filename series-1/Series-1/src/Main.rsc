@@ -50,6 +50,8 @@ public value main(list[str] args) {
     MetricRanking metricRankings = ();
     verboseLog = getVerboseLog();
     
+    println("Project : <projectLocation>");
+    
     // Volume
     totalLinesOfCode = getLinesTotalOfCode(model);
     Rank volumeRank = getVolumeRank(totalLinesOfCode);
@@ -129,8 +131,8 @@ public value main(list[str] args) {
     displayScores(metricRankings);
     
     endProfiling = realTime() * 1.0;
-    totalProfilingTime = (endProfiling - startProfiling) / 1000;    
-    println("Total profiling time: <totalProfilingTime>");
+    totalTime = (endProfiling - startProfiling) / 1000;    
+    println("Total time: <totalTime> seconds");
     
     return 0;
 }
