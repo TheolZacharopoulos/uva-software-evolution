@@ -48,10 +48,10 @@ public int detectDuplicates(M3 model) {
 }
 
 bool isDuplicate(list[Line] lines, list[int] lineIndexes, int originalBlockStart, int duplBlockStart) {
-    duplicateSize = 0;
-    for (i <- [0 .. DUPLICATION_THRESHOLD],
-        lines[lineIndexes[originalBlockStart] + duplicateSize] == lines[lineIndexes[duplBlockStart] + duplicateSize])
-            duplicateSize += 1;
+    
+    duplicateSize = (0 | it + 1 | i <- [0 .. DUPLICATION_THRESHOLD],
+        lines[lineIndexes[originalBlockStart] + i] == lines[lineIndexes[duplBlockStart] + i]);
+            
     return duplicateSize == DUPLICATION_THRESHOLD; 
 }
 
@@ -60,7 +60,7 @@ int detectDuplicatesInLines(list[Line] lines) {
     lineIndexingMap = toMap(zip(lines, index(lines)));
     
     // count the number of duplicated indexes, including the original.
-    return size({ originalIndex, duplIndex |    
+    return size({ originalIndex, duplIndex |
                     
                     // get indexes for every line.
                     lineSrcToLineIndexes := lineIndexingMap,
