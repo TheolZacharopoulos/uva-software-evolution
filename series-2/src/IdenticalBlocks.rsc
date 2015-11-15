@@ -6,7 +6,7 @@ import lang::java::m3::Core;
 
 import Prelude;
 
-set[loc] findIdenticalMethods(M3 model)
+set[tuple[loc, loc]] findIdenticalMethods(M3 model)
 {
     map[loc, Statement] bodies = ();
     
@@ -19,5 +19,7 @@ set[loc] findIdenticalMethods(M3 model)
         }
     }
     
-    return {methodA, methodB | methodA <- bodies, methodB <- bodies, methodA != methodB, bodies[methodA] == bodies[methodB]};
+    iprintln(bodies);
+    
+    return {<methodA, methodB> | methodA <- bodies, methodB <- bodies, methodA != methodB, bodies[methodA] == bodies[methodB]};
 }
