@@ -2,6 +2,7 @@ module Main
 
 import IO;
 import util::Math;
+import util::Benchmark;
 
 import lang::java::m3::Core;
 import lang::java::jdt::m3::Core;
@@ -41,6 +42,9 @@ M3 getModel(loc eclipseProjectLocation) {
 
 public value main() = main([]);
 public value main(list[str] args) {
+    
+    startProfiling = realTime() * 1.0;
+
     loc projectLocation = getProjectLocation();
     M3 model = getModel(projectLocation);
     MetricRanking metricRankings = ();
@@ -123,6 +127,10 @@ public value main(list[str] args) {
     println("Total Scores:");
     println("===================================================");
     displayScores(metricRankings);
+    
+    endProfiling = realTime() * 1.0;
+    totalProfilingTime = (endProfiling - startProfiling) / 1000;    
+    println("Total profiling time: <totalProfilingTime>");
     
     return 0;
 }
