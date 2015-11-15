@@ -15,7 +15,8 @@ module Metrics::Duplication
 import IO;
 import String;
 import List;
-import Map;
+import Set;
+import util::Math;
 import lang::java::m3::Core;
 import lang::java::jdt::m3::Core;
 
@@ -23,12 +24,13 @@ import Configurations;
 import Metrics::LinesOfCode;
 import Metrics::Utils::SourceCleaner;
 
-alias NumberOfDuplicates = int;
-alias LineDuplicates = map[Line lineSrc, int lineIndex];
+alias Index = int;
+alias LineIndexes = map[Line lineSrc, int lineIndex];
+
 
 int DUPLICATION_THRESHOLD = getDuplicationThreshold();
 
-private list[Line] getAllLinesFromModel(M3 model) {
+list[Line] getAllLinesFromModel(M3 model) {
     set[loc] classes = classes(model);
     list[Line] allLines = [];
     
@@ -40,93 +42,39 @@ private list[Line] getAllLinesFromModel(M3 model) {
     return [trim(line) | line <- allLines];
 }
 
-private list[Line] getBlock(list[Line] lines, int \index, int duplicationThresehold) {
-    return lines[\index .. (\index + duplicationThresehold)];
-}
-
-private NumberOfDuplicates detectDuplicatesInLines(list[Line] lines) {
-    NumberOfDuplicates duplicatesNum = 0;
-    map[int startIndex, list[Line] block] duplicatedLines = ();
-    
-    map[int startIndex, list[Line] block] blocksRepository = ();
-    
-    int currentIndex = 0;
-    
-    while (currentIndex <= size(lines)) {
-    
-        // Construct a pattern of size DUPLICATION_THRESHOLD, to check fir duplication.
-        list[Line] blockToCheck = getBlock(lines, currentIndex, DUPLICATION_THRESHOLD);
-        
-        // Search if the pattern exists in the lines.
-        if (blockToCheck in range(duplicatedLines)) {
-            // Increase the duplicates                
-            duplicatesNum += 1;
-            // Jump to the next block.
-            blocksRepository[currentIndex] = blockToCheck;
-            currentIndex += DUPLICATION_THRESHOLD-1;
-            
-        }        
-        // append the pattern to the lines
-        duplicatedLines[currentIndex] = blockToCheck;
-        currentIndex += 1; // next index
-    }   
-    
-    
-    map[int, map[int startIndex, list[Line] block]] duplicatingBlocksMap = ();
-    list[int] blacklist = [];
-    
-    for (startIndex <- blocksRepository) {
-        block = blocksRepository[startIndex];
-        for (duplicateIndex <- duplicatedLines) {
-            if (block == duplicatedLines[duplicateIndex] && duplicateIndex != startIndex && duplicateIndex notin blacklist) {
-                blacklist += duplicateIndex;
-                duplicatingBlocksMap[startIndex] ? (duplicateIndex:block) += (duplicateIndex:block);
-            }
-        }
-    }    
-    
-    map[int, int] originalIndexMargin = ();
-    
-    
-    
-    for (originalStartIndex <- duplicatingBlocksMap) {
-        margin = 1;
-        
-        // originalBlock = blocksRepository[originalStartIndex] + extraLine;
-        originalBlock = expandBlock(lines, originalStartIndex, margin);
-            
-        duplicates = duplicatingBlocksMap[originalStartIndex];
-        
-        for (duplicateStartIndex <- duplicates) {
-        
-            expandedDuplicate = expandBlock(lines, duplicateStartIndex, margin);
-            
-            if (expandedDuplicate == originalBlock) {
-                margin += 1;
-            } else {
-                break;
-            }
-        }
-        
-        originalIndexMargin[originalStartIndex] = margin;
-    }
-    
-    println("=============HERE============");
-    iprintln(originalIndexMargin);
-    println("=============ENDHERE============");
-    
-    return duplicatesNum;
-}
-
-public list[Line] expandBlock(list[Line] overallLines, int startIndex, int margin)
-{
-    end = startIndex + DUPLICATION_THRESHOLD + margin;
-    return overallLines[startIndex..end];
-}
-
-// TODO: Tests
-
-public NumberOfDuplicates detectDuplicates(M3 model) {
-    list[Line] lines = getAllLinesFromModel(model);    
+public int detectDuplicates(M3 model) {
+    lines = getAllLinesFromModel(model);
     return detectDuplicatesInLines(lines);
+}
+
+int detectDuplicatesInLines(list[Line] lines) {
+    
+    // count the number of duplicated indexes, including the original.
+    return size({ originalIndex, duplIndex |
+                    
+                    // get indexes for every line.
+                    lineSrcToLineIndexes := toMap(zip(lines, index(lines))),
+                    
+                    // get the lines, which have more than 1 indexes (potential duplicates).
+                    line <- lineSrcToLineIndexes, size(lineSrcToLineIndexes[line]) > 1,
+
+                    // get the indexes, on a list so we can refer to them.
+                    lineIndexes := toList(lineSrcToLineIndexes[line]),
+                    
+                    // loop over the original and duplicate blocks of the line indexes.
+                    originalBlock <- upTill(size(lineIndexes)),                    
+                                    (lineIndexes[originalBlock] + DUPLICATION_THRESHOLD) <= size(lines),                    
+                    duplBlock <- [(originalBlock + 1) .. size(lineIndexes)], 
+                                    (lineIndexes[duplBlock] + DUPLICATION_THRESHOLD) <= size(lines),
+                                
+                    // check if these blocks consist a duplicate.
+                    duplicateSize := (0 | it + 1 | duplSize <- [0 .. DUPLICATION_THRESHOLD],
+                        lines[lineIndexes[originalBlock] + duplSize] == lines[lineIndexes[duplBlock] + duplSize]), 
+                    duplicateSize == DUPLICATION_THRESHOLD,
+                    
+                    // expand the blocks.
+                    // since it's a set, it will not keep the indexes of smaller duplicate blocks. 
+                    extraIndex <- [0 .. DUPLICATION_THRESHOLD],
+                    originalIndex := lineIndexes[originalBlock] + extraIndex,
+                    duplIndex     := lineIndexes[duplBlock] + extraIndex});    
 }

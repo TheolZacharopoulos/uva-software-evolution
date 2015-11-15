@@ -39,6 +39,7 @@ M3 getModel(loc eclipseProjectLocation) {
     return createM3FromEclipseProject(eclipseProjectLocation);
 }
 
+public value main() = main([]);
 public value main(list[str] args) {
     loc projectLocation = getProjectLocation();
     M3 model = getModel(projectLocation);
