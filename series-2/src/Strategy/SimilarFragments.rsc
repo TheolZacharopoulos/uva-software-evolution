@@ -16,6 +16,7 @@ private set[Declaration] flattenIdentifiers(set[Declaration] complicationUnits) 
         case v:\variable(_, a, b) => \variable("SIMILAR", a, b)[@src=v@src]
         case l:\label(_, body) => \label("SIMILAR", body)[@src=l@src]
         case s:\stringLiteral(_) => \stringLiteral("SIMILAR")[@src=s@src]
+        case s:\simpleName(_) => \simpleName("SIMILAR")
     }
     
     return complicationUnits;
