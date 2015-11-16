@@ -13,7 +13,7 @@ public RiskSchema getDefaultRiskRankThresholds()
         ),
         High(): (
             Moderate(): 30,
-            Complex(): 0,
+            Complex(): 5,
             Untestable(): 0
         ),
         Medium(): (

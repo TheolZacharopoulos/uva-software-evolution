@@ -70,7 +70,7 @@ public Rank getRankFromRisk(RiskPercentageMap riskMap, RiskSchema riskRankDefini
             thresehold = riskRangesMap[risk];
             riskPercentage = toInt(riskMap[risk]);
             
-            if (riskPercentage notin [0 .. thresehold + 1]) {
+            if (riskPercentage notin [0 .. (thresehold + 1)]) {
                 hasMatch = false;
             }
         }

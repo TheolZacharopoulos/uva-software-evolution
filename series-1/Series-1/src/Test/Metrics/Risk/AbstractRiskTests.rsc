@@ -31,11 +31,11 @@ public test bool shouldGetComplexRisk() {
     return Risk == Complex();
 }
 
-public test bool shouldGetUnstableRisk() {
+public test bool shouldGetUntestableRisk() {
     int exampleNumber = 60;
 
     Risk Risk = getRisk(exampleNumber, exampleDefinition, 0);
-    return Risk == Unstable();
+    return Risk == Untestable();
 }
 
 public test bool shouldThrowExceptionOnWrongValue() {

@@ -9,7 +9,7 @@ private loc hsqlProjectLocation     = |project://hsqldb_src|;
  * Get a project location.
  * @return a project location.
  */
-public loc getProjectLocation() = demoProjectLocation;
+public loc getProjectLocation() = hsqlProjectLocation;
 
 /**
  * Get test project location.
@@ -24,7 +24,7 @@ public loc getTestProjectLocation() = demoProjectLocation;
  */
 public int getDuplicationThreshold() = 6;
 
-public bool getVerboseLog() = false;
+public bool getVerboseLog() = true;
 
 public set[loc] getTestFrameWorksBaseClasses() = {
     |java+class:///junit/framework/TestCase|    // JUnit Test Framework.
