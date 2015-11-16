@@ -26,10 +26,10 @@ public Rank getRank(int \value, RankDefinition definition) throws IllegalArgumen
     return findInMapUsingRange(\value, definition, VeryLow(), 0);
 }
 
-public Rank rankifyStar(StarNumber stars) {
-    // Handle edge cases.
-    if (stars > 4) return VeryHigh();
-    if (stars < 0) return VeryLow();
+public Rank rankifyStar(StarNumber stars) = VeryHigh() when stars > 4;
+public Rank rankifyStar(StarNumber stars) = VeryLow() when stars < 0;
+
+public default Rank rankifyStar(StarNumber stars) {
      
     return (
         4: VeryHigh(),
