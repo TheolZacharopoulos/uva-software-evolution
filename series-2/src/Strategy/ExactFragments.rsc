@@ -1,24 +1,32 @@
-module IdenticalBlocks
+module Strategy::ExactFragments
 
+import Strategy::Commons;
+
+import Prelude;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 import lang::java::m3::Core;
 
-import Prelude;
+@doc{
+Todo: Find out how to do this only with attaching annotations. 
+Function needed for checking annotation existance.
+}
+private bool isAlreadyFound(CloneOccurance occurance, ClonesSet foundSoFar) {
+    return (false | true | duplicate <- foundSoFar, duplicate.clone == occurance.original && duplicate.original == occurance.clone);
+}
 
-alias ClonesSet = set[tuple[loc original, loc clone]];
-
-ClonesSet findIndenticalNodes(set[Declaration] complicationUnits)
-{    
+ClonesSet findExactFragments(set[Declaration] complicationUnits) {    
     ClonesSet foundClones = {};
     
     top-down visit (complicationUnits) {
         case originalMethod:\method(_, _, _, _, _): {
             top-down-break visit (complicationUnits) {
                 case cloneMethod:\method(_, _, _, _, _): {
+                    occurance = <originalMethod@src, cloneMethod@src>;
                     if (originalMethod@src != cloneMethod@src 
-                        && delAnnotationsRec(originalMethod) == delAnnotationsRec(cloneMethod)) {
-                        foundClones += <originalMethod@src, cloneMethod@src>;
+                        && delAnnotationsRec(originalMethod) == delAnnotationsRec(cloneMethod)
+                        && !isAlreadyFound(occurance, foundClones)) {
+                        foundClones += occurance;
                     }
                 }
             }
