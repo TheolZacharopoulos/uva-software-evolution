@@ -16,3 +16,6 @@ public loc getProjectLocation() = smallSqlProjectLocation;
  * @return a project location.
  */
 public loc getTestProjectLocation() = demoProjectLocation;
+
+public int TREE_MASS_THRESHOLD = 20;
+public real SIMILARITY_THRESHOLD = 0.4;

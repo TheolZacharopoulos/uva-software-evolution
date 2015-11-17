@@ -2,11 +2,9 @@ module TreeSimilarity
 
 import TreeMass;
 
-import IO;
 import util::Math;
 
-real getSimilarityFactor(subTreeA, subTreeB)
-{
+real getSimilarityFactor(subTreeA, subTreeB) {
     traversed = [];
     sharedNodes = 0;
     bottom-up visit (subTreeA) {
