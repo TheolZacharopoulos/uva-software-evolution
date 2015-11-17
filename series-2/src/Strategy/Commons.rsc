@@ -1,15 +1,24 @@
 module Strategy::Commons
 
 import lang::java::m3::AST;
+import Prelude;
 
-alias CloneOccurance = tuple[Declaration original, Declaration clone];
+data CloneOccurance = declaration(Declaration originalDeclaration, Declaration cloneDeclaration)
+                    | statement(Statement originalStatement, Statement cloneStatement);
+
 alias Clones = set[CloneOccurance];
 
-data CloneTree = 
-               // Class that has a clone
-               clonedClass(Declaration origin, Declaration clone)
-               // Class that holds cloned fragments
-               | class(Declaration class, list[CloneTree] \methods) 
-               // Method that has a clone
-               | clonedMethod()
-               ;
+int getTreeMass(node tree)
+{
+    c = 0;
+    bottom-up visit (tree) {
+        case node t: {
+            c += 1;
+        }
+    }
+    
+    return c;
+}
+
+
+int getTreeMass(set[node] trees) = (0 | it + getTreeMass(subTree) | subTree <- trees);
