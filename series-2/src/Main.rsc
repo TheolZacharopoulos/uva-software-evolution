@@ -17,12 +17,13 @@ void main()
     
     clones = findSimilarMethods(model);
     
-    for (occurance <- clones) {
+    println("**********METHODS**********");
+    for (declaration(original, clone) <- clones) {
         println("ORIGINAL------------------------------");
-        println(occurance.original@src);
-        println(readFile(occurance.original@src));
+        println(original@src);
+        println(readFile(original@src));
         println("CLONE---------------------------------");
-        println(occurance.clone@src);
-        println(readFile(occurance.clone@src));
+        println(clone@src);
+        println(readFile(clone@src));
     }
 }
