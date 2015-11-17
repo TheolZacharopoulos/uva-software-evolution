@@ -8,41 +8,58 @@ import lang::java::jdt::m3::AST;
 import lang::java::m3::Core;
 
 @doc{
-Todo: Find out how to do this only with attaching annotations. 
-Function needed for checking annotation existance.
+Todo: Optimize visits. Use list of methods to prevent deep seeking on the first (top) visit. 
+Furthermore, this visit can be deprecated in favour of simple loop. 
 }
-private bool isAlreadyFound(CloneOccurance occurance, ClonesSet foundSoFar) {
-    return (false | true | duplicate <- foundSoFar, duplicate.clone == occurance.original && duplicate.original == occurance.clone);
+Clones findExactMethods(set[Declaration] complicationUnits) { 
+
+    allMethods = getMethods(complicationUnits);
+    
+    clonedMethods = seekSameMethods(allMethods);
+    
+    return { <occurance.original, occurance.clone> | 
+                occurance <- clonedMethods, 
+                mirrored <- clonedMethods, 
+                occurance.original == mirrored.clone,
+                occurance.clone == mirrored.original
+    };
 }
 
-ClonesSet findExactFragments(set[Declaration] complicationUnits) {    
-    ClonesSet foundClones = {};
-    
-    top-down visit (complicationUnits) {
-        case originalMethod:\method(_, _, _, _, _): {
-            top-down-break visit (complicationUnits) {
-                case cloneMethod:\method(_, _, _, _, _): {
-                    occurance = <originalMethod@src, cloneMethod@src>;
-                    if (originalMethod@src != cloneMethod@src 
-                        && delAnnotationsRec(originalMethod) == delAnnotationsRec(cloneMethod)
-                        && !isAlreadyFound(occurance, foundClones)) {
-                        foundClones += occurance;
-                    }
-                }
-            }
-        }
-        /*
-        TODO Find out how to skip records (statements found identical in methods comparision)
-        case Statement stmt: {
-            top-down-break visit (complicationUnits) {
-                case Statement cloneStmt: {
-                    if (stmt@src != cloneStmt@src && delAnnotationsRec(cloneStmt) == delAnnotationsRec(stmt)) {
-                        foundClones += <stmt@src, cloneStmt@src>;
-                    }
-                }
-            }
-        }*/
+@doc{
+Extracts methods only out of AST
+}
+private list[Declaration] getMethods(set[Declaration] complicationUnits) {
+    list[Declaration] methods = [];
+    top-down-break visit (complicationUnits) {
+        case methodFound:\method(_, _, _, _, _): methods += methodFound;
     }
     
-    return foundClones;
+    return methods;
+}
+
+private Clones seekSameMethods(list[Declaration] \methods) = {
+    <originalMethod, cloneMethod> | 
+        originalMethod <- \methods,
+        cloneMethod <- \methods,
+        originalMethod@src != cloneMethod@src,
+        originalMethod == cloneMethod
+};
+
+private Clones seekSameStatements(list[Declaration] \methods, Clones foundCloneMethods) {
+
+    map[Declaration, list[Statement]] methodStatements = ();
+    
+    excludedMethods = [occurance.orginal, occurance.clone | occurance <- foundCloneMethods];
+    
+    for (\method <- \methods, \method notin excludedMethods) {
+        methodStatements[\method] = [];
+    
+        top-down visit (\method) {
+            case Statement stmt: {
+                methodStatements[\method] += [stmt];
+            }
+        }
+    }
+    
+    return {};
 }

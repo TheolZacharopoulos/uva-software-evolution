@@ -15,14 +15,14 @@ void main()
 {
     model = createAstsFromEclipseProject(getTestProjectLocation(), true);
     
-    clones = findSimilarFragments(model);
+    clones = findSimilarMethods(model);
     
     for (occurance <- clones) {
         println("ORIGINAL------------------------------");
-        println(occurance.original);
-        println(readFile(occurance.original));
+        println(occurance.original@src);
+        println(readFile(occurance.original@src));
         println("CLONE---------------------------------");
-        println(occurance.clone);
-        println(readFile(occurance.clone));
+        println(occurance.clone@src);
+        println(readFile(occurance.clone@src));
     }
 }

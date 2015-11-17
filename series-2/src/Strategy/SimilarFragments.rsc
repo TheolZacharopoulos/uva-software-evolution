@@ -22,4 +22,4 @@ private set[Declaration] flattenIdentifiers(set[Declaration] complicationUnits) 
     return complicationUnits;
 }
 
-ClonesSet findSimilarFragments(set[Declaration] complicationUnits) = findExactFragments(flattenIdentifiers(complicationUnits));
+Clones findSimilarMethods(set[Declaration] complicationUnits) = findExactMethods(flattenIdentifiers(complicationUnits));
