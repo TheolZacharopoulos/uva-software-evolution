@@ -1,6 +1,6 @@
-module Test::Strategy::Commons
+module Test::TreeMass
 
-import Strategy::Commons;
+import TreeMass;
 
 data TestTree = TestNodeA(TestTree l, TestTree r) | TestNodeB(int number) | TestNodeC(str text);
 

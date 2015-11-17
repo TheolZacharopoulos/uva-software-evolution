@@ -1,4 +1,4 @@
 module Test::AllTests
 
-extend Test::Strategy::Commons;
+extend Test::TreeMass;
 extend Test::TreeSimilarity;

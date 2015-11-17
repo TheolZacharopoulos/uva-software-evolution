@@ -1,7 +1,6 @@
 module Main
 
 import Configurations;
-import Strategy::Commons;
 
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;

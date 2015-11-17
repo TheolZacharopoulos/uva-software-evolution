@@ -1,6 +1,6 @@
 module TreeSimilarity
 
-import Strategy::Commons;
+import TreeMass;
 
 import IO;
 import util::Math;
