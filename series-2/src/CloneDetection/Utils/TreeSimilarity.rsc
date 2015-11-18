@@ -8,6 +8,9 @@ import util::Math;
 
 import IO;
 
+// Hack to make identical detection work
+real getSimilarityFactor(subTreeA, subTreeB) = 1.0 when subTreeA == subTreeB;
+
 // TODO add types here. Use pattern matching for set[node] cases
 real getSimilarityFactor(subTreeA, subTreeB) {
     
