@@ -1,4 +1,5 @@
 module Test::AllTests
 
-extend Test::TreeMass;
-extend Test::TreeSimilarity;
+extend Test::CloneDetection::Utils::TreeMass;
+extend Test::CloneDetection::Utils::TreeSimilarity;
+extend Test::CloneDetection::Utils::TreeBucket;

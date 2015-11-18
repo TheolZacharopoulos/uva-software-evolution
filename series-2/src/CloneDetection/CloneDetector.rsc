@@ -1,8 +1,8 @@
 module CloneDetection::CloneDetector
 
 import Configurations;
-import Utils::TreeMass;
-import Utils::TreeSimilarity;
+import CloneDetection::Utils::TreeMass;
+import CloneDetection::Utils::TreeSimilarity;
 
 import Prelude;
 import lang::java::jdt::m3::AST;
@@ -14,7 +14,7 @@ void detectClones(set[Declaration] complicationUnits) {
     
     // \part@src does not work on each node, that's why I specify possibilities
     bottom-up visit (complicationUnits) {
-        case Statement \part: {
+        case node \subTrees: {
             if (getTreeMass(\part) >= TREE_MASS_THRESHOLD && \part@src?) {
                 bucket += \part;
             }
