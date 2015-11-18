@@ -1,8 +1,7 @@
-module Test::TreeSimilarity
+module Test::CloneDetection::Utils::TreeSimilarity
 
 import CloneDetection::Utils::TreeSimilarity;
-
-data TestTree = TestNodeA(TestTree l, TestTree r) | TestNodeB(int number) | TestNodeC(str text);
+import Test::CloneDetection::Utils::TestTreeProvider;
 
 test bool testCompareTreesWhichAreEqual() {
     // same

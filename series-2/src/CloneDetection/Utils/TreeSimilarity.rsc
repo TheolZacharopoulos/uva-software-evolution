@@ -3,6 +3,7 @@ module CloneDetection::Utils::TreeSimilarity
 import CloneDetection::Utils::TreeMass;
 import util::Math;
 
+// TODO add types here. Use pattern matching for set[node] cases
 real getSimilarityFactor(subTreeA, subTreeB) {
     traversed = [];
     sharedNodes = 0;
