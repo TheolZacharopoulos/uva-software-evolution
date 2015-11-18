@@ -1,11 +1,10 @@
 module Test::TreeSimilarity
 
-import TreeSimilarity;
+import CloneDetection::Utils::TreeSimilarity;
 
 data TestTree = TestNodeA(TestTree l, TestTree r) | TestNodeB(int number) | TestNodeC(str text);
 
-test bool testCompareTreesWhichAreEqual()
-{
+test bool testCompareTreesWhichAreEqual() {
     // same
     // sharedNodes = 5
     treeA = TestNodeA(TestNodeA(TestNodeB(4), TestNodeC("Test 2")), TestNodeC("Test")); // mass = 5
@@ -14,8 +13,7 @@ test bool testCompareTreesWhichAreEqual()
     return 1 == getSimilarityFactor(treeA, treeB);
 }
 
-test bool testCompareTreesWhichAreDifferent1()
-{
+test bool testCompareTreesWhichAreDifferent1() {
      // sharedNodes = 3, mass is equal
     treeA = TestNodeA(TestNodeA(TestNodeB(4), TestNodeC("Test 2")), TestNodeB(3)); // mass = 5
     treeB = TestNodeA(TestNodeA(TestNodeB(4), TestNodeC("Test 2")), TestNodeC("Test"));
@@ -23,8 +21,7 @@ test bool testCompareTreesWhichAreDifferent1()
     return 0.6 == getSimilarityFactor(treeA, treeB);
 }
 
-test bool testCompareTreesWhichAreDifferent2()
-{
+test bool testCompareTreesWhichAreDifferent2() {
     // sharedNodes = 5
     treeA = {TestNodeA(TestNodeA(TestNodeB(4), TestNodeC("Test 2")), TestNodeB(3)), TestNodeB(4)}; // mass = 6
     treeB = TestNodeA(TestNodeA(TestNodeB(4), TestNodeC("Test 2")), TestNodeB(3)); // mass = 5

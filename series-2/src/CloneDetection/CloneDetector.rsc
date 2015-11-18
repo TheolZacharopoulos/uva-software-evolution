@@ -1,8 +1,8 @@
-module CloneDetector
+module CloneDetection::CloneDetector
 
 import Configurations;
-import TreeMass;
-import TreeSimilarity;
+import Utils::TreeMass;
+import Utils::TreeSimilarity;
 
 import Prelude;
 import lang::java::jdt::m3::AST;

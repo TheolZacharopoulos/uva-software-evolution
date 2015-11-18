@@ -1,4 +1,4 @@
-module TreeMass
+module CloneDetection::Utils::TreeMass
 
 int getTreeMass(node tree) {
     c = 0;
@@ -6,10 +6,8 @@ int getTreeMass(node tree) {
         case node t: {
             c += 1;
         }
-    }
-    
+    }    
     return c;
 }
-
 
 int getTreeMass(set[node] trees) = (0 | it + getTreeMass(subTree) | subTree <- trees);

@@ -1,6 +1,6 @@
 module Test::TreeMass
 
-import TreeMass;
+import CloneDetection::Utils::TreeMass;
 
 data TestTree = TestNodeA(TestTree l, TestTree r) | TestNodeB(int number) | TestNodeC(str text);
 

@@ -1,7 +1,6 @@
-module TreeSimilarity
+module CloneDetection::Utils::TreeSimilarity
 
-import TreeMass;
-
+import CloneDetection::Utils::TreeMass;
 import util::Math;
 
 real getSimilarityFactor(subTreeA, subTreeB) {
