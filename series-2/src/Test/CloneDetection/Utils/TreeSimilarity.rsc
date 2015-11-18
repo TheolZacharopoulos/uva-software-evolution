@@ -2,6 +2,7 @@ module Test::CloneDetection::Utils::TreeSimilarity
 
 import CloneDetection::Utils::TreeSimilarity;
 import Test::CloneDetection::Utils::TestTreeProvider;
+import Prelude;
 
 test bool testCompareTreesWhichAreEqual() {
     // same

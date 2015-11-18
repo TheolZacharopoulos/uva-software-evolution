@@ -41,16 +41,3 @@ test bool testAddToBucketSorted() {
     
     return [treeSmall, treeMedium, treeBig] == testBucket;
 }
-
-private TestTree getTestTreeBig() = TestNodeA(
-    TestNodeA(
-        TestNodeB(2), TestNodeA(TestNodeC("dasdsadas"), TestNodeB(4))
-    ), 
-    TestNodeA(TestNodeB(2135), TestNodeB(1))
-);
-
-private TestTree getTestTreeMedium() = TestNodeA(
-    TestNodeB(2), TestNodeA(TestNodeC("dasdsadas"), TestNodeB(4))
-);
-
-private TestTree getTestTreeSmall() = TestNodeA(TestNodeC("dasdsadas"), TestNodeB(4));
