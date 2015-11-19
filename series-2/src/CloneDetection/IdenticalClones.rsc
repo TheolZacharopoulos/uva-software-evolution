@@ -8,7 +8,11 @@ import List;
 import Node;
 import IO;
 
+anno int node @ uniqueKey;
+
 Clones detectExactClones(set[Declaration] ast) {
+    
+    ast = putIndetifiers(ast);
     
     // Step 1: New bucket
     bucket = newBucket();
@@ -20,11 +24,6 @@ Clones detectExactClones(set[Declaration] ast) {
                 bucket = addToBucket(subTree, bucket);
             }
         }
-        case set[node] subTreeSet: {
-            if (getTreeMass(subTreeSet) >= TREE_MASS_THRESHOLD) {
-                bucket = addToBucket(subTreeSet, bucket);
-            }
-        }
     }
     
     // sort the bucket (extra step, not mentioned in the paper :shame:)
@@ -33,7 +32,7 @@ Clones detectExactClones(set[Declaration] ast) {
     clones = newClones();
     
     // Step 3: Detect clones
-    for (origin <- bucket, clone <- bucket, getSimilarityFactor(origin, clone) == 1.0) {
+    for (origin <- bucket, clone <- bucket, clone@uniqueKey != origin@uniqueKey, getSimilarityFactor(origin, clone) == 1.0) {
         clones = clearSubTreesFromSet(origin, clones);
         clones = clearSubTreesFromSet(clone, clones);
         clones = addClone(origin, clone, clones);
