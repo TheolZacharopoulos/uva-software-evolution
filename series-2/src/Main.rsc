@@ -10,8 +10,19 @@ import CloneDetection::IdenticalClones;
 
 import Prelude;
 
+anno loc node @ src;
+
 void main() {
     model = createAstsFromEclipseProject(getTestProjectLocation(), true);
     
-    iprintln(delAnnotationsRec(detectExactClones(model)));
+    clones = detectExactClones(model);
+    
+    for (clone <- clones) {
+        if (occurance(node a, node b) := clone) {
+            iprintln(a@src);
+            println("-----");
+            iprintln(b@src);
+            println("=========================================");
+        }
+    }
 }
