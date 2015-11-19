@@ -6,26 +6,32 @@ import Set;
 import Node;
 import util::Math;
 
-import IO;
+anno bool node @ similarityAlgorithmSkip;
 
-// Hack to make identical detection work
+// Quick check for identical trees
 real getSimilarityFactor(subTreeA, subTreeB) = 1.0 when subTreeA == subTreeB;
 
 // TODO add types here. Use pattern matching for set[node] cases
 real getSimilarityFactor(subTreeA, subTreeB) {
     
+    subTreeB = bottom-up visit (subTreeB) {
+        case node clone: {
+            clone = clone@similarityAlgorithmSkip = false;
+            insert clone;
+        }
+    }
+    
     sharedNodes = 0;
     
-    traversed = [];
-    
-    top-down visit (subTreeA) {
+    bottom-up visit (subTreeA) {
         case node origin: {
-            top-down visit (subTreeB) {
+            subTreeB = bottom-up-break visit (subTreeB) {
                 case node clone: {
-                    if (clone == origin && clone notin traversed) {
+                    if (clone == origin && clone@similarityAlgorithmSkip == false) {
                         sharedNodes += 1;
-                        traversed += clone;
-                    }
+                        clone = clone@similarityAlgorithmSkip = true;
+                        insert clone;
+                    } else fail;
                 }
             }
         }
