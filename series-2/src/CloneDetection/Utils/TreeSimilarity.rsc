@@ -1,19 +1,30 @@
 module CloneDetection::Utils::TreeSimilarity
 
 import CloneDetection::Utils::TreeMass;
+
+import Set;
+import Node;
 import util::Math;
+
+import IO;
+
+// Hack to make identical detection work
+real getSimilarityFactor(subTreeA, subTreeB) = 1.0 when subTreeA == subTreeB;
 
 // TODO add types here. Use pattern matching for set[node] cases
 real getSimilarityFactor(subTreeA, subTreeB) {
-    traversed = [];
+    
     sharedNodes = 0;
-    bottom-up visit (subTreeA) {
+    
+    traversed = [];
+    
+    top-down visit (subTreeA) {
         case node origin: {
-            visit (subTreeB) {
+            top-down visit (subTreeB) {
                 case node clone: {
-                    if (origin == clone && clone notin traversed) {
+                    if (clone == origin && clone notin traversed) {
                         sharedNodes += 1;
-                        traversed += origin;
+                        traversed += clone;
                     }
                 }
             }
