@@ -29,7 +29,8 @@ Bucket addToBucket(node subTree, Bucket bucket) {
 @doc{
 Adds ability to automatically reorder the bucket
 }
-Bucket addToBucket(node subTree, Bucket bucket, bool \sort) = \sort ?  sortBucket(addToBucket(subTree, bucket)) : addToBucket(subTree, bucket);
+Bucket addToBucket(node subTree, Bucket bucket, bool \sort) = 
+        \sort ? sortBucket(addToBucket(subTree, bucket)) : addToBucket(subTree, bucket);
 
 @doc{
 Used to extract bucket from abstract syntax tree

@@ -58,7 +58,11 @@ Clones detectClonesInBucket(Bucket bucket, similarityThreshold) {
     
     clones = newClones();
 
-    for (origin <- bucket, clone <- bucket, clone@uniqueKey != origin@uniqueKey, getSimilarityFactor(origin, clone) >= similarityThreshold) {
+    for (origin <- bucket, 
+        clone <- bucket, 
+        clone@uniqueKey != origin@uniqueKey, 
+        getSimilarityFactor(origin, clone) >= similarityThreshold) 
+    {
         clones = clearSubTreesFromSet(origin, clones);
         clones = clearSubTreesFromSet(clone, clones);
         clones = addClone(origin, clone, clones);
