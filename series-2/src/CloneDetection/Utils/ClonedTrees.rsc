@@ -1,5 +1,7 @@
 module CloneDetection::Utils::ClonedTrees
 
+import CloneDetection::Utils::TreeBucket;
+
 anno int node @ uniqueKey;
 
 data Clone = occurrance(node origin, node clone)
@@ -44,6 +46,22 @@ Clones clearSubTreesFromSet(tree, Clones clones) {
                 clones = removeClone(subTree, clones);
             }
         }
+    }
+    
+    return clones;
+}
+
+@doc{
+Detect clones in bucket using similarity threshold
+}
+Clones detectClonesInBucket(Bucket bucket, similarityThreshold) {
+    
+    clones = newClones();
+
+    for (origin <- bucket, clone <- bucket, clone@uniqueKey != origin@uniqueKey, getSimilarityFactor(origin, clone) >= similarityThreshold) {
+        clones = clearSubTreesFromSet(origin, clones);
+        clones = clearSubTreesFromSet(clone, clones);
+        clones = addClone(origin, clone, clones);
     }
     
     return clones;

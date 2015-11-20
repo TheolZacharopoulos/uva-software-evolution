@@ -30,3 +30,20 @@ Bucket addToBucket(node subTree, Bucket bucket) {
 Adds ability to automatically reorder the bucket
 }
 Bucket addToBucket(node subTree, Bucket bucket, bool \sort) = \sort ?  sortBucket(addToBucket(subTree, bucket)) : addToBucket(subTree, bucket);
+
+@doc{
+Used to extract bucket from abstract syntax tree
+}
+Bucket extractBucketFromAST(ast, minMassThreshold) {
+    bucket = newBucket();
+    
+    top-down visit (ast) {
+        case node subTree: {
+            if (getTreeMass(subTree) >= minMassThreshold) {
+                bucket = addToBucket(subTree, bucket);
+            }
+        }
+    }
+    
+    return sortBucket(bucket);
+}
