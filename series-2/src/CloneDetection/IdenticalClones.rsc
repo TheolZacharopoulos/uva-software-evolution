@@ -12,30 +12,18 @@ anno int node @ uniqueKey;
 
 Clones detectExactClones(set[Declaration] ast) {
     
+    print("Adding unique identifiers...");
     ast = putIdentifiers(ast);
+    println("Done!");
     
     // Step 1: New bucket
-    bucket = newBucket();
-
-    top-down visit (ast) {
-        case node subTree: {
-            if (getTreeMass(subTree) >= TREE_MASS_THRESHOLD) {
-                bucket = addToBucket(subTree, bucket);
-            }
-        }
-    }
+    print("Building bucket from AST...");
+    bucket = extractBucketFromAST(ast, TREE_MASS_THRESHOLD);
+    println("Done!");    
     
-    // sort the bucket (extra step, not mentioned in the paper :shame:)
-    bucket = sortBucket(bucket);
-    
-    clones = newClones();
-    
-    // Step 3: Detect clones
-    for (origin <- bucket, clone <- bucket, clone@uniqueKey != origin@uniqueKey, getSimilarityFactor(origin, clone) == 1) {
-        clones = clearSubTreesFromSet(origin, clones);
-        clones = clearSubTreesFromSet(clone, clones);
-        clones = addClone(origin, clone, clones);
-    }
+    print("Detecting clones...");
+    clones = detectClonesInBucket(bucket, 1);
+    println("Done!");
     
     return clones;
 }
