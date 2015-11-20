@@ -21,7 +21,14 @@ public loc getTestProjectLocation() = demoProjectLocation;
  * The mass threshold parameter specifies the minimum sub-tree mass (number of nodes) value 
  * to be considered, so that small pieces of code (e.g., expressions) are ignored.
  */
-public int TREE_MASS_THRESHOLD = 20;
+public int TREE_MASS_THRESHOLD = 5;
+
+/**
+ * The difference of mass threshold parameter is used in the similarity algorithm.
+ * Simply put, when comparing two trees and the difference between their masses is more then 
+ * the number in TREE_DIFF_MASS_THRESHOLD the trees will be ignored (e.g. similarity will be forced to 0).
+ */
+public int TREE_DIFF_MASS_THRESHOLD = 10;
 
 /**
  * The similarity threshold parameter allows the user to specify

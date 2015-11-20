@@ -17,11 +17,11 @@ Clones findExactMethods(set[Declaration] complicationUnits) {
     
     clonedMethods = seekSameMethods(allMethods);
     
-    return { occurance | 
-                occurance <- clonedMethods, 
+    return { occurrance | 
+                occurrance <- clonedMethods, 
                 mirrored <- clonedMethods, 
-                occurance.originalDeclaration == mirrored.cloneDeclaration,
-                occurance.cloneDeclaration == mirrored.originalDeclaration
+                occurrance.originalDeclaration == mirrored.cloneDeclaration,
+                occurrance.cloneDeclaration == mirrored.originalDeclaration
     };
 }
 

@@ -18,7 +18,7 @@ void main() {
     clones = detectExactClones(model);
     
     for (clone <- clones) {
-        if (occurance(node a, node b) := clone) {
+        if (occurrance(node a, node b) := clone) {
             iprintln(a@src);
             println("-----");
             iprintln(b@src);
