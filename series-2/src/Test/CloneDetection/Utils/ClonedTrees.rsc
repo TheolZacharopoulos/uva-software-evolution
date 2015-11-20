@@ -7,14 +7,14 @@ test bool testAddClone() {
     clones = newClones();
     clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
     
-    return clones == {occurance(getTestTreeBig(), getTestTreeBig())};
+    return clones == [occurrance(getTestTreeBig(), getTestTreeBig())];
 }
 
 test bool testAddCloneSets() {
     clones = newClones();
     clones = addClone({getTestTreeBig(), getTestTreeSmall()}, {getTestTreeBig(), getTestTreeSmall()}, clones);
     
-    return clones == {occurance({getTestTreeBig(), getTestTreeSmall()}, {getTestTreeBig(), getTestTreeSmall()})};
+    return clones == [occurrance({getTestTreeBig(), getTestTreeSmall()}, {getTestTreeBig(), getTestTreeSmall()})];
 }
 
 test bool testSubTreeExists() {
@@ -34,41 +34,62 @@ test bool testSubTreeDoesNotExists() {
 }
 
 test bool testRemoveClone() {
+    treeA = getTestTreeBig();
+    treeB = getTestTreeMedium();
+    treeC = getTestTreeBig();
+    treeD = getTestTreeSmall();
+    
     clones = newClones();
-    clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
-    clones = addClone(getTestTreeMedium(), getTestTreeSmall(), clones);
+    clones = addClone(treeA, treeC, clones);
+    clones = addClone(treeB, treeD, clones);
     
-    clones = removeClone(getTestTreeMedium(), clones);
+    clones = removeClone(treeD, clones);
     
-    return clones == {occurance(getTestTreeBig(), getTestTreeBig())};
+    return clones == [occurrance(treeA, treeC)];
 }
 
 test bool testRemoveClone2() {
+    treeA = getTestTreeBig();
+    treeB = getTestTreeMedium();
+    treeC = getTestTreeBig();
+    treeD = getTestTreeSmall();
+    
     clones = newClones();
-    clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
-    clones = addClone(getTestTreeMedium(), getTestTreeSmall(), clones);
+    clones = addClone(treeA, treeC, clones);
+    clones = addClone(treeB, treeD, clones);
     
-    clones = removeClone(getTestTreeSmall(), clones);
+    clones = removeClone(treeD, clones);
     
-    return clones == {occurance(getTestTreeBig(), getTestTreeBig())};
+    return clones == [occurrance(treeA, treeC)];
 }
 
 test bool testRemoveClone3() {
+    treeA = getTestTreeBig();
+    treeB = getTestTreeMedium();
+    treeC = getTestTreeBig();
+    treeD = getTestTreeSmall();
+    
     clones = newClones();
-    clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
-    clones = addClone(getTestTreeMedium(), getTestTreeSmall(), clones);
+    clones = addClone(treeA, treeC, clones);
+    clones = addClone(treeB, treeD, clones);
     
-    clones = removeClone(getTestTreeBig(), clones);
+    clones = removeClone(treeC, clones);
     
-    return clones == {occurance(getTestTreeMedium(), getTestTreeSmall())};
+    return clones == [occurrance(treeB, treeD)];
 }
 
 test bool testClearSubTreesFromSet() {
+    treeA = getTestTreeBig();
+    treeC = getTestTreeBig();
+    treeB = getTestTreeMedium();
+    treeD = getTestTreeSmall();
+    
     clones = newClones();
-    clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
-    clones = addClone(getTestTreeMedium(), getTestTreeSmall(), clones);
+    clones = addClone(treeA, treeC, clones);
+    clones = addClone(treeA.l, treeC.l, clones);
     
-    clones = clearSubTreesFromSet(getTestTreeBig(), clones);
+    clones = clearSubTreesFromSet(treeA, clones);
+    clones = clearSubTreesFromSet(treeC, clones);
     
-    return clones == {occurance(getTestTreeBig(), getTestTreeBig())};
+    return clones == [occurrance(treeA, treeC)];
 }

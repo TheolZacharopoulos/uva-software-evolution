@@ -7,8 +7,10 @@ anno int node @ uniqueKey;
 @doc{
 Creates unique identifiers for each node in the AST
 }
-set[Declaration] putIndetifiers(set[Declaration] ast) {
-    counter = 0;
+&E putIdentifiers(&E ast) = putIdentifiers(ast, 0);
+
+&E putIdentifiers(&E ast, int \start) {
+    counter = \start;
     return visit (ast) {
         case node subTree: {
             counter += 1;

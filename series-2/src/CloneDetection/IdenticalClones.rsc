@@ -12,12 +12,11 @@ anno int node @ uniqueKey;
 
 Clones detectExactClones(set[Declaration] ast) {
     
-    ast = putIndetifiers(ast);
+    ast = putIdentifiers(ast);
     
     // Step 1: New bucket
     bucket = newBucket();
-    
-    // Step 2: fill the bucket (Two girls one bucket)
+
     top-down visit (ast) {
         case node subTree: {
             if (getTreeMass(subTree) >= TREE_MASS_THRESHOLD) {
@@ -32,7 +31,7 @@ Clones detectExactClones(set[Declaration] ast) {
     clones = newClones();
     
     // Step 3: Detect clones
-    for (origin <- bucket, clone <- bucket, clone@uniqueKey != origin@uniqueKey, getSimilarityFactor(origin, clone) == 1.0) {
+    for (origin <- bucket, clone <- bucket, clone@uniqueKey != origin@uniqueKey, getSimilarityFactor(origin, clone) == 1) {
         clones = clearSubTreesFromSet(origin, clones);
         clones = clearSubTreesFromSet(clone, clones);
         clones = addClone(origin, clone, clones);
