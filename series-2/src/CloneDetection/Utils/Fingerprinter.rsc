@@ -8,6 +8,7 @@ import lang::java::jdt::m3::AST;
 import IO;
 import List;
 import Set;
+import Node;
 import String;
 import util::Math;
 
@@ -23,6 +24,12 @@ public Hash perfectHash(tree) {
     bottom-up visit(tree) {
     
         // Declaration
+        case \compilationUnit(list[Declaration] imports, list[Declaration] types): {
+                iprintln("");
+            }
+        case \compilationUnit(Declaration package, list[Declaration] imports, list[Declaration] types): {
+                iprintln("");
+            }
         case \enum(str name, _, _, _): {
                 iprintln("");
             }
@@ -38,8 +45,11 @@ public Hash perfectHash(tree) {
         case \interface(str name, _, _, _): {
                 iprintln("");
             }
-        case \method(_, str name, _, _, _): {
+        case m:\method(_, str name, _, _, _): {
+                println("########################");
+                iprintln(getHash(m@decl));
                 iprintln(getHash(name));
+                println("########################");
             }
         case \method(_, str name, _, _): {
                 iprintln("");
@@ -54,6 +64,9 @@ public Hash perfectHash(tree) {
                 iprintln("");
             }
         case \package(_, str name): {
+                iprintln("");
+            }
+        case \variables(Type \type, list[Expression] \fragments): {
                 iprintln("");
             }
         case \typeParameter(str name, _): {
@@ -197,6 +210,7 @@ public Hash perfectHash(tree) {
 Hash getHash(str s) = (RANDOM_SMALL_PRIME | it * RANDOM_PRIME + charAt(s, i) | i <- [0..size(s)]);
 Hash getHash(int n) = (n*2654435761) % pow(2, 32);
 Hash getHash(bool b) = b ? RANDOM_LARGE_PRIME1 : RANDOM_LARGE_PRIME2;
+default Hash getHash(node n) = getHash(itoString(n));
 
 public Hash degradedHash(tree) {
     return 0;
