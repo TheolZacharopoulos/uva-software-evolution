@@ -27,22 +27,26 @@ real getSimilarityFactor(subTreeA, subTreeB) {
         }
     }
     
-    set[node] shared = {};
-    
-    bottom-up visit (subTreeA) {
-        case node origin: {
-            originMass = getTreeMass(origin);
-            bottom-up-break visit (subTreeB) {
-                case node clone: {
-                    if (clone == origin 
-                        && clone@uniqueKey != origin@uniqueKey
-                        && abs(getTreeMass(clone) - originMass) < TREE_DIFF_MASS_THRESHOLD) {
-                        shared += clone;
-                    } else fail;
-                }
-            }
-        }
+    // Collect nodes for subTree A
+    set[node] subTreeANodes = {};
+    visit (subTreeA) {
+        case node n: subTreeANodes += n;
     }
+    // Collect nodes for subTree B
+    set[node] subTreeBNodes = {};
+    visit (subTreeB) {
+        case node n: subTreeBNodes += n;
+    }
+    
+    // Find shared nodes.
+    set[node] shared = { sharedNode |                        
+        origin <- subTreeANodes,
+        clone <- subTreeBNodes,
+        clone == origin,
+        clone@uniqueKey != origin@uniqueKey,
+        abs(getTreeMass(clone) - getTreeMass(origin)) < TREE_DIFF_MASS_THRESHOLD,
+        sharedNode := clone
+    };
     
     sharedNodes = size(shared);
     
@@ -51,10 +55,10 @@ real getSimilarityFactor(subTreeA, subTreeB) {
     
     //println("<subTreeADifferentNodes> to <subTreeBDifferentNodes>/<sharedNodes> = <precision(toReal(2 * sharedNodes) / toReal((2 * sharedNodes) + subTreeADifferentNodes + subTreeBDifferentNodes), 2)>");
     
-    if (subTreeADifferentNodes < 0 || subTreeBDifferentNodes < 0) {
-        iprintToFile(|project://Series-2/debug/| + "debug-tree-<subTreeA@uniqueKey>.txt", subTreeA);
-        iprintToFile(|project://Series-2/debug/| + "debug-tree-<subTreeB@uniqueKey>.txt", subTreeB);
-    }
+    //if (subTreeADifferentNodes < 0 || subTreeBDifferentNodes < 0) {
+    //    iprintToFile(|project://Series-2/debug/| + "debug-tree-<subTreeA@uniqueKey>.txt", subTreeA);
+    //    iprintToFile(|project://Series-2/debug/| + "debug-tree-<subTreeB@uniqueKey>.txt", subTreeB);
+    //}
     
     return precision(toReal(2 * sharedNodes) / toReal((2 * sharedNodes) + subTreeADifferentNodes + subTreeBDifferentNodes), 2);
 }
