@@ -9,10 +9,13 @@ import lang::java::m3::Core;
 import CloneDetection::IdenticalClones;
 
 import Prelude;
+import util::Benchmark;
 
 anno loc node @ src;
 
 void main() {
+    startProfiling = realTime() * 1.0;
+    
     model = createAstsFromEclipseProject(getTestProjectLocation(), true);
     
     clones = detectExactClones(model);
@@ -25,4 +28,8 @@ void main() {
             println("=========================================");
         }
     }
+    
+    endProfiling = realTime() * 1.0;
+    totalTime = (endProfiling - startProfiling) / 1000;    
+    println("Total time: <totalTime> seconds");
 }
