@@ -20,13 +20,6 @@ real getSimilarityFactor(subTreeA, subTreeB) {
     subTreeAMass = getTreeMass(subTreeA);
     subTreeBMass = getTreeMass(subTreeB);
     
-    subTreeB = bottom-up visit (subTreeB) {
-        case node clone: {
-            clone = clone@similarityAlgorithmSkip = false;
-            insert clone;
-        }
-    }
-    
     // Collect nodes for subTree A
     set[node] subTreeANodes = {};
     visit (subTreeA) {

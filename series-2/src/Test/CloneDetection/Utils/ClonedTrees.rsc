@@ -22,7 +22,7 @@ test bool testSubTreeExists() {
     clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
     clones = addClone(getTestTreeSmall(), getTestTreeSmall(), clones);
     
-    return subTreeExists(getTestTreeSmall(), clones);
+    return isSubTreeExists(getTestTreeSmall(), clones);
 }
 
 test bool testSubTreeDoesNotExists() {
@@ -30,7 +30,7 @@ test bool testSubTreeDoesNotExists() {
     clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
     clones = addClone(getTestTreeSmall(), getTestTreeSmall(), clones);
     
-    return subTreeExists(getTestTreeMedium(), clones) == false;
+    return isSubTreeExists(getTestTreeMedium(), clones) == false;
 }
 
 test bool testRemoveClone() {
