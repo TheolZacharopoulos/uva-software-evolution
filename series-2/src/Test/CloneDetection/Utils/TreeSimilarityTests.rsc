@@ -1,4 +1,4 @@
-module Test::CloneDetection::Utils::TreeSimilarity
+module Test::CloneDetection::Utils::TreeSimilarityTests
 
 import CloneDetection::Utils::TreeSimilarity;
 import CloneDetection::Utils::ASTIdentifier;

@@ -1,4 +1,4 @@
-module Test::CloneDetection::Utils::TreeMass
+module Test::CloneDetection::Utils::TreeMassTests
 
 import CloneDetection::Utils::TreeMass;
 import Test::CloneDetection::Utils::TestTreeProvider;

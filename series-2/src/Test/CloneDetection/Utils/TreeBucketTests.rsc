@@ -1,4 +1,4 @@
-module Test::CloneDetection::Utils::TreeBucket
+module Test::CloneDetection::Utils::TreeBucketTests
 
 import CloneDetection::Utils::TreeBucket;
 import Test::CloneDetection::Utils::TestTreeProvider;
