@@ -1,4 +1,4 @@
-module Test::CloneDetection::Utils::ClonedTrees
+module Test::CloneDetection::Utils::ClonedTreesTests
 
 import CloneDetection::Utils::ClonedTrees;
 import Test::CloneDetection::Utils::TestTreeProvider;
@@ -22,7 +22,7 @@ test bool testSubTreeExists() {
     clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
     clones = addClone(getTestTreeSmall(), getTestTreeSmall(), clones);
     
-    return subTreeExists(getTestTreeSmall(), clones);
+    return doesSubTreeExist(getTestTreeSmall(), clones);
 }
 
 test bool testSubTreeDoesNotExists() {
@@ -30,7 +30,7 @@ test bool testSubTreeDoesNotExists() {
     clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
     clones = addClone(getTestTreeSmall(), getTestTreeSmall(), clones);
     
-    return subTreeExists(getTestTreeMedium(), clones) == false;
+    return doesSubTreeExist(getTestTreeMedium(), clones) == false;
 }
 
 test bool testRemoveClone() {

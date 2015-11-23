@@ -35,7 +35,7 @@ Clones addClone(&E origin, &E clone, Clones clones) {
 @doc{
 Removes clone pair and returns the new clone set as a result
 }
-Clones removeClone(Statement subTree, Clones clones) {
+Clones removeClone(subTree, Clones clones) {
     return [pairs | pairs <- clones, occurrance(origin, clone) := pairs, clone@uniqueKey != subTree@uniqueKey];
 }
 
@@ -108,7 +108,7 @@ Clones detectClonesInBucket(Bucket bucket, similarityThreshold) {
 @doc{
 Detect if node (or node set) has already been registered in the results
 }
-bool subTreeExists(subTree, Clones clones) {
+bool doesSubTreeExist(subTree, Clones clones) {
     return (false | true | occurrance(origin, clone) <- clones, origin == subTree || clone == subTree);
 }
 

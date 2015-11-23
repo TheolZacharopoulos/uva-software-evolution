@@ -14,4 +14,5 @@ public int factorialImperative(int n)
 }
 
 public int factorialPatternMatching(0) = 1;
-public default int factorialPatternMatching(int n) = factorialPatternMatching(n - 1) * n;
+public default int factorialPatternMatching(int n) 
+    = factorialPatternMatching(n - 1) * n;
