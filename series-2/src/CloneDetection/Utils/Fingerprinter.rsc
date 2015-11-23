@@ -22,7 +22,8 @@ int RANDOM_LARGE_PRIME2 = 1237;
 
 public Hash getFingerprint(set[node] trees) = { getHash(tree) | tree <- trees };
 public Hash getFingerprint(node tree) {
-    return getHash(tree);
+    //return getHash(tree);
+    return itoString(n);
 }
 
 Hash getHash(str s) = (RANDOM_SMALL_PRIME | it * RANDOM_PRIME + charAt(s, i) | i <- [0..size(s)]);
