@@ -1,14 +1,11 @@
 module CloneDetection::Utils::ClonedTrees
 
 import CloneDetection::Utils::TreeBucket;
-import CloneDetection::Utils::StatementSequences;
 
-import lang::java::jdt::m3::AST;
+anno int node @ uniqueKey;
 
-anno int Statement @ uniqueKey;
-
-data Clone = occurrance(Statement origin, Statement clone)
-           | occurrance(Sequences seqOrigin, Sequences seqClone);
+data Clone = occurrance(node origin, node clone)
+           | occurrance(set[node] setOrigin, set[node] setClone);
 
 alias Clones = list[Clone];
 
@@ -20,7 +17,7 @@ Clones newClones() = [];
 @doc{
 Add clone pairs. Supports both nodes and sets of nodes.
 }
-Clones addClone(&E origin, &E clone, Clones clones) {
+Clones addClone(origin, clone, Clones clones) {
     
     pair = occurrance(origin, clone);
     
@@ -40,48 +37,16 @@ Clones removeClone(subTree, Clones clones) {
 }
 
 @doc{
-Removes clone seuqnce pair and returns the new clone set as a result
-}
-Clones removeClone(Sequence clone, Clone clones) {
-    return [
-        pairs | pairs <- clones,
-        occurance(Sequences origins, Sequences clones) := pairs, 
-        cloneSeq <- clones,
-        all(statement <- cloneSeq, cloneStatement <- clone, statement@uniqueKey != cloneStatement@uniqueKey)
-    ];
-}
-
-Clones clearSubTrees(tree, Clones clones) = clearSubTrees(tree, clones, #Statement);
-
-@doc{
 Removes all sub tree that may occur in the clone results
 }
-Clones clearSubTrees(tree, Clones clones, \type) {
+Clones clearSubTrees(tree, Clones clones) {
     bottom-up visit (tree) {
-        case \type subTree: {
-            if (subTreeExists(subTree, clones) && subTree@uniqueKey != tree@uniqueKey) {
+        case node subTree: {
+            if (doesSubTreeExist(subTree, clones) && subTree@uniqueKey != tree@uniqueKey) {
                 clones = removeClone(subTree, clones);
             }
         }
-    }
-    
-    return clones;
-}
-
-@doc{
-Removes all sub sequences that may occur in the clone results
-}
-Clones clearSubSequences(Sequence tree, Clones clones) {
-    treeUniqueKeys = getSequenceUniqueKeys(tree);
-    bottom-up visit (tree) {
-        case Sequence subTree: {
-            subTreeUniqueKeys = getSequenceUniqueKeys(subTree);
-            if (subSequenceExists(subTree, clones) && treeUniqueKeys != subTreeUniqueKeys) {
-                clones = removeClone(subTree, clones);
-            }
-        }
-    }
-    
+    }    
     return clones;
 }
 
@@ -113,35 +78,9 @@ bool doesSubTreeExist(subTree, Clones clones) {
 }
 
 @doc{
-Detect if node (or node set) has already been registered in the results
-}
-bool subSequenceExists(Sequence subSequence, Clones clones) = subTreeExists(subSequence, clones);
-
-@doc{
 TODO Write test for this
 Check if two occurrances are mirrored
 }
-bool isMirrored(occurrance(Statement origin, Statement clone), occurrance(Statement newOrigin, Statement newClone)) {
+bool isMirrored(occurrance(origin, clone), occurrance(newOrigin, newClone)) {
     return origin@uniqueKey == newClone@uniqueKey && clone@uniqueKey == newOrigin@uniqueKey;
-}
-
-@doc{
-TODO Write test for this
-Check if two sequence occurrances are mirrored
-}
-bool isMirrored(occurrance(Sequence origin, Sequence clone), occurrance(Sequence newOrigin, Sequence newClone)) {
-    return getSequenceUniqueKeys(origin) == getSequenceUniqueKeys(newClone)
-        && getSequenceUniqueKeys(clone) == getSequenceUniqueKeys(newOrigin);
-}
-
-@doc{
-Extract potentionally cloned sequences from the list of all sequences 
-}
-Sequences getSequencesContainingClones(Sequences sequences, Clones clones) {
-    return [
-        sequence | sequence <- sequences, 
-        statement <- sequence,
-        occurrance(origin, clone) <- clones,
-        origin@uniqueKey == statement@uniqueKey || clone@uniqueKey == statement@uniqueKey
-    ];
 }

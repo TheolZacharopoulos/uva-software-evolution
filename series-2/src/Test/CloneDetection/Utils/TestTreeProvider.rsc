@@ -1,29 +1,109 @@
 module Test::CloneDetection::Utils::TestTreeProvider
 
 import CloneDetection::Utils::ASTIdentifier;
+import lang::java::jdt::m3::AST;
 
 data TestTree = TestNodeA(TestTree l, TestTree r) | TestNodeB(int number) | TestNodeC(str text);
 
 int lastUnique = 0;
 
-TestTree getTestTreeBig() {
+Statement getTestTreeBig() {
     lastUnique += 100;
-    return putIdentifiers(TestNodeA(
-        TestNodeA(
-            TestNodeB(2), TestNodeA(TestNodeC("dasdsadas"), TestNodeB(4))
-        ), 
-        TestNodeA(TestNodeB(2135), TestNodeB(1))
-    ), lastUnique);
+    return putIdentifiers(block([
+        declarationStatement(variables(
+            \int(),
+            [variable(
+                "blablabla",
+                0,
+                number("123"))])),
+        \if(
+          infix(
+            simpleName("blablabla"),
+            "\>",
+            \number("240")),
+          block([
+              expressionStatement(methodCall(
+                  false,
+                  qualifiedName(
+                    simpleName("System"),
+                    simpleName("out")),
+                  "print",
+                  [stringLiteral("\"1\"")])),
+              expressionStatement(methodCall(
+                  false,
+                  qualifiedName(
+                    simpleName("System"),
+                    simpleName("out")),
+                  "print",
+                  [stringLiteral("\"2\"")])),
+              expressionStatement(methodCall(
+                  false,
+                  qualifiedName(
+                    simpleName("System"),
+                    simpleName("out")),
+                  "print",
+                  [stringLiteral("\"3\"")]))
+            ]),
+          block([
+              expressionStatement(methodCall(
+                  false,
+                  qualifiedName(
+                    simpleName("System"),
+                    simpleName("out")),
+                  "print",
+                  [stringLiteral("\"1\"")])),
+              expressionStatement(methodCall(
+                  false,
+                  qualifiedName(
+                    simpleName("System"),
+                    simpleName("out")),
+                  "print",
+                  [stringLiteral("\"2\"")])),
+              expressionStatement(methodCall(
+                  false,
+                  qualifiedName(
+                    simpleName("System"),
+                    simpleName("out")),
+                  "print",
+                  [stringLiteral("\"5\"")]))
+            ]))
+      ]), lastUnique);
 }
 
-TestTree getTestTreeMedium() {
+Statement getTestTreeMedium() {
     lastUnique += 150;
-    return putIdentifiers(TestNodeA(
-        TestNodeB(2), TestNodeA(TestNodeC("dasdsadas"), TestNodeB(4))
-    ), lastUnique);
+    return putIdentifiers(block([
+      expressionStatement(methodCall(
+          false,
+          qualifiedName(
+            simpleName("System"),
+            simpleName("out")),
+          "print",
+          [stringLiteral("\"1\"")])),
+      expressionStatement(methodCall(
+          false,
+          qualifiedName(
+            simpleName("System"),
+            simpleName("out")),
+          "print",
+          [stringLiteral("\"2\"")])),
+      expressionStatement(methodCall(
+          false,
+          qualifiedName(
+            simpleName("System"),
+            simpleName("out")),
+          "print",
+          [stringLiteral("\"3\"")]))
+    ]), lastUnique);
 }
 
-TestTree getTestTreeSmall() { 
+Statement getTestTreeSmall() { 
     lastUnique += 200;
-    return putIdentifiers(TestNodeA(TestNodeC("dasdsadas"), TestNodeB(4)), lastUnique);
+    return putIdentifiers(expressionStatement(methodCall(
+      false,
+      qualifiedName(
+        simpleName("System"),
+        simpleName("out")),
+      "print",
+      [stringLiteral("\"3\"")])), lastUnique);
 }
