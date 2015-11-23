@@ -39,10 +39,10 @@ Clones removeClone(subTree, Clones clones) {
 @doc{
 Removes all sub tree that may occur in the clone results
 }
-Clones clearSubTreesFromSet(tree, Clones clones) {
+Clones clearSubTrees(tree, Clones clones) {
     bottom-up visit (tree) {
         case node subTree: {
-            if (isSubTreeExists(subTree, clones) && subTree@uniqueKey != tree@uniqueKey) {
+            if (doesSubTreeExist(subTree, clones) && subTree@uniqueKey != tree@uniqueKey) {
                 clones = removeClone(subTree, clones);
             }
         }
@@ -62,8 +62,8 @@ Clones detectClonesInBucket(Bucket bucket, similarityThreshold) {
         clone@uniqueKey != origin@uniqueKey, 
         getSimilarityFactor(origin, clone) >= similarityThreshold) 
     {
-        clones = clearSubTreesFromSet(origin, clones);
-        clones = clearSubTreesFromSet(clone, clones);
+        clones = clearSubTrees(origin, clones);
+        clones = clearSubTrees(clone, clones);
         clones = addClone(origin, clone, clones);
     }
     
@@ -73,7 +73,7 @@ Clones detectClonesInBucket(Bucket bucket, similarityThreshold) {
 @doc{
 Detect if node (or node set) has already been registered in the results
 }
-bool isSubTreeExists(subTree, Clones clones) {
+bool doesSubTreeExist(subTree, Clones clones) {
     return (false | true | occurrance(origin, clone) <- clones, origin == subTree || clone == subTree);
 }
 
