@@ -17,7 +17,7 @@ real getSimilarityFactor(subTreeA, subTreeB) = 1.0 when subTreeA == subTreeB;
 @doc{
 Get similarity factor using two statements
 }
-real getSimilarityFactor(Statement subTreeA, Statement subTreeB) {
+real getSimilarityFactor(node subTreeA, node subTreeB) {
     
     subTreeAMass = getTreeMass(subTreeA);
     subTreeBMass = getTreeMass(subTreeB);

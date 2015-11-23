@@ -86,7 +86,6 @@ test bool testClearSubTreesFromSet() {
     
     clones = newClones();
     clones = addClone(treeA, treeC, clones);
-    clones = addClone(treeA.l, treeC.l, clones);
     
     clones = clearSubTrees(treeA, clones);
     clones = clearSubTrees(treeC, clones);
