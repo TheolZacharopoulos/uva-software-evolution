@@ -88,8 +88,8 @@ test bool testClearSubTreesFromSet() {
     clones = addClone(treeA, treeC, clones);
     clones = addClone(treeA.l, treeC.l, clones);
     
-    clones = clearSubTreesFromSet(treeA, clones);
-    clones = clearSubTreesFromSet(treeC, clones);
+    clones = clearSubTrees(treeA, clones);
+    clones = clearSubTrees(treeC, clones);
     
     return clones == [occurrance(treeA, treeC)];
 }
