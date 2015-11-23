@@ -10,25 +10,53 @@ import List;
 import Set;
 import Node;
 import String;
-import util::Math;
 
-alias Hash = int;
+str SIMILAR_ID = "Y";
+str SIMILAR_STR = "X";
+str SIMILAR_NUM = "6";
+bool SIMILAR_BOOL = true;
 
-int RANDOM_SMALL_PRIME = 7;
-int RANDOM_PRIME = 31;
-str SIMILAR_HASH = "X";
-int RANDOM_LARGE_PRIME1 = 1231;
-int RANDOM_LARGE_PRIME2 = 1237;
+public str getFingerprint(set[node] trees) = { getHash(tree) | tree <- trees };
+public str getFingerprint(node tree) {
 
-public Hash getFingerprint(set[node] trees) = { getHash(tree) | tree <- trees };
-public Hash getFingerprint(node tree) {
-    //return getHash(tree);
-    return itoString(n);
+    // remove literals and identifiers to make it dump
+    tree = visit(tree) {
+    
+        // remove identifiers
+        case s:\simpleName(_) => \simpleName(SIMILAR_ID)
+        case cl:\class(_, a, b, c) => \class(SIMILAR_ID, a, b, c)
+        case m:\method(a, _, b, c, d) => \method(a, SIMILAR_ID, b, c, d)
+        case cons:\constructor(_, a, b, c) => \constructor(SIMILAR_ID, a, b, c)
+        case p:\parameter(a, _, b) => \parameter(a, SIMILAR_ID, b)
+        case v:\variable(_, a) => \variable(SIMILAR_ID, a)
+        case va:\variable(_, a, b) => \variable(SIMILAR_ID, a, b)
+        case l:\label(_, body) => \label(SIMILAR_ID, body)
+        case en:\enum(_, a, b, c) => \enum(SIMILAR_ID, a, b, c)
+        case im:\import(_) => \import(SIMILAR_ID)
+        case pk:\package(_) => \package(SIMILAR_ID)
+        case pkg:\package(a, _) => \package(a, SIMILAR_ID)
+        case tp:\typeParameter(_, a) => \typeParameter(SIMILAR_ID, a)
+        case ann:\annotationType(_, a) => \annotationType(SIMILAR_ID, a)
+        case annT:\annotationTypeMember(a, _) => \annotationTypeMember(a, SIMILAR_ID)
+        case annTM:\annotationTypeMember(a, _, b) => \annotationTypeMember(a, SIMILAR_ID, b)
+        case va:\vararg(a, _) => \vararg(a, SIMILAR_ID)
+        
+        // calls
+        case fa:\fieldAccess(a, b, _) => \fieldAccess(a, b, SIMILAR_ID)
+        case fac:\fieldAccess(a, _) => \fieldAccess(a, SIMILAR_ID)
+        case mc:\methodCall(a, _, b) => \methodCall(a, SIMILAR_ID, b)
+        case mca:\methodCall(a, c, _, c) => \methodCall(a, b, SIMILAR_ID, c)
+        
+        // literals        
+        case sl:\stringLiteral(_) => \stringLiteral(SIMILAR_STR)
+        case cl:\characterLiteral(_) => \characterLiteral(SIMILAR_STR)
+        case bl:\booleanLiteral(_) => \booleanLiteral(SIMILAR_BOOL)
+        case nl:\number(_) => \number(SIMILAR_NUM)
+    }
+    
+    // remove annotations because it makes it too perfect.
+    cleanNode = delAnnotationsRec(tree);
+    
+    // get node as string
+    return toString(cleanNode);
 }
-
-Hash getHash(str s) = (RANDOM_SMALL_PRIME | it * RANDOM_PRIME + charAt(s, i) | i <- [0..size(s)]);
-Hash getHash(int n) = (n*2654435761) % pow(2, 32);
-Hash getHash(bool b) = b ? RANDOM_LARGE_PRIME1 : RANDOM_LARGE_PRIME2;
-
-// Get the string of the node and hash it.
-default Hash getHash(node n) = getHash(itoString(n));
