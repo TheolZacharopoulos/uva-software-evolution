@@ -48,7 +48,5 @@ Bucket extractBucketFromAST(set[Declaration] ast, minMassThreshold) {
         }
     }
     
-    return bucket;
-    
     return sortBucket(bucket);
 }
