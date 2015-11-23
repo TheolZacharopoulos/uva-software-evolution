@@ -22,7 +22,7 @@ test bool testSubTreeExists() {
     clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
     clones = addClone(getTestTreeSmall(), getTestTreeSmall(), clones);
     
-    return isSubTreeExists(getTestTreeSmall(), clones);
+    return doesSubTreeExist(getTestTreeSmall(), clones);
 }
 
 test bool testSubTreeDoesNotExists() {
@@ -30,7 +30,7 @@ test bool testSubTreeDoesNotExists() {
     clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
     clones = addClone(getTestTreeSmall(), getTestTreeSmall(), clones);
     
-    return isSubTreeExists(getTestTreeMedium(), clones) == false;
+    return doesSubTreeExist(getTestTreeMedium(), clones) == false;
 }
 
 test bool testRemoveClone() {
@@ -88,8 +88,8 @@ test bool testClearSubTreesFromSet() {
     clones = addClone(treeA, treeC, clones);
     clones = addClone(treeA.l, treeC.l, clones);
     
-    clones = clearSubTreesFromSet(treeA, clones);
-    clones = clearSubTreesFromSet(treeC, clones);
+    clones = clearSubTrees(treeA, clones);
+    clones = clearSubTrees(treeC, clones);
     
     return clones == [occurrance(treeA, treeC)];
 }

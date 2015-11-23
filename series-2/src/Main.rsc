@@ -7,6 +7,7 @@ import lang::java::jdt::m3::AST;
 import lang::java::m3::Core;
 
 import CloneDetection::IdenticalClones;
+import CloneDetection::Utils;
 
 import Prelude;
 import util::Benchmark;
@@ -17,6 +18,7 @@ void main() {
     startProfiling = realTime() * 1.0;
     
     model = createAstsFromEclipseProject(getTestProjectLocation(), true);
+    model = putIdentifiers(model);
     
     clones = detectExactClones(model);
     
