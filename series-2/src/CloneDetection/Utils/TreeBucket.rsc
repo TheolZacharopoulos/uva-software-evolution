@@ -1,52 +1,43 @@
 module CloneDetection::Utils::TreeBucket
 
 import CloneDetection::Utils::TreeMass;
+import CloneDetection::Utils::Fingerprinter;
 
 import List;
 import lang::java::jdt::m3::AST;
 
-alias Bucket = list[Statement];
-
-@doc{
-Sorts bucket by placing buckets with smaller mass in the begining
-}
-Bucket sortBucket(Bucket bucket) {
-    return sort(bucket, bool (Statement a, Statement b) {
-        return getTreeMass(a) < getTreeMass(b);
-    });
-}
+alias Buckets = map[str, list[Statement]];
 
 @doc{
 New buckets factory
 }
-Bucket newBucket() = [];
+Buckets newBuckets() = ();
 
 @doc{
-Adds node to a existing bucket and returns the resulting bucket
+Adds node to a bucket and returns the resulting buckets map
 }
-Bucket addToBucket(Statement subTree, Bucket bucket) {
-    return bucket + subTree;
+Buckets addToBucket(Statement subTree, Buckets buckets) {
+    fingerPrint = getFingerprint(subTree);
+    
+    // TODO test
+    list[Statement] emptyList = [];
+    
+    return buckets[fingerPrint] ? emptyList += subTree;
 }
 
 @doc{
-Adds ability to automatically reorder the bucket
+Used to extract buckets from abstract syntax tree
 }
-Bucket addToBucket(Statement subTree, Bucket bucket, bool \sort) = 
-        \sort ? sortBucket(addToBucket(subTree, bucket)) : addToBucket(subTree, bucket);
-
-@doc{
-Used to extract bucket from abstract syntax tree
-}
-Bucket extractBucketFromAST(set[Declaration] ast, minMassThreshold) {
-    bucket = newBucket();
+Buckets extractBucketsFromAST(set[Declaration] ast, minMassThreshold) {
+    buckets = newBuckets();
     
     top-down visit (ast) {
         case Statement subTree: {
             if (getTreeMass(subTree) >= minMassThreshold) {
-                bucket = addToBucket(subTree, bucket);
+                buckets = addToBucket(subTree, buckets);
             }
         }
     }
     
-    return sortBucket(bucket);
+    return buckets;
 }

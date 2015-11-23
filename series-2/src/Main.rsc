@@ -27,7 +27,6 @@ void main() {
             iprintln(a@src);
             println("-----");
             iprintln(b@src);
-            iprintln(delAnnotationsRec(b));
             println("=========================================");
         }
     }

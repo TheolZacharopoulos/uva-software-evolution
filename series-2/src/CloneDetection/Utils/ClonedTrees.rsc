@@ -51,14 +51,16 @@ Clones clearSubTrees(tree, Clones clones) {
 }
 
 @doc{
-Detect clones in bucket using similarity threshold
+Detect clones in buckets using similarity threshold
 }
-Clones detectClonesInBucket(Bucket bucket, similarityThreshold) {
+Clones detectClonesInBuckets(Buckets buckets, similarityThreshold) {
     
     clones = newClones();
 
-    for (origin <- bucket, 
-        clone <- bucket, 
+    for (originKey <- buckets, 
+        cloneKey <- buckets,
+        origin <- buckets[originKey],
+        clone <- buckets[cloneKey],
         clone@uniqueKey != origin@uniqueKey, 
         getSimilarityFactor(origin, clone) >= similarityThreshold) 
     {

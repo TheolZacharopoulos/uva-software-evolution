@@ -12,8 +12,8 @@ anno int Statement @ uniqueKey;
 
 Clones detectExactClones(set[Declaration] ast) {
     
-    bucket = extractBucketFromAST(ast, TREE_MASS_THRESHOLD);
-    clones = detectClonesInBucket(bucket, 1.0);
+    buckets = extractBucketsFromAST(ast, TREE_MASS_THRESHOLD);
+    clones = detectClonesInBuckets(buckets, 1.0);
     
     return clones;
 }
