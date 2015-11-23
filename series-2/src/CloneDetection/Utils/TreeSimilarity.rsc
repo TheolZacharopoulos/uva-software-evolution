@@ -6,7 +6,7 @@ import CloneDetection::Utils::TreeMass;
 import Set;
 import Node;
 import util::Math;
-import IO;
+import lang::java::jdt::m3::AST;
 
 anno int node @ uniqueKey;
 anno bool node @ similarityAlgorithmSkip;
@@ -14,8 +14,10 @@ anno bool node @ similarityAlgorithmSkip;
 // Quick check for identical trees
 real getSimilarityFactor(subTreeA, subTreeB) = 1.0 when subTreeA == subTreeB;
 
-// TODO add types here. Use pattern matching for set[node] cases
-real getSimilarityFactor(subTreeA, subTreeB) {
+@doc{
+Get similarity factor using two statements
+}
+real getSimilarityFactor(Statement subTreeA, Statement subTreeB) {
     
     subTreeAMass = getTreeMass(subTreeA);
     subTreeBMass = getTreeMass(subTreeB);
@@ -37,7 +39,7 @@ real getSimilarityFactor(subTreeA, subTreeB) {
         clone <- subTreeBNodes,
         clone == origin,
         clone@uniqueKey != origin@uniqueKey,
-        abs(getTreeMass(clone) - getTreeMass(origin)) < TREE_DIFF_MASS_THRESHOLD,
+        //abs(getTreeMass(clone) - getTreeMass(origin)) < TREE_DIFF_MASS_THRESHOLD,
         sharedNode := clone
     };
     
@@ -46,12 +48,6 @@ real getSimilarityFactor(subTreeA, subTreeB) {
     subTreeADifferentNodes = subTreeAMass - sharedNodes;
     subTreeBDifferentNodes = subTreeBMass - sharedNodes;
     
-    //println("<subTreeADifferentNodes> to <subTreeBDifferentNodes>/<sharedNodes> = <precision(toReal(2 * sharedNodes) / toReal((2 * sharedNodes) + subTreeADifferentNodes + subTreeBDifferentNodes), 2)>");
-    
-    //if (subTreeADifferentNodes < 0 || subTreeBDifferentNodes < 0) {
-    //    iprintToFile(|project://Series-2/debug/| + "debug-tree-<subTreeA@uniqueKey>.txt", subTreeA);
-    //    iprintToFile(|project://Series-2/debug/| + "debug-tree-<subTreeB@uniqueKey>.txt", subTreeB);
-    //}
-    
+    // TODO remove precision
     return precision(toReal(2 * sharedNodes) / toReal((2 * sharedNodes) + subTreeADifferentNodes + subTreeBDifferentNodes), 2);
 }

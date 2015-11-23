@@ -8,7 +8,7 @@ import List;
 import Node;
 import IO;
 
-anno int node @ uniqueKey;
+anno int Statement @ uniqueKey;
 
 Clones detectExactClones(set[Declaration] ast) {
     
