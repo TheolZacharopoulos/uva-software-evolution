@@ -2,6 +2,7 @@ module CloneDetection::Statements::TreeSimilarity
 
 import Configurations;
 import CloneDetection::Statements::TreeMass;
+import CloneDetection::Utils::SimilarityCache;
 
 import Set;
 import Node;
@@ -10,8 +11,13 @@ import lang::java::jdt::m3::AST;
 
 anno int Statement @ uniqueKey;
 
-// Quick check for identical trees
-real getSimilarityFactor(subTreeA, subTreeB) = 1.0 when subTreeA == subTreeB;
+real getSimilarityFactor(Statement subTreeA, Statement subTreeB) 
+    = getCachedSimilarity(subTreeA@uniqueKey, subTreeB@uniqueKey) when isSimilarityCached(subTreeA@uniqueKey, subTreeB@uniqueKey);
+
+@doc{
+Quick check for identical trees
+}
+real getSimilarityFactor(Statement subTreeA, Statement subTreeB) = 1.0 when subTreeA == subTreeB;
 
 @doc{
 Get similarity factor using two statements
@@ -48,5 +54,10 @@ real getSimilarityFactor(Statement subTreeA, Statement subTreeB) {
     subTreeBDifferentNodes = subTreeBMass - sharedNodes;
     
     // TODO remove precision
-    return precision(toReal(2 * sharedNodes) / toReal((2 * sharedNodes) + subTreeADifferentNodes + subTreeBDifferentNodes), 2);
+    real similarityFactor = precision(toReal(2 * sharedNodes) / toReal((2 * sharedNodes) + subTreeADifferentNodes + subTreeBDifferentNodes), 2);
+    
+    // Cache similarity
+    cacheSimilarity(subTreeA@uniqueKey, subTreeB@uniqueKey, similarityFactor);
+    
+    return similarityFactor;
 }

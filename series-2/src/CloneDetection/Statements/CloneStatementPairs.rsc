@@ -4,13 +4,14 @@ import CloneDetection::AbstractClonePairs;
 import CloneDetection::Statements::TreeBucket;
 import CloneDetection::Sequences::StatementSequences;
 import CloneDetection::Statements::TreeSimilarity;
+import CloneDetection::Utils::TreeExistanceCache;
 
 import lang::java::jdt::m3::AST;
 
 import Map;
 import List;
+import IO;
 
-// TODO change to Statement
 anno int Statement @ uniqueKey;
 
 @doc{
@@ -58,9 +59,12 @@ ClonePairs detectClonesInBuckets(Buckets buckets, similarityThreshold) {
     return clones;
 }
 
-@doc{
-Detect if node (or node set) has already been registered in the results
-}
-bool doesSubTreeExist(subTree, ClonePairs clones) {
-    return (false | true | occurrance(origin, clone) <- clones, origin == subTree || clone == subTree);
+bool doesSubTreeExist(Statement subTree, ClonePairs clones) = true when isSubTreeExistanceCached(subTree@uniqueKey);
+
+bool doesSubTreeExist(Statement subTree, ClonePairs clones) {
+    for (occurrance(Statement origin, Statement clone) <- clones, origin == subTree) {
+        cacheSubTreeExistance(subTree@uniqueKey);
+        return true;
+    }
+    return false;
 }

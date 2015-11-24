@@ -33,6 +33,7 @@ Buckets extractBucketsFromAST(set[Declaration] ast, minMassThreshold) {
     
     top-down visit (ast) {
         case Statement subTree: {
+            // TODO Discuss if we need min weight treshold since we use statements
             if (getTreeMass(subTree) >= minMassThreshold) {
                 buckets = addToBucket(subTree, buckets);
             }
