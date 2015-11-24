@@ -2,7 +2,7 @@ module CloneDetection::Utils::ASTIdentifier
 
 import lang::java::m3::AST;
 
-anno int node @ uniqueKey;
+anno int Statement @ uniqueKey;
 
 @doc{
 Creates unique identifiers for each node in the AST
@@ -12,7 +12,7 @@ Creates unique identifiers for each node in the AST
 &E putIdentifiers(&E ast, int \start) {
     counter = \start;
     return visit (ast) {
-        case node subTree: {
+        case Statement subTree: {
             counter += 1;
             subTree = subTree[@uniqueKey = counter];
             insert subTree;

@@ -8,8 +8,7 @@ import Node;
 import util::Math;
 import lang::java::jdt::m3::AST;
 
-anno int node @ uniqueKey;
-anno bool node @ similarityAlgorithmSkip;
+anno int Statement @ uniqueKey;
 
 // Quick check for identical trees
 real getSimilarityFactor(subTreeA, subTreeB) = 1.0 when subTreeA == subTreeB;
@@ -17,24 +16,24 @@ real getSimilarityFactor(subTreeA, subTreeB) = 1.0 when subTreeA == subTreeB;
 @doc{
 Get similarity factor using two statements
 }
-real getSimilarityFactor(node subTreeA, node subTreeB) {
+real getSimilarityFactor(Statement subTreeA, Statement subTreeB) {
     
     subTreeAMass = getTreeMass(subTreeA);
     subTreeBMass = getTreeMass(subTreeB);
     
     // Collect nodes for subTree A
-    set[node] subTreeANodes = {};
+    set[Statement] subTreeANodes = {};
     visit (subTreeA) {
-        case node n: subTreeANodes += n;
+        case Statement n: subTreeANodes += n;
     }
     // Collect nodes for subTree B
-    set[node] subTreeBNodes = {};
+    set[Statement] subTreeBNodes = {};
     visit (subTreeB) {
-        case node n: subTreeBNodes += n;
+        case Statement n: subTreeBNodes += n;
     }
     
     // Find shared nodes.
-    set[node] shared = { sharedNode |                        
+    set[Statement] shared = { sharedNode |                        
         origin <- subTreeANodes,
         clone <- subTreeBNodes,
         clone == origin,

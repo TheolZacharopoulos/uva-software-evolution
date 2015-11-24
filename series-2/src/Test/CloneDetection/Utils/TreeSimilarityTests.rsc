@@ -8,15 +8,9 @@ import Prelude;
 test bool testCompareTreesWhichAreEqual() {
     // same
     // sharedNodes = 5
-    treeA = putIdentifiers(TestNodeA(
-                                TestNodeA(
-                                    TestNodeB(4), TestNodeC("Test 2")), 
-                            TestNodeC("Test"))); // mass = 5
+    treeA = putIdentifiers(getTestTreeMedium()); // mass = 5
                 
-    treeB = putIdentifiers(TestNodeA(
-                                TestNodeA(
-                                    TestNodeB(4), TestNodeC("Test 2")), 
-                            TestNodeC("Test")), 
+    treeB = putIdentifiers(getTestTreeMedium(), 
                             50);
     
     return 1 == getSimilarityFactor(treeA, treeB);
@@ -24,14 +18,10 @@ test bool testCompareTreesWhichAreEqual() {
 
 test bool testCompareTreesWhichAreDifferent1() {
      // sharedNodes = 3, mass is equal
-    treeA = putIdentifiers(TestNodeA(
-                                TestNodeA(TestNodeB(4), TestNodeC("Test 2")), 
-                            TestNodeB(3))); // mass = 5
+    treeA = putIdentifiers(getTestTreeMedium()); // mass = 5
                             
-    treeB = putIdentifiers(TestNodeA(
-                                TestNodeA(TestNodeB(4), TestNodeC("Test 2")), 
-                            TestNodeC("Test")), 
+    treeB = putIdentifiers(getTestTreeBig(), 
                             50);
                             
-    return 0.6 == getSimilarityFactor(treeA, treeB);
+    return 0.12 == getSimilarityFactor(treeA, treeB);
 }

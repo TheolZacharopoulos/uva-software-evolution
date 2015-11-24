@@ -4,16 +4,19 @@ import CloneDetection::AbstractClonePairs;
 import CloneDetection::Statements::TreeBucket;
 import CloneDetection::Sequences::StatementSequences;
 import CloneDetection::Statements::TreeSimilarity;
+
+import lang::java::jdt::m3::AST;
+
 import Map;
 import List;
 
 // TODO change to Statement
-anno int node @ uniqueKey;
+anno int Statement @ uniqueKey;
 
 @doc{
 Add clone pairs. Supports both nodes and sets of nodes.
 }
-ClonePairs addClone(node origin, node clone, ClonePairs clones) {
+ClonePairs addClone(Statement origin, Statement clone, ClonePairs clones) {
     
     pair = occurrance(origin, clone);
     
@@ -37,7 +40,7 @@ Removes all sub tree that may occur in the clone results
 }
 ClonePairs clearSubTrees(tree, ClonePairs clones) {
     bottom-up visit (tree) {
-        case node subTree: {
+        case Statement subTree: {
             if (doesSubTreeExist(subTree, clones) && subTree@uniqueKey != tree@uniqueKey) {
                 clones = removeClone(subTree, clones);
             }

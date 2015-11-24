@@ -12,7 +12,7 @@ import CloneDetection::Utils;
 import Prelude;
 import util::Benchmark;
 
-anno loc node @ src;
+anno loc Statement @ src;
 
 void main() {
     startProfiling = realTime() * 1.0;
@@ -23,7 +23,7 @@ void main() {
     clones = detectSequenceClones(model);
     
     for (clone <- clones) {
-        if (occurrance(node a, node b) := clone) {
+        if (occurrance(Statement a, Statement b) := clone) {
             iprintln(a@src);
             println("-----");
             iprintln(b@src);

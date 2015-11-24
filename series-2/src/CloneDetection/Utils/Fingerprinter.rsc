@@ -25,7 +25,7 @@ public str getBadSeqFingerprint(Sequence seq) {
     return ("" | it + getBadFingerprint(st) | st <- seq);
 }
 
-public str getPerfectFingerprint(node tree) {
+public str getPerfectFingerprint(Statement tree) {
     // remove annotations because it makes it too perfect.
     cleanNode = delAnnotationsRec(tree);
     
@@ -33,7 +33,7 @@ public str getPerfectFingerprint(node tree) {
     return toString(cleanNode);
 }
 
-public str getBadFingerprint(node tree) {
+public str getBadFingerprint(Statement tree) {
 
     // remove literals and identifiers to make it dump
     tree = visit(tree) {
