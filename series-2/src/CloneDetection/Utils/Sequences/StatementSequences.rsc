@@ -2,11 +2,9 @@ module CloneDetection::Utils::Sequences::StatementSequences
 
 import Configurations;
 import CloneDetection::Utils;
+import CloneDetection::AbstractClonePairs;
 
 import lang::java::jdt::m3::AST;
-
-alias Sequence = list[Statement];
-alias Sequences = list[Sequence];
 
 @doc{
 Get all possible sequences from the AST
@@ -29,7 +27,7 @@ Sequences extractSequencesFromAST(set[Declaration] ast) {
 @doc{
 Extract potentionally cloned sequences from the list of all sequences 
 }
-Sequences getSequencesContainingClones(Sequences sequences, Clones clones) {
+Sequences getSequencesContainingClones(Sequences sequences, ClonePairs clones) {
 
     list[Statement] statements = [];
     

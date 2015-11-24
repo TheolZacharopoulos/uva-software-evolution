@@ -1,13 +1,14 @@
 module CloneDetection::Utils::Sequences::CloneSequencePairs
 
-import CloneDetection::Utils::CloneStatementPairs;
+import CloneDetection::AbstractClonePairs;
 import CloneDetection::Utils::Sequences::StatementSequences;
 
 @doc{
 Add sequence clone pairs
 }
-Clones addClone(Sequence origin, Sequence clone, Clones clones) = clones + occurrance(origin, clone);
+ClonePairs addClone(Sequence origin, Sequence clone, ClonePairs clones) = clones + occurrance(origin, clone);
 
-Clones clearSequenceSubclones() {
-    
+ClonePairs clearSequenceSubclones() {
+    // TODO:
+    return newClonePairs();
 }

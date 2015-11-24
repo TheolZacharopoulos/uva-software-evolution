@@ -1,5 +1,6 @@
 module CloneDetection::Utils::CloneStatementPairs
 
+import CloneDetection::AbstractClonePairs;
 import CloneDetection::Utils::TreeBucket;
 import CloneDetection::Utils::Sequences::StatementSequences;
 import Map;
@@ -8,21 +9,15 @@ import List;
 // TODO change to Statement
 anno int node @ uniqueKey;
 
-// TODO change node to Statement
-data Clone = occurrance(node origin, node clone) 
-           | occurrance(Sequence originSeq, Sequence cloneSeq);
-
-alias Clones = list[Clone];
-
 @doc{
 Factory for creating new empty clone sets
 }
-Clones newClones() = [];
+ClonePairs newClonePairs() = [];
 
 @doc{
 Add clone pairs. Supports both nodes and sets of nodes.
 }
-Clones addClone(node origin, node clone, Clones clones) {
+ClonePairs addClone(node origin, node clone, ClonePairs clones) {
     
     pair = occurrance(origin, clone);
     
@@ -37,14 +32,14 @@ Clones addClone(node origin, node clone, Clones clones) {
 @doc{
 Removes clone pair and returns the new clone set as a result
 }
-Clones removeClone(subTree, Clones clones) {
+ClonePairs removeClone(subTree, ClonePairs clones) {
     return [pairs | pairs <- clones, occurrance(origin, clone) := pairs, clone@uniqueKey != subTree@uniqueKey];
 }
 
 @doc{
 Removes all sub tree that may occur in the clone results
 }
-Clones clearSubTrees(tree, Clones clones) {
+ClonePairs clearSubTrees(tree, ClonePairs clones) {
     bottom-up visit (tree) {
         case node subTree: {
             if (doesSubTreeExist(subTree, clones) && subTree@uniqueKey != tree@uniqueKey) {
@@ -58,9 +53,9 @@ Clones clearSubTrees(tree, Clones clones) {
 @doc{
 Detect clones in buckets using similarity threshold
 }
-Clones detectClonesInBuckets(Buckets buckets, similarityThreshold) {
+ClonePairs detectClonesInBuckets(Buckets buckets, similarityThreshold) {
     
-    clones = newClones();
+    clones = newClonePairs();
     
     // loop over all buckets, filter out buckets with one subtree
     for (bucketKey <- buckets, size(buckets[bucketKey]) > 1) {
@@ -82,7 +77,7 @@ Clones detectClonesInBuckets(Buckets buckets, similarityThreshold) {
 @doc{
 Detect if node (or node set) has already been registered in the results
 }
-bool doesSubTreeExist(subTree, Clones clones) {
+bool doesSubTreeExist(subTree, ClonePairs clones) {
     return (false | true | occurrance(origin, clone) <- clones, origin == subTree || clone == subTree);
 }
 

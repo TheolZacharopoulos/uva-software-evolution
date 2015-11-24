@@ -10,7 +10,7 @@ import List;
 import Set;
 import Node;
 import String;
-import CloneDetection::Utils::Sequences::StatementSequences;
+import CloneDetection::AbstractClonePairs;
 
 str SIMILAR_ID = "Y";
 str SIMILAR_STR = "X";

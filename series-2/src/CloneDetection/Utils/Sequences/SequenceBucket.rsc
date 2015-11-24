@@ -2,6 +2,7 @@ module CloneDetection::Utils::Sequences::SequenceBucket
 
 import CloneDetection::Utils::Fingerprinter;
 import CloneDetection::Utils::Sequences::StatementSequences;
+import CloneDetection::AbstractClonePairs;
 
 import lang::java::jdt::m3::AST;
 
@@ -19,6 +20,7 @@ SequenceBuckets constructSequenceBuckets(Sequences subSequences) {
 
     SequenceBuckets sequenceBuckets = newSequenceBuckets();
     Sequences emptySequences = [];
+    
     for (subSequence <- subSequences) {
         str fingerprint = getBadSeqFingerprint(subSequence);
         sequenceBuckets[fingerprint] ? emptySequences += [subSequence];
