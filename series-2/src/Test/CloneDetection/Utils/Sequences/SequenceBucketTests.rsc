@@ -1,7 +1,7 @@
 module Test::CloneDetection::Utils::Sequences::SequenceBucketTests
 
-import CloneDetection::Utils::Sequences::SequenceBucket;
-import CloneDetection::Utils::Sequences::StatementSequences;
+import CloneDetection::Sequences::SequenceBucket;
+import CloneDetection::Sequences::StatementSequences;
 import Test::CloneDetection::Utils::TestTreeProvider;
 import Map;
 

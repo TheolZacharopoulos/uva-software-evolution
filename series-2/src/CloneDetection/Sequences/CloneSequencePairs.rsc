@@ -1,7 +1,7 @@
-module CloneDetection::Utils::Sequences::CloneSequencePairs
+module CloneDetection::Sequences::CloneSequencePairs
 
 import CloneDetection::AbstractClonePairs;
-import CloneDetection::Utils::Sequences::StatementSequences;
+import CloneDetection::Sequences::StatementSequences;
 
 @doc{
 Add sequence clone pairs

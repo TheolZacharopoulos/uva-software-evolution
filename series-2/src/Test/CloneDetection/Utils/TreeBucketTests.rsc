@@ -1,6 +1,6 @@
 module Test::CloneDetection::Utils::TreeBucketTests
 
-import CloneDetection::Utils::TreeBucket;
+import CloneDetection::Statements::TreeBucket;
 import CloneDetection::Utils::Fingerprinter;
 import Test::CloneDetection::Utils::TestTreeProvider;
 

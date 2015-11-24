@@ -1,6 +1,6 @@
 module Test::CloneDetection::Utils::TreeSimilarityTests
 
-import CloneDetection::Utils::TreeSimilarity;
+import CloneDetection::Statements::TreeSimilarity;
 import CloneDetection::Utils::ASTIdentifier;
 import Test::CloneDetection::Utils::TestTreeProvider;
 import Prelude;

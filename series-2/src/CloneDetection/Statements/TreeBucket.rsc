@@ -1,6 +1,6 @@
-module CloneDetection::Utils::TreeBucket
+module CloneDetection::Statements::TreeBucket
 
-import CloneDetection::Utils::TreeMass;
+import CloneDetection::Statements::TreeMass;
 import CloneDetection::Utils::Fingerprinter;
 
 import List;

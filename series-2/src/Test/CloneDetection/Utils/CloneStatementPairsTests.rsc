@@ -1,6 +1,6 @@
 module Test::CloneDetection::Utils::CloneStatementPairsTests
 
-import CloneDetection::Utils::CloneStatementPairs;
+import CloneDetection::Statements::CloneStatementPairs;
 import Test::CloneDetection::Utils::TestTreeProvider;
 import CloneDetection::AbstractClonePairs;
 

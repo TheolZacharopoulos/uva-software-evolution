@@ -2,14 +2,14 @@ module CloneDetection::CloneDetector
 
 import CloneDetection::AbstractClonePairs;
 
-import CloneDetection::Utils::TreeBucket;
-import CloneDetection::Utils::CloneStatementPairs;
-import CloneDetection::Utils::TreeSimilarity;
+import CloneDetection::Statements::TreeBucket;
+import CloneDetection::Statements::CloneStatementPairs;
+import CloneDetection::Statements::TreeSimilarity;
 
-import CloneDetection::Utils::Sequences::StatementSequences;
-import CloneDetection::Utils::Sequences::SubsequencesExtractor;
-import CloneDetection::Utils::Sequences::SequenceBucket;
-import CloneDetection::Utils::Sequences::SequenceSimilarity;
+import CloneDetection::Sequences::StatementSequences;
+import CloneDetection::Sequences::SubsequencesExtractor;
+import CloneDetection::Sequences::SequenceBucket;
+import CloneDetection::Sequences::SequenceSimilarity;
 
 import Configurations;
 

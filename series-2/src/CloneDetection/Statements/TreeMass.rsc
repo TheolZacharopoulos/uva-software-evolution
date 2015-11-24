@@ -1,4 +1,4 @@
-module CloneDetection::Utils::TreeMass
+module CloneDetection::Statements::TreeMass
 
 @doc {
     Get the tree mass (number of nodes) of a given tree.

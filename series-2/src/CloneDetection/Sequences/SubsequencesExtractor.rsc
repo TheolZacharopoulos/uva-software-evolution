@@ -1,4 +1,4 @@
-module CloneDetection::Utils::Sequences::SubsequencesExtractor
+module CloneDetection::Sequences::SubsequencesExtractor
 
 import CloneDetection::AbstractClonePairs;
 

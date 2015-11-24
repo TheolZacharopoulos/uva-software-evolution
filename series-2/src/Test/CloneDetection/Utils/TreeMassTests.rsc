@@ -1,6 +1,6 @@
 module Test::CloneDetection::Utils::TreeMassTests
 
-import CloneDetection::Utils::TreeMass;
+import CloneDetection::Statements::TreeMass;
 import Test::CloneDetection::Utils::TestTreeProvider;
 
 test bool testGetMassForATree() = getTreeMass(TestNodeA(TestNodeA(TestNodeB(4), TestNodeC("Test 2")), TestNodeC("Test"))) == 5;

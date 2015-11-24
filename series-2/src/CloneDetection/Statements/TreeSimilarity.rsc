@@ -1,7 +1,7 @@
-module CloneDetection::Utils::TreeSimilarity
+module CloneDetection::Statements::TreeSimilarity
 
 import Configurations;
-import CloneDetection::Utils::TreeMass;
+import CloneDetection::Statements::TreeMass;
 
 import Set;
 import Node;

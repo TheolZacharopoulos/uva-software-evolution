@@ -1,6 +1,6 @@
 module Test::CloneDetection::Utils::Sequences::SubsequencesExtractorTests
 
-import CloneDetection::Utils::Sequences::SubsequencesExtractor;
+import CloneDetection::Sequences::SubsequencesExtractor;
 import Test::CloneDetection::Utils::TestTreeProvider;
 
 import lang::java::jdt::m3::AST;

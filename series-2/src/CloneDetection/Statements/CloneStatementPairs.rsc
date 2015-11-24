@@ -1,9 +1,9 @@
-module CloneDetection::Utils::CloneStatementPairs
+module CloneDetection::Statements::CloneStatementPairs
 
 import CloneDetection::AbstractClonePairs;
-import CloneDetection::Utils::TreeBucket;
-import CloneDetection::Utils::Sequences::StatementSequences;
-import CloneDetection::Utils::TreeSimilarity;
+import CloneDetection::Statements::TreeBucket;
+import CloneDetection::Sequences::StatementSequences;
+import CloneDetection::Statements::TreeSimilarity;
 import Map;
 import List;
 

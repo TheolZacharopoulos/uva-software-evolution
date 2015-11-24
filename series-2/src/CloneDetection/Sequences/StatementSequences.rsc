@@ -1,7 +1,6 @@
-module CloneDetection::Utils::Sequences::StatementSequences
+module CloneDetection::Sequences::StatementSequences
 
 import Configurations;
-import CloneDetection::Utils;
 import CloneDetection::AbstractClonePairs;
 import List;
 import lang::java::jdt::m3::AST;

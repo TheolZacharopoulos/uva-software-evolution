@@ -1,7 +1,7 @@
-module CloneDetection::Utils::Sequences::SequenceSimilarity
+module CloneDetection::Sequences::SequenceSimilarity
 
-import CloneDetection::Utils::TreeSimilarity;
-import CloneDetection::Utils::Sequences::StatementSequences;
+import CloneDetection::Statements::TreeSimilarity;
+import CloneDetection::Sequences::StatementSequences;
 import CloneDetection::AbstractClonePairs;
 
 import List;
