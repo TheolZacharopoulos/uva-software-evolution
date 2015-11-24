@@ -3,6 +3,7 @@ module CloneDetection::Utils::CloneStatementPairs
 import CloneDetection::AbstractClonePairs;
 import CloneDetection::Utils::TreeBucket;
 import CloneDetection::Utils::Sequences::StatementSequences;
+import CloneDetection::Utils::TreeSimilarity;
 import Map;
 import List;
 

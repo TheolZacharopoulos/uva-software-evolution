@@ -1,12 +1,18 @@
 module CloneDetection::CloneDetector
 
 import CloneDetection::AbstractClonePairs;
-import CloneDetection::Utils;
+
+import CloneDetection::Utils::TreeBucket;
 import CloneDetection::Utils::CloneStatementPairs;
 import CloneDetection::Utils::TreeSimilarity;
 
+import CloneDetection::Utils::Sequences::StatementSequences;
+import CloneDetection::Utils::Sequences::SubsequencesExtractor;
+import CloneDetection::Utils::Sequences::SequenceBucket;
+
 import Configurations;
 
+import List;
 import lang::java::m3::AST;
 
 ClonePairs detectExactClones(set[Declaration] ast) {
@@ -18,7 +24,7 @@ ClonePairs detectExactClones(set[Declaration] ast) {
 ClonePairs detectSequenceClones(set[Declaration] ast) {
 
     // Get all the clone statement pairs
-    ClonePairs cloneStatementPairs = detectIdenticalClones(ast);
+    ClonePairs cloneStatementPairs = detectExactClones(ast);
     
     // Build the list structures describing sequences
     Sequences allSequences = extractSequencesFromAST(ast);
@@ -32,13 +38,15 @@ ClonePairs detectSequenceClones(set[Declaration] ast) {
     for (sequenceLength <- [MINIMUM_SEQUENCE_LENGTH .. maximumSequenceLength]) {
     
         // Get all subsequences of length sequenceLength
-        subSequences = getSubSequences(allSequences, sequenceLength);
+        Sequences subSequences = getSubSequences(allSequences, sequenceLength);
         
         // Place all subsequences of length (sequenceLength) into buckets according to subsequence hash
         SequenceBuckets sequenceBuckets = constructSequenceBuckets(subSequences);
         
         for (bucketHash <- sequenceBuckets) {
+        
             sequencesIndeces = index(sequenceBuckets[bucketHash]);
+            
             for (originSeqIndex <- sequencesIndeces, 
                 cloneSeqIndex <- sequencesIndeces, 
                 originSeqIndex != cloneSeqIndex) 
