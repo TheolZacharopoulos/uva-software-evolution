@@ -1,6 +1,8 @@
 module CloneDetection::Utils::ClonedTrees
 
 import CloneDetection::Utils::TreeBucket;
+import Map;
+import List;
 
 anno int node @ uniqueKey;
 
@@ -56,19 +58,21 @@ Detect clones in buckets using similarity threshold
 Clones detectClonesInBuckets(Buckets buckets, similarityThreshold) {
     
     clones = newClones();
-
-    for (originKey <- buckets, 
-        cloneKey <- buckets,
-        origin <- buckets[originKey],
-        clone <- buckets[cloneKey],
-        clone@uniqueKey != origin@uniqueKey, 
-        getSimilarityFactor(origin, clone) >= similarityThreshold) 
-    {
-        clones = clearSubTrees(origin, clones);
-        clones = clearSubTrees(clone, clones);
-        clones = addClone(origin, clone, clones);
-    }
     
+    // loop over all buckets, filter out buckets with one subtree
+    for (bucketKey <- buckets, size(buckets[bucketKey]) > 1) {
+    
+        // loop over the subtrees on the same bucket.
+        for (originSubtree <- buckets[bucketKey],
+            cloneSubtree <- buckets[bucketKey],
+            cloneSubtree@uniqueKey != originSubtree@uniqueKey,
+            getSimilarityFactor(originSubtree, cloneSubtree) >= similarityThreshold)
+        {
+            clones = clearSubTrees(originSubtree, clones);
+            clones = clearSubTrees(cloneSubtree, clones);
+            clones = addClone(originSubtree, cloneSubtree, clones);
+        }
+    }    
     return clones;
 }
 
