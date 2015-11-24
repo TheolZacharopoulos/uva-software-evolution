@@ -2,16 +2,17 @@ module Test::CloneDetection::Utils::CloneStatementPairsTests
 
 import CloneDetection::Utils::CloneStatementPairs;
 import Test::CloneDetection::Utils::TestTreeProvider;
+import CloneDetection::AbstractClonePairs;
 
 test bool testAddClone() {
-    clones = newClones();
+    clones = newClonePairs();
     clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
     
     return clones == [occurrance(getTestTreeBig(), getTestTreeBig())];
 }
 
 test bool testSubTreeExists() {
-    clones = newClones();
+    clones = newClonePairs();
     clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
     clones = addClone(getTestTreeSmall(), getTestTreeSmall(), clones);
     
@@ -19,7 +20,7 @@ test bool testSubTreeExists() {
 }
 
 test bool testSubTreeDoesNotExists() {
-    clones = newClones();
+    clones = newClonePairs();
     clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
     clones = addClone(getTestTreeSmall(), getTestTreeSmall(), clones);
     
@@ -32,7 +33,7 @@ test bool testRemoveClone() {
     treeC = getTestTreeBig();
     treeD = getTestTreeSmall();
     
-    clones = newClones();
+    clones = newClonePairs();
     clones = addClone(treeA, treeC, clones);
     clones = addClone(treeB, treeD, clones);
     
@@ -47,7 +48,7 @@ test bool testRemoveClone2() {
     treeC = getTestTreeBig();
     treeD = getTestTreeSmall();
     
-    clones = newClones();
+    clones = newClonePairs();
     clones = addClone(treeA, treeC, clones);
     clones = addClone(treeB, treeD, clones);
     
@@ -62,7 +63,7 @@ test bool testRemoveClone3() {
     treeC = getTestTreeBig();
     treeD = getTestTreeSmall();
     
-    clones = newClones();
+    clones = newClonePairs();
     clones = addClone(treeA, treeC, clones);
     clones = addClone(treeB, treeD, clones);
     
@@ -77,7 +78,7 @@ test bool testClearSubTreesFromSet() {
     treeB = getTestTreeMedium();
     treeD = getTestTreeSmall();
     
-    clones = newClones();
+    clones = newClonePairs();
     clones = addClone(treeA, treeC, clones);
     
     clones = clearSubTrees(treeA, clones);

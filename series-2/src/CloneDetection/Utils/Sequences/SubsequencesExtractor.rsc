@@ -1,6 +1,6 @@
 module CloneDetection::Utils::Sequences::SubsequencesExtractor
 
-import CloneDetection::Utils::Sequences::StatementSequences;
+import CloneDetection::AbstractClonePairs;
 
 import List;
 import Exception;
