@@ -1,4 +1,4 @@
-module CloneDetection::Utils::StatementSequences
+module CloneDetection::Utils::Sequences::StatementSequences
 
 import Configurations;
 import CloneDetection::Utils;

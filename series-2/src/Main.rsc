@@ -6,7 +6,7 @@ import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 import lang::java::m3::Core;
 
-import CloneDetection::IdenticalClones;
+import CloneDetection::CloneDetector;
 import CloneDetection::Utils;
 
 import Prelude;

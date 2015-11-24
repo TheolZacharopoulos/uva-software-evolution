@@ -16,7 +16,6 @@ str SIMILAR_STR = "X";
 str SIMILAR_NUM = "6";
 bool SIMILAR_BOOL = true;
 
-public str getFingerprint(set[node] trees) = { getHash(tree) | tree <- trees };
 public str getFingerprint(node tree) {
 
     // remove literals and identifiers to make it dump

@@ -1,4 +1,4 @@
-module CloneDetection::Utils::ClonedTrees
+module CloneDetection::Utils::CloneStatementPairs
 
 import CloneDetection::Utils::TreeBucket;
 import Map;

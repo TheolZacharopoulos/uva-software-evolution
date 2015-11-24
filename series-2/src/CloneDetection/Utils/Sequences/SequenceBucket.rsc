@@ -1,6 +1,6 @@
-module CloneDetection::Utils::SequenceBucket
+module CloneDetection::Utils::Sequences::SequenceBucket
 
-import CloneDetection::Utils::StatementSequences;
+import CloneDetection::Utils::Sequences::StatementSequences;
 import IO;
 
 alias SequenceBuckets = map[int, Sequences];

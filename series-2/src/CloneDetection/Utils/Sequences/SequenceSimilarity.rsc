@@ -1,7 +1,7 @@
-module CloneDetection::Utils::SequenceSimilarity
+module CloneDetection::Utils::Sequences::SequenceSimilarity
 
 import CloneDetection::Utils::TreeSimilarity;
-import CloneDetection::Utils::StatementSequences;
+import CloneDetection::Utils::Sequences::StatementSequences;
 
 @doc{
 Finds similarity factor based on two sequences

@@ -1,33 +1,14 @@
 module CloneDetection::CloneDetector
 
+import CloneDetection::Utils;
 import Configurations;
-import CloneDetection::Utils::TreeMass;
-import CloneDetection::Utils::TreeSimilarity;
 
-import Prelude;
-import lang::java::jdt::m3::AST;
+import lang::java::m3::AST;
 
-// TODO Of course I'll change it, chill... just testing here
-void detectClones(set[Declaration] complicationUnits) {
-
-    bucket = [];
+Clones detectExactClones(set[Declaration] ast) {
     
-    // \part@src does not work on each node, that's why I specify possibilities
-    bottom-up visit (complicationUnits) {
-        case node \subTrees: {
-            if (getTreeMass(\part) >= TREE_MASS_THRESHOLD && \part@src?) {
-                bucket += \part;
-            }
-        }
-    }
+    buckets = extractBucketsFromAST(ast, TREE_MASS_THRESHOLD);
+    clones = detectClonesInBuckets(buckets, 1.0);
     
-    for (origin <- bucket, clone <- bucket, origin != clone) {
-        if (getSimilarityFactor(clone, origin) > SIMILARITY_THRESHOLD) {
-                println("Found clone:");
-                println(origin@src);
-                println(clone@src);
-                println(readFile(origin@src));
-                println("*********************************");
-        }
-    }
+    return clones;
 }

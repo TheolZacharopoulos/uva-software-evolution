@@ -1,6 +1,6 @@
-module Test::CloneDetection::Utils::ClonedTreesTests
+module Test::CloneDetection::Utils::CloneStatementPairsTests
 
-import CloneDetection::Utils::ClonedTrees;
+import CloneDetection::Utils::CloneStatementPairs;
 import Test::CloneDetection::Utils::TestTreeProvider;
 
 test bool testAddClone() {
