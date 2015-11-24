@@ -25,3 +25,10 @@ Sequences getSubSequences(Sequence sequence, int length) throws IllegalArgument 
 Shortcut for computing size 1 subsequences
 }
 Sequences getSubSequences(Sequence sequence, int length) = [sequence] when length == size(sequence);
+
+@doc{
+Extract subsequences from list of sequences
+}
+Sequences getSubSequences(Sequences sequences, int length) {
+    return ([] | it + getSubSequences(sequence) | sequence <- sequences);
+}

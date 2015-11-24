@@ -25,15 +25,9 @@ Clones detectSequenceClones(set[Declaration] ast) {
     // Cloned sequences results
     Clones cloneSequencePairs = newClones();
     
-    for (
-        sequence <- allSequences,
-        sequenceLength := size(sequence),
-        sequenceLength >= MINIMUM_SEQUENCE_LENGTH,
-        sequenceLength <= maximumSequenceLength) 
-    {
-        // Get all subsequences.
-        list[Sequences] subSequences = getSubSequences(sequence, sequenceLength);
-        
+    for (sequenceLength <- [MINIMUM_SEQUENCE_LENGTH .. maximumSequenceLength]) {
+        // Get all subsequences of length sequenceLength
+        subSequences = getSubSequences(allSequences, sequenceLength);
         // Place all subsequences of length (sequenceLength) into buckets according to subsequence hash
         SequenceBuckets sequenceBuckets = constructSequenceBuckets(subSequences);
         
