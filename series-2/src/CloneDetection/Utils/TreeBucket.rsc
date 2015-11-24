@@ -17,7 +17,7 @@ Buckets newBuckets() = ();
 Adds node to a bucket and returns the resulting buckets map
 }
 Buckets addToBucket(Statement subTree, Buckets buckets) {
-    fingerPrint = getFingerprint(subTree);
+    fingerPrint = getBadFingerprint(subTree);
     
     // TODO test
     list[Statement] emptyList = [];

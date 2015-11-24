@@ -10,13 +10,30 @@ import List;
 import Set;
 import Node;
 import String;
+import CloneDetection::Utils::Sequences::StatementSequences;
 
 str SIMILAR_ID = "Y";
 str SIMILAR_STR = "X";
 str SIMILAR_NUM = "6";
 bool SIMILAR_BOOL = true;
 
-public str getFingerprint(node tree) {
+public str getPerfectSeqFingerprint(Sequence seq) {
+    return ("" | it + getPerfectFingerprint(st) | st <- seq);
+}
+
+public str getBadSeqFingerprint(Sequence seq) {
+    return ("" | it + getBadFingerprint(st) | st <- seq);
+}
+
+public str getPerfectFingerprint(node tree) {
+    // remove annotations because it makes it too perfect.
+    cleanNode = delAnnotationsRec(tree);
+    
+    // get node as string
+    return toString(cleanNode);
+}
+
+public str getBadFingerprint(node tree) {
 
     // remove literals and identifiers to make it dump
     tree = visit(tree) {

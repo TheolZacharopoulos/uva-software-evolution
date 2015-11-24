@@ -16,8 +16,8 @@ test bool testAddToBucket() {
     testBucket = addToBucket(treeSmall, testBucket);
     
     return (
-        getFingerprint(treeBig): [treeBig], 
-        getFingerprint(treeMedium): [treeMedium], 
-        getFingerprint(treeSmall): [treeSmall]
+        getBadFingerprint(treeBig): [treeBig], 
+        getBadFingerprint(treeMedium): [treeMedium], 
+        getBadFingerprint(treeSmall): [treeSmall]
     ) == testBucket;
 }
