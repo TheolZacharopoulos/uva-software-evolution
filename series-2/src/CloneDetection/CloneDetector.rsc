@@ -2,7 +2,6 @@ module CloneDetection::CloneDetector
 
 import CloneDetection::Utils;
 import Configurations;
-import CloneDetection::Utils::CloneStatementPairs;
 
 import lang::java::m3::AST;
 
@@ -23,7 +22,10 @@ Clones detectSequenceClones(set[Declaration] ast) {
     // Get max sequence length
     int maximumSequenceLength = getLargestSequenceSize(allSequences);
     
-    return for (
+    // Cloned sequences results
+    Clones cloneSequencePairs = newClones();
+    
+    for (
         sequence <- allSequences,
         sequenceLength := size(sequence),
         sequenceLength >= MINIMUM_SEQUENCE_LENGTH,
@@ -35,7 +37,19 @@ Clones detectSequenceClones(set[Declaration] ast) {
         // Place all subsequences of length (sequenceLength) into buckets according to subsequence hash
         SequenceBuckets sequenceBuckets = constructSequenceBuckets(subSequences);
         
-        // detect sequence clones
-        append detectClonesSequencesInBuckets(sequenceBuckets);
+        for (bucketHash <- sequenceBuckets) {
+            sequencesIndeces = index(sequenceBuckets[bucketHash]);
+            for (originSeqIndex <- sequencesIndeces, cloneSeqIndex <- sequencesIndeces, originSeqIndex != cloneSeqIndex) {
+                Sequence originSeq = sequenceBuckets[originSeqIndex];
+                Sequence cloneSeq = sequenceBuckets[cloneSeqIndex];
+                
+                if (getSimilarityFactor(originSeq, cloneSeq) >= SIMILARITY_THRESHOLD) {
+                    // TODO clear subclones here
+                    cloneSequencePairs = addClone(originSeq, cloneSeq, cloneSequencePairs);
+                }
+            }
+        }
     }
+    
+    return cloneSequencePairs;
 }

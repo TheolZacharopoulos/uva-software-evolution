@@ -13,14 +13,6 @@ Factory for creating new empty sequence buckets
 }
 SequenceBuckets newSequenceBuckets() = ();
 
-SequenceBuckets addSequenceToBucket(Sequence sequence, SequenceBuckets buckets) {
-    fingerPrint = getSequenceFingerprint(sequence);
-    
-    Sequences emptyList = [];
-    
-    return buckets[fingerPrint] ? emptyList += sequence;
-}
-
 @doc{
 Place all subsequences of length (sequenceLength) into buckets according to subsequence hash
 }

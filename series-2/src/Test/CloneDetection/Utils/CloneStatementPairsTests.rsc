@@ -10,13 +10,6 @@ test bool testAddClone() {
     return clones == [occurrance(getTestTreeBig(), getTestTreeBig())];
 }
 
-test bool testAddCloneSets() {
-    clones = newClones();
-    clones = addClone({getTestTreeBig(), getTestTreeSmall()}, {getTestTreeBig(), getTestTreeSmall()}, clones);
-    
-    return clones == [occurrance({getTestTreeBig(), getTestTreeSmall()}, {getTestTreeBig(), getTestTreeSmall()})];
-}
-
 test bool testSubTreeExists() {
     clones = newClones();
     clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);

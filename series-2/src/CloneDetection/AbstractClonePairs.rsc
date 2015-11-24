@@ -1,6 +1,11 @@
 module CloneDetection::AbstractClonePairs
 
-data ClonePair = occurrance(node origin, node clone);
+import CloneDetection::Utils::Sequences::StatementSequences;
+
+import lang::java::jdt::m3::AST;
+
+data ClonePair = occurrance(Statement origin, Statement clone)
+               | occurrance(Sequence originSeq, Statement cloneSeq);
 
 alias ClonePairs = list[ClonePair];
 

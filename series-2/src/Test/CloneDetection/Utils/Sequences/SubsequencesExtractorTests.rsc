@@ -1,4 +1,4 @@
-module Test::CloneDetection::Utils::Sequences::SubsequencesExtractorTest
+module Test::CloneDetection::Utils::Sequences::SubsequencesExtractorTests
 
 import CloneDetection::Utils::Sequences::SubsequencesExtractor;
 import Test::CloneDetection::Utils::TestTreeProvider;

@@ -1,13 +1,16 @@
 module CloneDetection::Utils::CloneStatementPairs
 
 import CloneDetection::Utils::TreeBucket;
+import CloneDetection::Utils::Sequences::StatementSequences;
 import Map;
 import List;
 
+// TODO change to Statement
 anno int node @ uniqueKey;
 
-data Clone = occurrance(node origin, node clone)
-           | occurrance(set[node] setOrigin, set[node] setClone);
+// TODO change node to Statement
+data Clone = occurrance(node origin, node clone) 
+           | occurrance(Sequence originSeq, Sequence cloneSeq);
 
 alias Clones = list[Clone];
 
@@ -19,7 +22,7 @@ Clones newClones() = [];
 @doc{
 Add clone pairs. Supports both nodes and sets of nodes.
 }
-Clones addClone(origin, clone, Clones clones) {
+Clones addClone(node origin, node clone, Clones clones) {
     
     pair = occurrance(origin, clone);
     
