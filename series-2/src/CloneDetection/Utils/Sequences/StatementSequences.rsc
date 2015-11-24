@@ -27,6 +27,27 @@ Sequences extractSequencesFromAST(set[Declaration] ast) {
 }
 
 @doc{
+Extract potentionally cloned sequences from the list of all sequences 
+}
+Sequences getSequencesContainingClones(Sequences sequences, Clones clones) {
+
+    list[Statement] statements = [];
+    
+    visit (clones) {
+        case Statement statement: {
+            statements += statement;
+        }
+    }
+
+    return [
+        sequence | sequence <- sequences, 
+        sequenceStatement <- sequence,
+        availableStatement <- statements,
+        availableStatement@uniqueKey == statement@uniqueKey
+    ];
+}
+
+@doc{
 Find the size of the largest sequence in the sequences list
 }
 int getLargestSequenceSize(Sequences sequences) {

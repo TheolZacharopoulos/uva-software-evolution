@@ -1,25 +1,21 @@
 module CloneDetection::Utils::Sequences::SequenceBucket
 
+import CloneDetection::Utils::CloneStatementPairs;
 import CloneDetection::Utils::Sequences::StatementSequences;
-import IO;
 
-alias SequenceBuckets = map[int, Sequences];
+import lang::java::jdt::m3::AST;
+
+alias SequenceBuckets = map[str, Sequences];
 
 @doc{
 Factory for creating new empty sequence buckets
 }
-Sequences newSequenceBucket() = [];
+SequenceBuckets newSequenceBuckets() = ();
 
-@doc{
-Build seuqnce bucket maps which contain all sequences devided by length
-}
-SequenceBuckets organizeSequenceBucketsByLength(Sequences sequences) {
-    SequenceBuckets buckets = ();
-    emptyBucket = newSequenceBucket();
+SequenceBuckets addSequenceToBucket(Sequence sequence, SequenceBuckets buckets) {
+    fingerPrint = getSequenceFingerprint(sequence);
     
-    for (sequence <- sequences) {
-        buckets[size(sequence)] ? emptyBucket += [sequence];
-    }
+    Sequences emptyList = [];
     
-    return buckets;
+    return buckets[fingerPrint] ? emptyList += sequence;
 }
