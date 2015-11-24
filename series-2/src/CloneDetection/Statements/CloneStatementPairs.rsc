@@ -14,21 +14,6 @@ import List;
 anno int Statement @ uniqueKey;
 
 @doc{
-Add clone pairs. Supports both nodes and sets of nodes.
-}
-ClonePairs addClone(Statement origin, Statement clone, ClonePairs clones) {
-    
-    pair = occurrance(origin, clone);
-    
-    // prevent for adding the same twice
-    for (existing <- clones, isMirrored(pair, existing)) {
-        return clones;
-    }
-    
-    return clones + pair;
-}
-
-@doc{
 Removes clone pair and returns the new clone set as a result
 }
 ClonePairs removeClone(subTree, ClonePairs clones) {
@@ -78,12 +63,4 @@ Detect if node (or node set) has already been registered in the results
 }
 bool doesSubTreeExist(subTree, ClonePairs clones) {
     return (false | true | occurrance(origin, clone) <- clones, origin == subTree || clone == subTree);
-}
-
-@doc{
-TODO Write test for this
-Check if two occurrances are mirrored
-}
-bool isMirrored(occurrance(origin, clone), occurrance(newOrigin, newClone)) {
-    return origin@uniqueKey == newClone@uniqueKey && clone@uniqueKey == newOrigin@uniqueKey;
 }

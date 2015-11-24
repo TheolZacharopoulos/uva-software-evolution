@@ -20,7 +20,7 @@ void main() {
     model = createAstsFromEclipseProject(getTestProjectLocation(), true);
     model = putIdentifiers(model);
     
-    clones = detectSequenceClones(model);
+    clones = detectExactClones(model);
     
     for (clone <- clones) {
         if (occurrance(Statement a, Statement b) := clone) {
