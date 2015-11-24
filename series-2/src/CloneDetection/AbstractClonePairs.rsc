@@ -7,7 +7,7 @@ alias Sequences = list[Sequence];
 
 data ClonePair 
         = occurrance(node origin, node clone) // TODO: make this Statement
-       | occurrance(Sequence originSeq, Statement cloneSeq);
+       | occurrance(Sequence originSeq, Sequence cloneSeq);
 
 alias ClonePairs = list[ClonePair];
 

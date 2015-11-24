@@ -11,11 +11,6 @@ import List;
 anno int node @ uniqueKey;
 
 @doc{
-Factory for creating new empty clone sets
-}
-ClonePairs newClonePairs() = [];
-
-@doc{
 Add clone pairs. Supports both nodes and sets of nodes.
 }
 ClonePairs addClone(node origin, node clone, ClonePairs clones) {

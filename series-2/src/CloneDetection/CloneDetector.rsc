@@ -9,6 +9,7 @@ import CloneDetection::Utils::TreeSimilarity;
 import CloneDetection::Utils::Sequences::StatementSequences;
 import CloneDetection::Utils::Sequences::SubsequencesExtractor;
 import CloneDetection::Utils::Sequences::SequenceBucket;
+import CloneDetection::Utils::Sequences::SequenceSimilarity;
 
 import Configurations;
 
@@ -51,12 +52,14 @@ ClonePairs detectSequenceClones(set[Declaration] ast) {
                 cloneSeqIndex <- sequencesIndeces, 
                 originSeqIndex != cloneSeqIndex) 
             {
-                Sequence originSeq = sequenceBuckets[originSeqIndex];
-                Sequence cloneSeq = sequenceBuckets[cloneSeqIndex];
+                Sequence originSeq = sequenceBuckets[bucketHash][originSeqIndex];
+                Sequence cloneSeq = sequenceBuckets[bucketHash][cloneSeqIndex];
                 
                 if (getSimilarityFactor(originSeq, cloneSeq) >= SIMILARITY_THRESHOLD) {
                     // TODO clear subclones here
-                    cloneSequencePairs = addClone(originSeq, cloneSeq, cloneSequencePairs);
+                    // TODO add clone sequences here
+                    // cloneSequencePairs = addClone(originSeq, cloneSeq, cloneSequencePairs);
+                    ;
                 }
             }
         }

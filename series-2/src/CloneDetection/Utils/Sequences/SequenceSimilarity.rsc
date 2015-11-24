@@ -4,10 +4,12 @@ import CloneDetection::Utils::TreeSimilarity;
 import CloneDetection::Utils::Sequences::StatementSequences;
 import CloneDetection::AbstractClonePairs;
 
+import List;
+
 @doc{
 Finds similarity factor based on two sequences
 }
-real getSimilarityFactor(Sequences sequenceA, Sequences sequenceB) {    
+real getSimilarityFactor(Sequence sequenceA, Sequence sequenceB) {    
     // TODO optimize by using cached factors as annotations
     return (
         0.0
