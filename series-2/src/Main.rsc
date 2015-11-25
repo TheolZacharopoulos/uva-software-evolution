@@ -17,10 +17,18 @@ anno loc Statement @ src;
 void main() {
     startProfiling = realTime() * 1.0;
     
-    model = createAstsFromEclipseProject(getTestProjectLocation(), true);
-    model = putIdentifiers(model);
+    // load asts
+    asts = createAstsFromEclipseProject(getTestProjectLocation(), true);
     
-    clones = detectExactClones(model);
+    endProfiling = realTime() * 1.0;
+    totalTime = (endProfiling - startProfiling) / 1000;    
+    println("Asts loaded in <totalTime> seconds");
+    
+    // -------------------------------------------------
+    startProfiling = realTime() * 1.0;
+    
+    asts = putIdentifiers(asts);    
+    clones = detectExactClones(asts);
     
     for (clone <- clones) {
         if (occurrance(Statement a, Statement b) := clone) {
@@ -33,5 +41,5 @@ void main() {
     
     endProfiling = realTime() * 1.0;
     totalTime = (endProfiling - startProfiling) / 1000;    
-    println("Total time: <totalTime> seconds");
+    println("Clone detection total time: <totalTime> seconds");
 }
