@@ -22,8 +22,8 @@ void main() {
     
     clones = detectExactClones(model);
     
-    for (clone <- clones) {
-        if (occurrance(Statement a, Statement b) := clone) {
+    for (cloneKey <- clones) {
+        if (occurrance(Statement a, Statement b) := clones[cloneKey]) {
             iprintln(a@src);
             println("-----");
             iprintln(b@src);
