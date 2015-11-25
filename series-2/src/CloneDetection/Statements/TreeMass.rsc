@@ -1,16 +1,21 @@
 module CloneDetection::Statements::TreeMass
 
+import Node;
+import List;
+import lang::java::jdt::m3::AST;
+
 @doc {
     Get the tree mass (number of nodes) of a given tree.
 }
-int getTreeMass(node tree) {
-    c = 0;
+int getTreeMass(Statement tree) {
+    mass = 0;
     bottom-up visit (tree) {
-        case node t: {
-            c += 1;
+        case Statement t: {
+            mass += 1;
         }
-    }    
-    return c;
+    }
+    
+    return mass;
 }
 
-int getTreeMass(set[node] trees) = (0 | it + getTreeMass(subTree) | subTree <- trees);
+int getTreeMass(set[Statement] trees) = (0 | it + getTreeMass(subTree) | subTree <- trees);
