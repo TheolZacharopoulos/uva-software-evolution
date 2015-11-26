@@ -66,7 +66,10 @@ bool doesSubTreeExist(Statement subTree, ClonePairs clones) {
     
     return clones[subTree@uniqueKey]?;
 
-    for (cloneKey <- clones, occurrance(Statement origin, Statement clone) := clones[cloneKey], origin == subTree) {
+    for (cloneKey <- clones, 
+        <Statement origin, Statement clone> := clones[cloneKey], 
+        origin == subTree) 
+    {
         cacheSubTreeExistance(subTree@uniqueKey);
         return true;
     }

@@ -31,7 +31,7 @@ void main() {
     clones = detectExactClones(asts);
     
     for (cloneKey <- clones) {
-        if (occurrance(Statement a, Statement b) := clones[cloneKey]) {
+        if (<Statement a, Statement b> := clones[cloneKey]) {
             iprintln(a@src);
             println("-----");
             iprintln(b@src);
