@@ -30,5 +30,5 @@ Sequences getSubSequences(Sequence sequence, int length) = [sequence] when lengt
 Extract subsequences from list of sequences
 }
 Sequences getSubSequences(Sequences sequences, int length) {
-    return ([] | it + getSubSequences(sequence, length) | sequence <- sequences);
+    return ([] | it + getSubSequences(sequence, length) | sequence <- sequences, size(sequence) >= length);
 }
