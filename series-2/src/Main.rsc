@@ -30,8 +30,8 @@ void main() {
     asts = putIdentifiers(asts);    
     clones = detectExactClones(asts);
     
-    for (cloneKey <- clones) {
-        if (occurrance(Statement a, Statement b) := clones[cloneKey]) {
+    for (clone <- clones) {
+        if (occurrance(Statement a, Statement b) := clone) {
             iprintln(a@src);
             println("-----");
             iprintln(b@src);
