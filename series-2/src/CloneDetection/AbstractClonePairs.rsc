@@ -7,8 +7,11 @@ anno int Statement @ uniqueKey;
 alias Sequence  = list[Statement];
 alias Sequences = list[Sequence];
 
-alias ClonePair  = tuple[Statement origin, Statement clone]; 
+alias ClonePair  = tuple[Statement origin, Statement clone];  
 alias ClonePairs = map[int, ClonePair];
+
+alias ClonePairSeq  = tuple[Sequence origin, Sequence clone];  
+alias ClonePairsSeq = map[set[int], ClonePairSeq];
 
 @doc{
 Adds clone pair to the list
