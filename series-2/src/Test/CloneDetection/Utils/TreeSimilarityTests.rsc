@@ -9,19 +9,15 @@ test bool testCompareTreesWhichAreEqual() {
     // same
     // sharedNodes = 5
     treeA = putIdentifiers(getTestTreeMedium()); // mass = 5
-                
-    treeB = putIdentifiers(getTestTreeMedium(), 
-                            50);
+    treeB = putIdentifiers(getTestTreeMedium(), 50);
     
-    return 1 == getSimilarityFactor(treeA, treeB);
+    return 1.0 == getSimilarityFactor(treeA, treeB);
 }
 
 test bool testCompareTreesWhichAreDifferent1() {
      // sharedNodes = 3, mass is equal
-    treeA = putIdentifiers(getTestTreeMedium()); // mass = 5
-                            
-    treeB = putIdentifiers(getTestTreeBig(), 
-                            50);
-                            
-    return 0.12 == getSimilarityFactor(treeA, treeB);
+    treeA = putIdentifiers(getTestTreeMedium()); // mass = 5                            
+    treeB = putIdentifiers(getTestTreeBig(), 50);
+         
+    return 0.53 == getSimilarityFactor(treeA, treeB);
 }

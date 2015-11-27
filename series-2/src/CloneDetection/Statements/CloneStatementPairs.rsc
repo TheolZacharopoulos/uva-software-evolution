@@ -64,6 +64,8 @@ ClonePairs detectClonesInBuckets(Buckets buckets, similarityThreshold) {
 
 bool doesSubTreeExist(Statement subTree, ClonePairs clones) {
     
+    // TODO: Fix this
+    
     return clones[subTree@uniqueKey]?;
 
     for (cloneKey <- clones, 
