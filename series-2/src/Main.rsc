@@ -28,7 +28,7 @@ void main() {
     startProfiling = realTime() * 1.0;
     
     asts = putIdentifiers(asts);    
-    clones = detectExactClones(asts);
+    clones = detectSequenceClones(asts);
     
     for (cloneKey <- clones) {
         if (<Statement a, Statement b> := clones[cloneKey]) {

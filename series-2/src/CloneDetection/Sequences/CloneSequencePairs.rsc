@@ -3,7 +3,7 @@ module CloneDetection::Sequences::CloneSequencePairs
 import CloneDetection::AbstractClonePairs;
 import CloneDetection::Sequences::StatementSequences;
 
-ClonePairs clearSequenceSubclones() {
+ClonePairsSeq clearSequenceSubclones() {
     // TODO:
-    return newClonePairs();
+    return newClonePairsSeq();
 }

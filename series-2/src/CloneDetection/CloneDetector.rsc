@@ -14,6 +14,7 @@ import CloneDetection::Sequences::SequenceSimilarity;
 import Configurations;
 
 import List;
+import IO;
 import lang::java::m3::AST;
 
 ClonePairs detectExactClones(set[Declaration] ast) {
@@ -22,7 +23,7 @@ ClonePairs detectExactClones(set[Declaration] ast) {
     return clones;
 }
 
-ClonePairs detectSequenceClones(set[Declaration] ast) {
+ClonePairsSeq detectSequenceClones(set[Declaration] ast) {
 
     // Get all the clone statement pairs
     ClonePairs cloneStatementPairs = detectExactClones(ast);
@@ -34,7 +35,7 @@ ClonePairs detectSequenceClones(set[Declaration] ast) {
     int maximumSequenceLength = getLargestSequenceSize(allSequences);
     
     // Cloned sequences results
-    ClonePairs cloneSequencePairs = newClonePairs();
+    ClonePairsSeq cloneSequencePairs = newClonePairsSeq();
     
     for (sequenceLength <- [MINIMUM_SEQUENCE_LENGTH .. maximumSequenceLength]) {
     
@@ -54,7 +55,7 @@ ClonePairs detectSequenceClones(set[Declaration] ast) {
             {
                 Sequence originSeq = sequenceBuckets[bucketHash][originSeqIndex];
                 Sequence cloneSeq = sequenceBuckets[bucketHash][cloneSeqIndex];
-                
+                        
                 if (getSimilarityFactor(originSeq, cloneSeq) >= SIMILARITY_THRESHOLD) {
                     // TODO clear subclones here
                     // TODO add clone sequences here

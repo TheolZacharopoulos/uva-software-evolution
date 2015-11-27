@@ -25,3 +25,5 @@ ClonePairs addClone(Statement origin, Statement clone, ClonePairs clones) {
 Factory for creating new empty clone pairs
 }
 ClonePairs newClonePairs() = ();
+
+ClonePairsSeq newClonePairsSeq() = ();
