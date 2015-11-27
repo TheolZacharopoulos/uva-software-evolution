@@ -28,7 +28,7 @@ ClonePairsSeq detectSequenceClones(set[Declaration] ast) {
     // Get all the clone statement pairs
     ClonePairs cloneStatementPairs = detectExactClones(ast);
     
-    // Build the list structures describing sequences
+    // * Build the list structures describing sequences
     Sequences allSequences = extractSequencesFromAST(ast);
     
     // Get max sequence length
@@ -37,26 +37,32 @@ ClonePairsSeq detectSequenceClones(set[Declaration] ast) {
     // Cloned sequences results
     ClonePairsSeq cloneSequencePairs = newClonePairsSeq();
     
+    // * For k = MinimumSequenceLengthThreshold to MaximumSequenceLength
     for (sequenceLength <- [MINIMUM_SEQUENCE_LENGTH .. maximumSequenceLength]) {
     
         // Get all subsequences of length sequenceLength
         Sequences subSequences = getSubSequences(allSequences, sequenceLength);
         
-        // Place all subsequences of length (sequenceLength) into buckets according to subsequence hash
+        // * Place all subsequences of length (sequenceLength) into buckets according to subsequence hash
         SequenceBuckets sequenceBuckets = constructSequenceBuckets(subSequences);
         
         for (bucketHash <- sequenceBuckets) {
         
             sequencesIndeces = index(sequenceBuckets[bucketHash]);
             
+            // * For each subsequence i and j in same bucket
             for (originSeqIndex <- sequencesIndeces, 
                 cloneSeqIndex <- sequencesIndeces, 
                 originSeqIndex != cloneSeqIndex) 
             {
-                Sequence originSeq = sequenceBuckets[bucketHash][originSeqIndex];
-                Sequence cloneSeq = sequenceBuckets[bucketHash][cloneSeqIndex];
-                        
-                if (getSimilarityFactor(originSeq, cloneSeq) >= SIMILARITY_THRESHOLD) {
+                Sequence originSubSeq = sequenceBuckets[bucketHash][originSeqIndex];
+                Sequence cloneSubSeq = sequenceBuckets[bucketHash][cloneSeqIndex];
+                
+                // * If CompareSequences (i,j,k) > SimilarityThreshold
+                if (getSimilarityFactor(originSubSeq, cloneSubSeq) >= SIMILARITY_THRESHOLD) {
+                    // * RemoveSequenceSubclonesOf(clones,i,j,k)
+                    // * AddSequenceClonePair(Clones,i,j,k)
+                    
                     // TODO clear subclones here
                     // TODO add clone sequences here
                     // cloneSequencePairs = addClone(originSeq, cloneSeq, cloneSequencePairs);
