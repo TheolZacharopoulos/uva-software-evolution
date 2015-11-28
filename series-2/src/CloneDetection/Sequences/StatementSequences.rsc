@@ -44,6 +44,8 @@ Sequences getSequencesContainingClones(Sequences sequences, ClonePairs clones) {
     ];
 }
 
+int getLargestSequenceSize([]) = 0;
+
 @doc{
 Find the size of the largest sequence in the sequences list
 }

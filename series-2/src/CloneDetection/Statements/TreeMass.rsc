@@ -7,7 +7,7 @@ import lang::java::jdt::m3::AST;
 @doc {
     Get the tree mass (number of nodes) of a given tree.
 }
-int getTreeMass(Statement tree) {
+int getTreeMass(tree) {
     mass = 0;
     bottom-up visit (tree) {
         case Statement t: {

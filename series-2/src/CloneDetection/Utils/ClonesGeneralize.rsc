@@ -3,10 +3,12 @@ module CloneDetection::Utils::ClonesGeneralize
 import CloneDetection::Statements::CloneStatementPairs;
 import CloneDetection::AbstractClonePairs;
 import CloneDetection::Statements::TreeSimilarity;
+import CloneDetection::Utils::ParentIndex;
 import Configurations;
 
 import IO;
 import Map;
+import Prelude;
 
 @doc{
     Convert Clone pair sequence to Clone pair.
@@ -31,25 +33,33 @@ ClonePairs generalizeClones(ClonePairsSeq clonePairsSeq) {
     ClonePairs clonesToGeneralize = clones;
     
     // * 2. While ClonesToGeneralize≠∅
-    for (clone <- clones, size(clonesToGeneralize) > 0) {
+    while (true) {
+    
+        if (size(clonesToGeneralize) == 0) break;
+        
+        currentKey = toList(domain(clonesToGeneralize))[0];
+        pair = clonesToGeneralize[currentKey];
         
         // * 3. Remove clone(i,j) from ClonesToGeneralize
-        clonesToGeneralize = removeCloneFromClonePairs(clones[clone].origin, clonesToGeneralize);
+        clonesToGeneralize = delete(clonesToGeneralize, currentKey);
+        
+        if (!hasParent(pair.origin)) continue;
         
         // * 4. If CompareClones(ParentOf(i), ParentOf(j)) > SimilarityThreshold
-        parentOfOrigin = getParentOf(clones[clone].origin);
-        parentOfClone = getParentOf(clones[clone].clone);
+        parentOfOrigin = getParentOf(pair.origin);
+        parentOfClone = getParentOf(pair.clone);
         if (getSimilarityFactor(parentOfOrigin, parentOfClone) >= SIMILARITY_THRESHOLD) {
         
             // * 5. RemoveClonePair(Clones,i,j)
-            clones = removeCloneFromClonePairs(clones[clone].origin, clones);
+            clones = removeCloneFromClonePairs(pair.origin, clones);
             
             // * 6. AddClonePair(Clones, ParentOf(i), ParentOf(j))
             clones = addCloneToClonePairs(parentOfOrigin, parentOfClone, clones); 
             
             // * 7. AddClonePair(ClonesToGeneralize, ParentOf(i),ParentOf(j))
             clonesToGeneralize = addCloneToClonePairs(parentOfOrigin, parentOfClone, clonesToGeneralize);
-        }
+        }    
     }
+
     return clones;
 }

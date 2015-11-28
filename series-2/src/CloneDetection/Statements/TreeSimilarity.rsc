@@ -9,20 +9,20 @@ import Node;
 import util::Math;
 import lang::java::jdt::m3::AST;
 
-anno int Statement @ uniqueKey;
+anno int node @ uniqueKey;
 
-real getSimilarityFactor(Statement subTreeA, Statement subTreeB) 
+real getSimilarityFactor(subTreeA, subTreeB) 
     = getCachedSimilarity(subTreeA@uniqueKey, subTreeB@uniqueKey) when isSimilarityCached(subTreeA@uniqueKey, subTreeB@uniqueKey);
 
 @doc{
 Quick check for identical trees
 }
-real getSimilarityFactor(Statement subTreeA, Statement subTreeB) = 1.0 when subTreeA == subTreeB;
+real getSimilarityFactor(subTreeA, subTreeB) = 1.0 when subTreeA == subTreeB;
 
 @doc{
 Get similarity factor using two statements
 }
-real getSimilarityFactor(Statement subTreeA, Statement subTreeB) {
+real getSimilarityFactor(subTreeA, subTreeB) {
     
     subTreeAMass = getTreeMass(subTreeA);
     subTreeBMass = getTreeMass(subTreeB);

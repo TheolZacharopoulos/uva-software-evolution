@@ -4,12 +4,13 @@ import CloneDetection::AbstractClonePairs;
 
 import lang::java::m3::AST;
 import Node;
+import Prelude;
 
 anno int Statement @ uniqueKey;
 anno int Declaration @ uniqueKey;
 anno int node @ uniqueKey;
 
-private map[int childOf, int parent] childrenToParent = ();
+private map[int childOf, node parent] childrenToParent = ();
 
 void setChildrenFromAParent(subTree) {
 
@@ -19,11 +20,11 @@ void setChildrenFromAParent(subTree) {
     for (child <- allChildrenNodes) {
         switch (child) {
             case Statement statement: {
-                childrenToParent[statement@uniqueKey] = parentUniqueKey;
+                childrenToParent[statement@uniqueKey] = subTree;
             }
             case list[Statement] block: {
                 for (statement <- block) {
-                    childrenToParent[statement@uniqueKey] = parentUniqueKey;
+                    childrenToParent[statement@uniqueKey] = subTree;
                 }
             }
         }

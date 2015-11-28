@@ -3,6 +3,7 @@ module CloneDetection::Utils::ASTIdentifier
 import CloneDetection::Utils::ParentIndex;
 
 import lang::java::m3::AST;
+import Prelude;
 
 anno int Statement @ uniqueKey;
 anno int Declaration @ uniqueKey;

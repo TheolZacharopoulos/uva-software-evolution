@@ -17,7 +17,7 @@ str SIMILAR_STR = "X";
 str SIMILAR_NUM = "6";
 bool SIMILAR_BOOL = true;
 
-public str getPerfectSeqFingerprint(Sequence seq) {
+public str getPerfectSeqFingerprint(seq) {
     return ("" | it + getPerfectFingerprint(st) | st <- seq);
 }
 
@@ -25,7 +25,7 @@ public str getBadSeqFingerprint(Sequence seq) {
     return ("" | it + getBadFingerprint(st) | st <- seq);
 }
 
-public str getPerfectFingerprint(Statement tree) {
+public str getPerfectFingerprint(tree) {
     // remove annotations because it makes it too perfect.
     cleanNode = delAnnotationsRec(tree);
     
@@ -33,7 +33,7 @@ public str getPerfectFingerprint(Statement tree) {
     return toString(cleanNode);
 }
 
-public str getBadFingerprint(Statement tree) {
+public str getBadFingerprint(tree) {
 
     // remove literals and identifiers to make it dump
     tree = visit(tree) {
