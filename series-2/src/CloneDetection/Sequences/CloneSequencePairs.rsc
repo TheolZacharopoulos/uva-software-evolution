@@ -3,6 +3,8 @@ module CloneDetection::Sequences::CloneSequencePairs
 import CloneDetection::AbstractClonePairs;
 import CloneDetection::Sequences::StatementSequences;
 
+import Map;
+
 @doc{
 Adds sequence clone pair
 }
