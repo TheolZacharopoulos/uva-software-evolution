@@ -6,6 +6,7 @@ import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 import lang::java::m3::Core;
 
+import CloneDetection::Utils::ClonesGeneralize;
 import CloneDetection::CloneDetector;
 import CloneDetection::AbstractClonePairs;
 
@@ -29,14 +30,16 @@ void main() {
     // -------------------------------------------------
     startProfiling = realTime() * 1.0;
     
-    asts = putIdentifiers(asts);    
-    clones = detectSequenceClones(asts);
+    asts = putIdentifiers(asts);
+    clonesSeqs = detectSequenceClones(asts);
     
-    for (cloneKey <- clones) {
-        if (<Sequence a, Sequence b> := clones[cloneKey]) {
-            iprintln(a[0]@src);
+    clonePairs = generalizeClones(clonesSeqs);
+    
+    for (cloneKey <- clonePairs) {
+        if (<origin, clone> := clonePairs[cloneKey]) {
+            iprintln(origin@src);
             println("-----");
-            iprintln(b[0]@src);
+            iprintln(clone@src);
             println("=========================================");
         }
     }
