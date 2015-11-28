@@ -8,6 +8,7 @@ import Exception;
 @doc{
 Extracts all possible subsequences from a sequence
 }
+Sequences getSubSequences([], _) = [];
 Sequences getSubSequences(Sequence sequence, int length) throws IllegalArgument {
     if (length > size(sequence)) {
         throw IllegalArgument("Length cannot be more than the size of the sequence");
