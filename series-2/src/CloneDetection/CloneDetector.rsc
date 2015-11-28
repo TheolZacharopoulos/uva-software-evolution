@@ -10,6 +10,7 @@ import CloneDetection::Sequences::StatementSequences;
 import CloneDetection::Sequences::SubsequencesExtractor;
 import CloneDetection::Sequences::SequenceBucket;
 import CloneDetection::Sequences::SequenceSimilarity;
+import CloneDetection::Sequences::CloneSequencePairs;
 
 import Configurations;
 
@@ -25,9 +26,6 @@ ClonePairs detectExactClones(set[Declaration] ast) {
 
 ClonePairsSeq detectSequenceClones(set[Declaration] ast) {
 
-    // Get all the clone statement pairs
-    ClonePairs cloneStatementPairs = detectExactClones(ast);
-    
     // * Build the list structures describing sequences
     Sequences allSequences = extractSequencesFromAST(ast);
     
@@ -35,7 +33,7 @@ ClonePairsSeq detectSequenceClones(set[Declaration] ast) {
     int maximumSequenceLength = getLargestSequenceSize(allSequences);
     
     // Cloned sequences results
-    ClonePairsSeq cloneSequencePairs = newClonePairsSeq();
+    ClonePairsSeq cloneSequencePairs = newClonePairsSeq();    
     
     // * For k = MinimumSequenceLengthThreshold to MaximumSequenceLength
     for (sequenceLength <- [MINIMUM_SEQUENCE_LENGTH .. maximumSequenceLength]) {
@@ -61,12 +59,9 @@ ClonePairsSeq detectSequenceClones(set[Declaration] ast) {
                 // * If CompareSequences (i,j,k) > SimilarityThreshold
                 if (getSimilarityFactor(originSubSeq, cloneSubSeq) >= SIMILARITY_THRESHOLD) {
                     // * RemoveSequenceSubclonesOf(clones,i,j,k)
-                    // * AddSequenceClonePair(Clones,i,j,k)
                     
-                    // TODO clear subclones here
-                    // TODO add clone sequences here
-                    // cloneSequencePairs = addClone(originSeq, cloneSeq, cloneSequencePairs);
-                    ;
+                    // * AddSequenceClonePair(Clones,i,j,k)
+                    cloneSequencePairs = addSeqClone(originSubSeq, cloneSubSeq, cloneSequencePairs);
                 }
             }
         }

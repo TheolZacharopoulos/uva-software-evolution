@@ -7,6 +7,8 @@ import lang::java::jdt::m3::AST;
 import lang::java::m3::Core;
 
 import CloneDetection::CloneDetector;
+import CloneDetection::AbstractClonePairs;
+
 import CloneDetection::Utils;
 
 import Prelude;
@@ -31,10 +33,10 @@ void main() {
     clones = detectSequenceClones(asts);
     
     for (cloneKey <- clones) {
-        if (<Statement a, Statement b> := clones[cloneKey]) {
-            iprintln(a@src);
+        if (<Sequence a, Sequence b> := clones[cloneKey]) {
+            iprintln(a);
             println("-----");
-            iprintln(b@src);
+            iprintln(b);
             println("=========================================");
         }
     }
