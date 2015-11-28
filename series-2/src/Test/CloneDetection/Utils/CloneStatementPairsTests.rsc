@@ -9,7 +9,7 @@ import Set;
 
 test bool testAddClone() {
     clones = newClonePairs();
-    clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
+    clones = addCloneToClonePairs(getTestTreeBig(), getTestTreeBig(), clones);
     
     return range(clones) == {<getTestTreeBig(), getTestTreeBig()>};
 }
@@ -23,16 +23,16 @@ test bool testSubTreeExists() {
     treeSmall = getTestTreeSmall();
     treeSmallClone = getTestTreeSmall();
     
-    clones = addClone(treeBig, treeBigClone, clones);
-    clones = addClone(treeSmall, treeSmallClone, clones);
+    clones = addCloneToClonePairs(treeBig, treeBigClone, clones);
+    clones = addCloneToClonePairs(treeSmall, treeSmallClone, clones);
     
     return doesSubTreeExist(treeSmall, clones);
 }
 
 test bool testSubTreeDoesNotExists() {
     clones = newClonePairs();
-    clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
-    clones = addClone(getTestTreeSmall(), getTestTreeSmall(), clones);
+    clones = addCloneToClonePairs(getTestTreeBig(), getTestTreeBig(), clones);
+    clones = addCloneToClonePairs(getTestTreeSmall(), getTestTreeSmall(), clones);
     
     return doesSubTreeExist(getTestTreeMedium(), clones) == false;
 }
@@ -44,10 +44,10 @@ test bool testRemoveClone() {
     treeD = getTestTreeSmall();
     
     clones = newClonePairs();
-    clones = addClone(treeA, treeC, clones);
-    clones = addClone(treeB, treeD, clones);
+    clones = addCloneToClonePairs(treeA, treeC, clones);
+    clones = addCloneToClonePairs(treeB, treeD, clones);
     
-    clones = removeClone(treeB, clones);
+    clones = removeCloneFromClonePairs(treeB, clones);
     
     return range(clones) == {<treeA, treeC>};
 }
@@ -59,10 +59,10 @@ test bool testRemoveClone2() {
     treeD = getTestTreeSmall();
     
     clones = newClonePairs();
-    clones = addClone(treeA, treeC, clones);
-    clones = addClone(treeB, treeD, clones);
+    clones = addCloneToClonePairs(treeA, treeC, clones);
+    clones = addCloneToClonePairs(treeB, treeD, clones);
     
-    clones = removeClone(treeA, clones);
+    clones = removeCloneFromClonePairs(treeA, clones);
     
     return range(clones) == {<treeB, treeD>};
 }
@@ -74,7 +74,7 @@ test bool testClearSubTreesFromSet() {
     treeD = getTestTreeSmall();
     
     clones = newClonePairs();
-    clones = addClone(treeA, treeC, clones);
+    clones = addCloneToClonePairs(treeA, treeC, clones);
     
     clones = clearSubTrees(treeA, clones);
     clones = clearSubTrees(treeC, clones);

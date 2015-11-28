@@ -45,27 +45,28 @@ ClonePairsSeq detectSequenceClones(set[Declaration] ast) {
         SequenceBuckets sequenceBuckets = constructSequenceBuckets(subSequences);
         
         for (bucketHash <- sequenceBuckets) {
-        
+
             sequencesIndeces = index(sequenceBuckets[bucketHash]);
-            
+
             // * For each subsequence i and j in same bucket
-            for (originSeqIndex <- sequencesIndeces, 
-                cloneSeqIndex <- sequencesIndeces, 
-                originSeqIndex != cloneSeqIndex) 
+            for (originSeqIndex <- sequencesIndeces,
+                cloneSeqIndex <- sequencesIndeces,
+                originSeqIndex != cloneSeqIndex)
             {
                 Sequence originSubSeq = sequenceBuckets[bucketHash][originSeqIndex];
                 Sequence cloneSubSeq = sequenceBuckets[bucketHash][cloneSeqIndex];
-                
+
                 // * If CompareSequences (i,j,k) > SimilarityThreshold
                 if (getSimilarityFactor(originSubSeq, cloneSubSeq) >= SIMILARITY_THRESHOLD) {
-                    // * RemoveSequenceSubclonesOf(clones,i,j,k)
-                    
-                    // * AddSequenceClonePair(Clones,i,j,k)
+
+                    // * RemoveSequenceSubclonesOf(clones, i, j, k)
+                    cloneSequencePairs = removeSequenceSubclones(originSubSeq, cloneSubSeq, cloneSequencePairs);
+
+                    // * AddSequenceClonePair(Clones, i, j, k)
                     cloneSequencePairs = addSeqClone(originSubSeq, cloneSubSeq, cloneSequencePairs);
                 }
             }
         }
-    }
-    
+    }    
     return cloneSequencePairs;
 }

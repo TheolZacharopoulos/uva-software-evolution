@@ -16,7 +16,7 @@ alias ClonePairsSeq = map[set[int], ClonePairSeq];
 @doc{
 Adds clone pair to the list
 }
-ClonePairs addClone(Statement origin, Statement clone, ClonePairs clones) {
+ClonePairs addCloneToClonePairs(Statement origin, Statement clone, ClonePairs clones) {
     clones[origin@uniqueKey] = <origin, clone>;
     return clones;
 }

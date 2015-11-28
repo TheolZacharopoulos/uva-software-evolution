@@ -17,12 +17,12 @@ anno int Statement @ uniqueKey;
 @doc{
 Removes clone pair and returns the new clone set as a result
 }
-ClonePairs removeClone(Statement subTree, ClonePairs clones) = delete(clones, subTree@uniqueKey) when clones[subTree@uniqueKey]?;
+ClonePairs removeCloneFromClonePairs(Statement subTree, ClonePairs clones) = delete(clones, subTree@uniqueKey) when clones[subTree@uniqueKey]?;
 
 @doc{
 If the previous removesClone override does not match - return the clone pairs map as it was
 }
-default ClonePairs removeClone(Statement subTree, ClonePairs clones) = clones;
+default ClonePairs removeCloneFromClonePairs(Statement subTree, ClonePairs clones) = clones;
 
 @doc{
 Removes all sub tree that may occur in the clone results
@@ -31,7 +31,7 @@ ClonePairs clearSubTrees(tree, ClonePairs clones) {
     bottom-up visit (tree) {
         case Statement subTree: {
             if (doesSubTreeExist(subTree, clones) && subTree@uniqueKey != tree@uniqueKey) {
-                clones = removeClone(subTree, clones);
+                clones = removeCloneFromClonePairs(subTree, clones);
             }
         }
     }    
@@ -56,7 +56,7 @@ ClonePairs detectClonesInBuckets(Buckets buckets, similarityThreshold) {
         {
             clones = clearSubTrees(originSubtree, clones);
             clones = clearSubTrees(cloneSubtree, clones);
-            clones = addClone(originSubtree, cloneSubtree, clones);
+            clones = addCloneToClonePairs(originSubtree, cloneSubtree, clones);
         }
     }    
     return clones;

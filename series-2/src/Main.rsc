@@ -34,9 +34,9 @@ void main() {
     
     for (cloneKey <- clones) {
         if (<Sequence a, Sequence b> := clones[cloneKey]) {
-            iprintln(a);
+            iprintln(a[0]@src);
             println("-----");
-            iprintln(b);
+            iprintln(b[0]@src);
             println("=========================================");
         }
     }
