@@ -52,6 +52,7 @@ ClonePairs generalizeClones(ClonePairsSeq clonePairsSeq) {
         
             // * 5. RemoveClonePair(Clones,i,j)
             clones = removeCloneFromClonePairs(pair.origin, clones);
+            clones = removeCloneFromClonePairs(pair.clone, clones);
             
             // * 6. AddClonePair(Clones, ParentOf(i), ParentOf(j))
             clones = addCloneToClonePairs(parentOfOrigin, parentOfClone, clones); 

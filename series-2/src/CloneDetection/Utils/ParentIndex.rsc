@@ -27,6 +27,14 @@ void setChildrenFromAParent(subTree) {
                     childrenToParent[statement@uniqueKey] = subTree;
                 }
             }
+            case Declaration declaration: {
+                childrenToParent[declaration@uniqueKey] = subTree;
+            }
+            case list[Declaration] declarations: {
+                for (declaration <- declarations) {
+                    childrenToParent[declaration@uniqueKey] = subTree;
+                }
+            }
         }
     }
 }

@@ -12,17 +12,17 @@ import Map;
 import List;
 import IO;
 
-anno int Statement @ uniqueKey;
+anno int node @ uniqueKey;
 
 @doc{
 Removes clone pair and returns the new clone set as a result
 }
-ClonePairs removeCloneFromClonePairs(Statement subTree, ClonePairs clones) = delete(clones, subTree@uniqueKey) when clones[subTree@uniqueKey]?;
+ClonePairs removeCloneFromClonePairs(node subTree, ClonePairs clones) = delete(clones, subTree@uniqueKey) when clones[subTree@uniqueKey]?;
 
 @doc{
 If the previous removesClone override does not match - return the clone pairs map as it was
 }
-default ClonePairs removeCloneFromClonePairs(Statement subTree, ClonePairs clones) = clones;
+default ClonePairs removeCloneFromClonePairs(node subTree, ClonePairs clones) = clones;
 
 @doc{
 Removes all sub tree that may occur in the clone results

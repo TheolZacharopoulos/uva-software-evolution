@@ -39,4 +39,4 @@ public int TREE_DIFF_MASS_THRESHOLD = 10;
  * The similarity threshold parameter allows the user to specify
  * how similar two sub-trees should be.
  */
-public real SIMILARITY_THRESHOLD = 0.8;
+public real SIMILARITY_THRESHOLD = 1.00;
