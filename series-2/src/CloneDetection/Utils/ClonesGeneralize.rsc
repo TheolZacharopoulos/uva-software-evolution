@@ -48,7 +48,7 @@ ClonePairs generalizeClones(ClonePairsSeq clonePairsSeq) {
         // * 4. If CompareClones(ParentOf(i), ParentOf(j)) > SimilarityThreshold
         parentOfOrigin = getParentOf(pair.origin);
         parentOfClone = getParentOf(pair.clone);
-        if (getSimilarityFactor(parentOfOrigin, parentOfClone) >= SIMILARITY_THRESHOLD) {
+        if (parentOfOrigin@uniqueKey != parentOfClone@uniqueKey && getSimilarityFactor(parentOfOrigin, parentOfClone) >= SIMILARITY_THRESHOLD) {
         
             // * 5. RemoveClonePair(Clones,i,j)
             clones = removeCloneFromClonePairs(pair.origin, clones);
