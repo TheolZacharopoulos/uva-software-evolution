@@ -36,7 +36,7 @@ ClonePairsSeq detectSequenceClones(set[Declaration] ast) {
     ClonePairsSeq cloneSequencePairs = newClonePairsSeq();    
     
     // * For k = MinimumSequenceLengthThreshold to MaximumSequenceLength
-    for (sequenceLength <- [MINIMUM_SEQUENCE_LENGTH .. maximumSequenceLength]) {
+    for (sequenceLength <- [MINIMUM_SEQUENCE_LENGTH .. (maximumSequenceLength + 1)]) {
     
         // Get all subsequences of length sequenceLength
         Sequences subSequences = getSubSequences(allSequences, sequenceLength);
