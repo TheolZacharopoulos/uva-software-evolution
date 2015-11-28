@@ -16,10 +16,17 @@ test bool testAddClone() {
 
 test bool testSubTreeExists() {
     clones = newClonePairs();
-    clones = addClone(getTestTreeBig(), getTestTreeBig(), clones);
-    clones = addClone(getTestTreeSmall(), getTestTreeSmall(), clones);
     
-    return doesSubTreeExist(getTestTreeSmall(), clones);
+    treeBig = getTestTreeBig();
+    treeBigClone = getTestTreeBig();
+    
+    treeSmall = getTestTreeSmall();
+    treeSmallClone = getTestTreeSmall();
+    
+    clones = addClone(treeBig, treeBigClone, clones);
+    clones = addClone(treeSmall, treeSmallClone, clones);
+    
+    return doesSubTreeExist(treeSmall, clones);
 }
 
 test bool testSubTreeDoesNotExists() {
@@ -40,7 +47,7 @@ test bool testRemoveClone() {
     clones = addClone(treeA, treeC, clones);
     clones = addClone(treeB, treeD, clones);
     
-    clones = removeClone(treeD, clones);
+    clones = removeClone(treeB, clones);
     
     return range(clones) == {<treeA, treeC>};
 }
@@ -55,7 +62,7 @@ test bool testRemoveClone2() {
     clones = addClone(treeA, treeC, clones);
     clones = addClone(treeB, treeD, clones);
     
-    clones = removeClone(treeC, clones);
+    clones = removeClone(treeA, clones);
     
     return range(clones) == {<treeB, treeD>};
 }
