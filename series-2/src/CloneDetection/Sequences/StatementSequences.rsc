@@ -54,4 +54,4 @@ int getLargestSequenceSize(Sequences sequences) {
 @doc{
 Extracts all unique keys from a sequence
 }
-list[int] getSequenceUniqueKeys(Sequence sequence) = [statement@uniqueKey | statement <- sequence];
+set[int] getSequenceUniqueKeys(Sequence sequence) = [statement@uniqueKey | statement <- sequence];
