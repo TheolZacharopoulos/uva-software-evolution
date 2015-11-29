@@ -14,6 +14,9 @@ ClonePairsSeq addSeqClone(Sequence origin, Sequence clone, ClonePairsSeq clones)
     return clones;
 }
 
+@doc{
+    Removes sequence subclones of a given sequence
+}
 ClonePairsSeq removeSequenceSubclones(Sequence origin, Sequence clone, ClonePairsSeq clones) {
     originKeys = getSequenceUniqueKeys(origin);
     cloneKeys  = getSequenceUniqueKeys(clone);
@@ -23,9 +26,4 @@ ClonePairsSeq removeSequenceSubclones(Sequence origin, Sequence clone, ClonePair
     }
     
     return clones;
-}
-
-ClonePairsSeq clearSequenceSubclones() {
-    // TODO:
-    return newClonePairsSeq();
 }

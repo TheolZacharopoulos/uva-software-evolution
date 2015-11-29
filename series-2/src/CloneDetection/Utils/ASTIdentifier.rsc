@@ -24,6 +24,7 @@ Creates unique identifiers for each node in the AST
             
             insert subTree;
         }
+        
         // TODO find out how to remove this clone
         case Declaration subTree: {
             counter += 1;

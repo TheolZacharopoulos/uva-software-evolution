@@ -18,8 +18,7 @@ Sequences extractSequencesFromAST(set[Declaration] ast) {
                 sequences += [sequence];
             }
         }
-    }
-    
+    }    
     return sequences;
 }
 
@@ -43,8 +42,6 @@ Sequences getSequencesContainingClones(Sequences sequences, ClonePairs clones) {
         availableStatement@uniqueKey == statement@uniqueKey
     ];
 }
-
-int getLargestSequenceSize([]) = 0;
 
 @doc{
 Find the size of the largest sequence in the sequences list
