@@ -6,15 +6,19 @@ import CloneDetection::AbstractClonePairs;
 
 import List;
 
+anno int Statement @ uniqueKey;
+anno int Declaration @ uniqueKey;
+
 @doc{
 Finds similarity factor based on two sequences
 }
-real getSimilarityFactor(Sequence sequenceA, Sequence sequenceB) {    
-    // TODO optimize by using cached factors as annotations
+real getSimilarityFactor(Sequence sequenceA, Sequence sequenceB) {
     return (
         0.0
       | it + getSimilarityFactor(sequenceA[currentIndex], sequenceB[currentIndex]) 
       | currentIndex <- index(sequenceA),
-        sequenceA[currentIndex]@uniqueKey != sequenceB[currentIndex]@uniqueKey
+        statementA := sequenceA[currentIndex],
+        statementB := sequenceB[currentIndex],
+        statementA@uniqueKey != statementB@uniqueKey
     ) / size(sequenceA);  
 }

@@ -5,6 +5,10 @@ import CloneDetection::AbstractClonePairs;
 import List;
 import lang::java::jdt::m3::AST;
 
+anno int node @ uniqueKey;
+anno int Statement @ uniqueKey;
+anno int Declaration @ uniqueKey;
+
 @doc{
 Get all possible sequences from the AST
 }
