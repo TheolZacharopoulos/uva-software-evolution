@@ -13,9 +13,11 @@ int getTreeMass(tree) {
         case Statement t: {
             mass += 1;
         }
+        
+        case Expression t: {
+            mass += 1;
+        }
     }
     
     return mass;
 }
-
-int getTreeMass(set[Statement] trees) = (0 | it + getTreeMass(subTree) | subTree <- trees);
