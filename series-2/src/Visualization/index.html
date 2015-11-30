@@ -10,6 +10,11 @@
 <script src="js/Consts.js"></script>
 <script>
 
+// size of the wheel
+const diameter = DIAMETER,
+      radius = diameter / 2,
+      innerRadius = radius - 120;
+	  
 // Make a full circle
 const cluster = d3.layout.cluster()
 	    .size([DEGREES, innerRadius])
