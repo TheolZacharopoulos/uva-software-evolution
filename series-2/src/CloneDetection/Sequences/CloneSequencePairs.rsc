@@ -9,7 +9,7 @@ import Map;
 Adds sequence clone pair
 }
 ClonePairsSeq addSeqClone(Sequence origin, Sequence clone, ClonePairsSeq clones) {
-    clones[getSequenceUniqueKeys(origin)] = <origin, clone>;
+    clones[getSequenceUniqueKeys(origin)] = sequence(origin, clone);
     
     return clones;
 }

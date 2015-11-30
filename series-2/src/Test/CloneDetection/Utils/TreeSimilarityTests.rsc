@@ -19,5 +19,7 @@ test bool testCompareTreesWhichAreDifferent1() {
     treeA = putIdentifiers(getTestTreeMedium()); // mass = 5                            
     treeB = putIdentifiers(getTestTreeBig(), 50);
          
-    return 0.1230769231 == getSimilarityFactor(treeA, treeB);
+     println( getSimilarityFactor(treeA, treeB));
+         
+    return 0.1194029851 == getSimilarityFactor(treeA, treeB);
 }
