@@ -54,7 +54,7 @@ real getSimilarityFactor(subTreeA, subTreeB) {
     subTreeBDifferentNodes = subTreeBMass - sharedNodes;
     
     // TODO remove precision
-    real similarityFactor = precision(toReal(2 * sharedNodes) / toReal((2 * sharedNodes) + subTreeADifferentNodes + subTreeBDifferentNodes), 2);
+    real similarityFactor = toReal(2 * sharedNodes) / toReal((2 * sharedNodes) + subTreeADifferentNodes + subTreeBDifferentNodes);
     
     // Cache similarity
     cacheSimilarity(subTreeA@uniqueKey, subTreeB@uniqueKey, similarityFactor);
