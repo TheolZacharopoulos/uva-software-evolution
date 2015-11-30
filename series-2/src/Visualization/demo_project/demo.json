@@ -1,0 +1,61 @@
+// A simple clone detection output
+
+{
+  "_comment_dirs": "*** Directories which include files with clones ***",
+  "directories": [
+      "dir_1",
+      "dir_2"
+  ],
+
+  "_comment_files": "*** Files which include clones ***",
+  "files": [
+    {
+      "name": "file_1",
+      "dir" : "dir_1"
+    },
+    {
+      "name": "file_2",
+      "dir" : "dir_2"
+    }
+  ],
+
+  "_comment_clones": "*** Describe the clone pairs ***",
+  "clone_pairs": [
+
+    {
+      "_comment_clone": "*** A clone pair definition ***",
+
+      "id": "clone_1",
+
+      "origin_location": {
+        "file": "file_1",
+        "clone_start_line": 5,
+        "clone_end_line": 10
+      },
+
+      "clone_location": {
+        "file": "file_1",
+        "clone_start_line": 25,
+        "clone_end_line": 30
+      }
+    },
+
+    {
+      "id": "clone_2",
+
+      "origin_location": {
+        "file": "file_1",
+        "clone_start_line": 5,
+        "clone_end_line": 10
+      },
+
+      "clone_location": {
+        "file": "file_2",
+        "clone_start_line": 15,
+        "clone_end_line": 20
+      }
+    }
+
+  ]
+
+}
