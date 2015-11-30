@@ -36,7 +36,9 @@ void main() {
     clonePairs = generalizeClones(clonesSeqs);
     
     for (cloneKey <- clonePairs) {
-        if (<origin, clone> := clonePairs[cloneKey]) {
+        if (sequence(originSeq, cloneSeq) := clonePairs[cloneKey]) {
+            origin = originSeq[0];
+            clone = cloneSeq[0];
             iprintln(origin@src);
             println("-----");
             iprintln(clone@src);

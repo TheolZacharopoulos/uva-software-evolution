@@ -18,12 +18,6 @@ import List;
 import IO;
 import lang::java::m3::AST;
 
-ClonePairs detectExactClones(set[Declaration] ast) {
-    buckets = extractBucketsFromAST(ast, TREE_MASS_THRESHOLD);
-    clones = detectClonesInBuckets(buckets, 1.0);    
-    return clones;
-}
-
 ClonePairsSeq detectSequenceClones(set[Declaration] ast) {
 
     // * Build the list structures describing sequences

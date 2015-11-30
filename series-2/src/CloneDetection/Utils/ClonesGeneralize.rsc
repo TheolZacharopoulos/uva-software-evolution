@@ -6,7 +6,6 @@ import CloneDetection::Statements::TreeSimilarity;
 import CloneDetection::Utils::ParentIndex;
 import Configurations;
 
-import IO;
 import Map;
 import Prelude;
 
@@ -16,10 +15,8 @@ import Prelude;
 ClonePairs clonePairsSeqToClonePairs(ClonePairsSeq clonePairsSeq) {
     ClonePairs clonePairs = newClonePairs();
 
-    for (cloneKey <- clonePairsSeq) {
-        if (<Sequence originSeq, Sequence cloneSeq> := clonePairsSeq[cloneKey]) {
-            clonePairs = addCloneToClonePairs(originSeq[0], cloneSeq[0], clonePairs);    
-        }
+    for (cloneKey <- clonePairsSeq, sequence(Sequence origin, Sequence clone) := clonePairsSeq[cloneKey]) {
+        clonePairs = addCloneToClonePairs(origin, clone, clonePairs);
     }
     return clonePairs;
 }
@@ -34,7 +31,7 @@ ClonePairs generalizeClones(ClonePairsSeq clonePairsSeq) {
     
     // * 2. While ClonesToGeneralize≠∅
     while (true) {
-    
+        
         if (size(clonesToGeneralize) == 0) break;
         
         currentKey = toList(domain(clonesToGeneralize))[0];
@@ -48,7 +45,8 @@ ClonePairs generalizeClones(ClonePairsSeq clonePairsSeq) {
         // * 4. If CompareClones(ParentOf(i), ParentOf(j)) > SimilarityThreshold
         parentOfOrigin = getParentOf(pair.origin);
         parentOfClone = getParentOf(pair.clone);
-        if (parentOfOrigin@uniqueKey != parentOfClone@uniqueKey && getSimilarityFactor(parentOfOrigin, parentOfClone) >= SIMILARITY_THRESHOLD) {
+        if (parentOfOrigin@uniqueKey != parentOfClone@uniqueKey && 
+            getSimilarityFactor(parentOfOrigin, parentOfClone) >= SIMILARITY_THRESHOLD) {
         
             // * 5. RemoveClonePair(Clones,i,j)
             clones = removeCloneFromClonePairs(pair.origin, clones);

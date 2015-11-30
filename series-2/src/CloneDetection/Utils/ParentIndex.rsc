@@ -42,5 +42,17 @@ void setChildrenFromAParent(subTree) {
 bool hasParent(Statement tree) = childrenToParent[tree@uniqueKey]?;
 bool hasParent(Declaration tree) = childrenToParent[tree@uniqueKey]?;
 
+bool hasParent(Sequence tree) {
+    firstStatement = tree[0];
+    
+    return childrenToParent[firstStatement@uniqueKey]?;
+}
+
 node getParentOf(Statement tree) = childrenToParent[tree@uniqueKey];
 node getParentOf(Declaration tree) = childrenToParent[tree@uniqueKey];
+
+node getParentOf(Sequence tree) {
+    firstStatement = tree[0];
+    
+    return childrenToParent[firstStatement@uniqueKey];
+}

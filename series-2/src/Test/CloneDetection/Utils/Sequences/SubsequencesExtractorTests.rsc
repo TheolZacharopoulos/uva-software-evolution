@@ -6,7 +6,7 @@ import Test::CloneDetection::Utils::TestTreeProvider;
 import lang::java::jdt::m3::AST;
 
 test bool testGetSubSequences() {
-    sequence = [
+    testSequence = [
       expressionStatement(methodCall(
           false,
           qualifiedName(
@@ -30,8 +30,7 @@ test bool testGetSubSequences() {
           [stringLiteral("\"3\"")]))
     ];
     
-    subSequences = getSubSequences(sequence, 2);
-    
+    subSequences = getSubSequences(testSequence, 2);
     return subSequences == [
         [
           expressionStatement(methodCall(

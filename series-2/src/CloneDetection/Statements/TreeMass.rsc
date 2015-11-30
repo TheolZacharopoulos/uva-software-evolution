@@ -10,11 +10,7 @@ import lang::java::jdt::m3::AST;
 int getTreeMass(tree) {
     mass = 0;
     bottom-up visit (tree) {
-        case Statement t: {
-            mass += 1;
-        }
-        
-        case Expression t: {
+        case node t: {
             mass += 1;
         }
     }

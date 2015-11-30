@@ -4,4 +4,6 @@ import CloneDetection::Statements::TreeMass;
 import Test::CloneDetection::Utils::TestTreeProvider;
 import IO;
 
-test bool testGetMassForATree() = getTreeMass(getTestTreeBig()) == 11;
+test bool testGetMassForATree() {
+    return getTreeMass(getTestTreeBig()) == 48;
+}

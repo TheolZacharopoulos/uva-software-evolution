@@ -11,7 +11,7 @@ import lang::java::jdt::m3::AST;
 
 anno int node @ uniqueKey;
 
-real getSimilarityFactor(subTreeA, subTreeB) 
+real getSimilarityFactor(node subTreeA, node subTreeB) 
     = getCachedSimilarity(subTreeA@uniqueKey, subTreeB@uniqueKey) when isSimilarityCached(subTreeA@uniqueKey, subTreeB@uniqueKey);
 
 @doc{
@@ -54,10 +54,10 @@ real getSimilarityFactor(subTreeA, subTreeB) {
     subTreeBDifferentNodes = subTreeBMass - sharedNodes;
     
     // TODO remove precision
-    real similarityFactor = precision(toReal(2 * sharedNodes) / toReal((2 * sharedNodes) + subTreeADifferentNodes + subTreeBDifferentNodes), 2);
+    real similarityFactor = toReal(2 * sharedNodes) / toReal((2 * sharedNodes) + subTreeADifferentNodes + subTreeBDifferentNodes);
     
     // Cache similarity
-    cacheSimilarity(subTreeA@uniqueKey, subTreeB@uniqueKey, similarityFactor);
+    // cacheSimilarity(subTreeA@uniqueKey, subTreeB@uniqueKey, similarityFactor);
     
     return similarityFactor;
 }

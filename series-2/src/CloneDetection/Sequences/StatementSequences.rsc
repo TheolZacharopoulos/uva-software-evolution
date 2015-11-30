@@ -5,6 +5,10 @@ import CloneDetection::AbstractClonePairs;
 import List;
 import lang::java::jdt::m3::AST;
 
+anno int node @ uniqueKey;
+anno int Statement @ uniqueKey;
+anno int Declaration @ uniqueKey;
+
 @doc{
 Get all possible sequences from the AST
 }
@@ -20,27 +24,6 @@ Sequences extractSequencesFromAST(set[Declaration] ast) {
         }
     }    
     return sequences;
-}
-
-@doc{
-Extract potentionally cloned sequences from the list of all sequences 
-}
-Sequences getSequencesContainingClones(Sequences sequences, ClonePairs clones) {
-
-    list[Statement] statements = [];
-    
-    visit (clones) {
-        case Statement statement: {
-            statements += statement;
-        }
-    }
-
-    return [
-        sequence | sequence <- sequences, 
-        sequenceStatement <- sequence,
-        availableStatement <- statements,
-        availableStatement@uniqueKey == statement@uniqueKey
-    ];
 }
 
 @doc{

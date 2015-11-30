@@ -11,7 +11,7 @@ test bool testAddClone() {
     clones = newClonePairs();
     clones = addCloneToClonePairs(getTestTreeBig(), getTestTreeBig(), clones);
     
-    return range(clones) == {<getTestTreeBig(), getTestTreeBig()>};
+    return range(clones) == {sequence([getTestTreeBig()], [getTestTreeBig()])};
 }
 
 test bool testSubTreeExists() {
@@ -49,7 +49,7 @@ test bool testRemoveClone() {
     
     clones = removeCloneFromClonePairs(treeB, clones);
     
-    return range(clones) == {<treeA, treeC>};
+    return range(clones) == {sequence([treeA], [treeC])};
 }
 
 test bool testRemoveClone2() {
@@ -64,7 +64,7 @@ test bool testRemoveClone2() {
     
     clones = removeCloneFromClonePairs(treeA, clones);
     
-    return range(clones) == {<treeB, treeD>};
+    return range(clones) == {sequence([treeB], [treeD])};
 }
 
 test bool testClearSubTreesFromSet() {
@@ -79,5 +79,5 @@ test bool testClearSubTreesFromSet() {
     clones = clearSubTrees(treeA, clones);
     clones = clearSubTrees(treeC, clones);
     
-    return range(clones) == {<treeA, treeC>};
+    return range(clones) == {sequence([treeA], [treeC])};
 }
