@@ -1,0 +1,101 @@
+{
+  "_comment_dirs": "*** Directories which include files with clones ***",
+  "directories": [
+      "dir_1",
+      "dir_2"
+  ],
+
+  "_comment_files": "*** Files which include clones pairs, original or clone ***",
+  "files": [
+    {
+      "name": "file_1.java",
+      "dir" : "dir_1"
+    },
+    {
+      "name": "file_2.java",
+      "dir" : "dir_1"
+    },
+	{
+      "name": "file_3.java",
+      "dir" : "dir_2"
+    },
+	{
+      "name": "file_4.java",
+      "dir" : "dir_2"
+    },
+	{
+      "name": "file_5.java",
+      "dir" : "dir_2"
+    }
+  ],
+
+  "_comment_clones": "*** Describe the clone pairs ***",
+  "clone_pairs": [
+
+    {
+      "id": "clone_1",
+
+      "origin": {
+        "file": "file_1.java",
+        "clone_start_line": 5,
+        "clone_end_line": 10
+      },
+
+      "clone": {
+        "file": "file_1.java",
+        "clone_start_line": 25,
+        "clone_end_line": 30
+      }
+    },
+
+    {
+      "id": "clone_2",
+
+      "origin": {
+        "file": "file_1.java",
+        "clone_start_line": 5,
+        "clone_end_line": 10
+      },
+
+      "clone": {
+        "file": "file_2.java",
+        "clone_start_line": 15,
+        "clone_end_line": 20
+      }
+    },
+
+	{
+	  	"id": "clone_3",
+
+	  	"origin": {
+	  	  "file": "file_3.java",
+	  	  "clone_start_line": 5,
+	  	  "clone_end_line": 10
+	  	},
+
+	  	"clone": {
+	  	  "file": "file_5.java",
+	  	  "clone_start_line": 15,
+	  	  "clone_end_line": 20
+	  	}
+	},
+
+	{
+	  	"id": "clone_4",
+
+	  	"origin": {
+	  	  "file": "file_4.java",
+	  	  "clone_start_line": 5,
+	  	  "clone_end_line": 10
+	  	},
+
+	  	"clone": {
+	  	  "file": "file_5.java",
+	  	  "clone_start_line": 15,
+	  	  "clone_end_line": 20
+	  	}
+	}
+
+  ]
+
+}
