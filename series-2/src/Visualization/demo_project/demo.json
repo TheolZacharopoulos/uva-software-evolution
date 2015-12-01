@@ -39,12 +39,14 @@
 
       "origin": {
         "file": "file_1.java",
+		"source_code": "Class {\n \t private String name;\n}",
         "start_line": 5,
         "end_line": 10
       },
 
       "clone": {
         "file": "file_1.java",
+		"source_code": "Class {\n \t private String name;\n}",
         "start_line": 25,
         "end_line": 30
       }
@@ -57,12 +59,14 @@
 
       "origin": {
         "file": "file_1.java",
+		"source_code": "if (a > 0) {\n System.out.println(\"Hello\");\n}",
 		"start_line": 5,
         "end_line": 10
       },
 
       "clone": {
         "file": "file_2.java",
+		"source_code": "if (a > 0) {\n System.out.println(\"Hello\");\n}",
         "start_line": 15,
         "end_line": 20
       }
@@ -75,12 +79,14 @@
 
 		"origin": {
 	  	  "file": "file_3.java",
+		  "source_code": "if (s > 21) {\n return 5;\n}",
 		  "start_line": 5,
           "end_line": 10
 	  	},
 
 	  	"clone": {
 	  	  "file": "file_5.java",
+		  "source_code": "if (xxx > 3) {\n return 4;\n}",
 	  	  "start_line": 15,
 	  	  "end_line": 20
 	  	}
@@ -93,12 +99,14 @@
 
 	  	"origin": {
 	  	  "file": "file_4.java",
+		  "source_code": "while (true) {\n System.out.println(\"Hello\");\n}",
 		  "start_line": 5,
           "end_line": 10
 	  	},
 
 	  	"clone": {
 	  	  "file": "file_5.java",
+		  "source_code": "while (true) {\n System.out.println(\"WHATS UP?!\");\n}",
 	  	  "start_line": 15,
 	  	  "end_line": 20
 	  	}
