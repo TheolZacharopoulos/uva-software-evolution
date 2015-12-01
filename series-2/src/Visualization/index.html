@@ -1,179 +1,402 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
 
-<head>
-<link rel="stylesheet" type="text/css" href="styles/diagram_style.css">
-<link rel="stylesheet" type="text/css" href="styles/editor_style.css">
-<head>
+    <title>Clone detector</title>
 
-<body>
-<script src="libs/d3.min.js"></script>
-<script src="libs/d3-jetpack.js"></script>
-<script src="js/Consts.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="styles/css/bootstrap.min.css" rel="stylesheet">
 
-<div id="diagram"> </div>
+    <!-- Custom styles for this template -->
+	<link href="styles/codemirror.css" rel="stylesheet">
+	<link href="styles/mergely.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="styles/diagram_style.css">
 
-<script>
-var allFiles = {};
-var allClonePairs = {};
+	<!-- Scripts -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
 
-d3.json(DATA_FILE, (error, data) => {
-	if (error) throw error;
+	<script src="libs/codemirror.js"></script>
+	<script src="libs/mergely.min.js"></script>
+	<script src="libs/searchcursor.js"></script>
 
-	// extract data
-	allFiles = data.files;
-	allClonePairs = data.clone_pairs;
+	<script src="libs/d3.min.js"></script>
+	<script src="libs/d3-jetpack.js"></script>
+	<script src="libs/underscore.js"></script>
 
-	initializeDiagram(allFiles, allClonePairs);
-});
+	<script src="js/Consts.js"></script>
 
-// ==============================
-// Diagram
-// ==============================
-// size of the wheel
-const diameter = DIAMETER,
-	  radius = diameter / 2,
-	  innerRadius = radius - 120;
+	<!-- Initialization -->
+	<script>
 
-// Make a full circle
-const cluster = d3.layout.cluster()
-		.size([DEGREES, innerRadius])
-		.sort(null)
-		.value(d => d.size);
+		// Read data file and initialize
+		d3.json(DATA_FILE, (error, data) => {
+			if (error) throw error;
 
-const bundle = d3.layout.bundle();
-
-const line = d3.svg.line.radial()
-		.interpolate("bundle")
-		.tension(TENSION)
-		.radius(d => d.y)
-		.angle(d => d.x / 180 * Math.PI);
-
-// Setup dom elements
-const svg = d3.select("#diagram").append("svg")
-	.attr("width", diameter)
-	.attr("height", diameter)
-  .append("g")
-	.attr("transform", "translate(" + radius + "," + radius + ")");
-
-var link = svg.append("g").selectAll(".link"),
-	node = svg.append("g").selectAll(".node");
-
-// Read the data
-function initializeDiagram(allFiles, allClonePairs) {
-
-	// Setup nodes and links from the data
-	var nodes = cluster.nodes(fileHierarchy(allFiles, allClonePairs)),
-		links = fileClonePairs(nodes, allClonePairs);
-
-	// Construct the links between the nodes in the dom
-	link = link
-		.data(bundle(links))
-	  .enter().append("path")
-		.each(d => {
-			d.source = d[0];
-			d.target = d[d.length - 1];
-		})
-		.attr("class", "link")
-		.attr("d", line);
-
-	// Construct the nodes in the dom
-	node = node
-		.data(nodes.filter(n => !n.children))
-	  .enter().append("text")
-		.attr("class", "node")
-		.attr("dy", ".31em")
-		.attr("transform", d => "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"))
-		.style("text-anchor", d => d.x < 180 ? "start" : "end")
-		.text(d => d.key)
-		.on("mouseover", mouseovered)
-		.on("mousedown", mousedown)
-		.on("mouseout", mouseouted);
-}
-
-// Lazily construct the files as nodes.
-function fileHierarchy(files, clonePairs) {
-	var map = {};
-
-	const find = (name, data) => {
-		var node = map[name], i;
-
-		if (!node) {
-
-			node = map[name] = data || {name: name, children: []};
-			if (name.length) {
-				node.parent = find(name.substring(0, i = name));
-				node.parent.children.push(node);
-
-				// set it's name as key
-				node.key = name.substring(i + 1);
-
-				// Add node's clone pair
-				node.clonePairs = clonePairs
-				.filter(clonepair => clonepair.origin.file == node.name)
-				.map(clonepair => clonepair);
-			}
-		}
-		return node;
-	}
-
-	files.forEach(d => find(d.name, d));
-
-	return map[""];
-}
-
-// Return a list of clone pairs for the given array of clone pairs.
-function fileClonePairs(nodes, clonePairs) {
-	var map = {},
-		clones = [];
-
-	// Compute a map from name to node.
-	nodes.forEach(d => map[d.name] = d);
-
-	// For each clone pair, construct a link from the source to target node.
-	nodes.forEach(node => {
-		clonePairs
-		.filter(clonepair => node.name === clonepair.origin.file)
-		.forEach(clonepair => {
-			clones.push({
-				source: map[node.name],
-				target: map[clonepair.clone.file]
-			});
+			initializeDiagram(data.files, data.clone_pairs);
+			initializeViews(data.summary, data.files, data.clone_pairs);
 		});
-	});
 
-	return clones;
-}
+		function getClonePairsForFile(filename, clonePairs) {
+			return clonePairs
+			.filter(clonePair => clonePair.origin.file === filename)
+			.map(clonePair => clonePair);
+		}
 
-function mousedown(d) {
-	console.log(d);
-}
+		function getOriginFiles(files, clonePairs) {
+			const originNames = clonePairs.map(clonePair => clonePair.origin.file);
+			return files
+				.filter(file => originNames.indexOf(file.name) !== -1)
+				.map(file => file);
+		}
 
-function mouseovered(d) {
-	node
-		.each(n => n.target = n.source = false);
+		function initializeViews(summary, allFiles, allClonePairs) {
+			$(document).ready(() => {
+				initializeSummaries(summary);
+				initializeCodeView();
+				initializeFileView(allFiles, allClonePairs);
+			});
+		}
 
-	link
-		.classed("link--target", function(l) { if (l.target === d) return l.source.source = true; })
-		.classed("link--source", function(l) { if (l.source === d) return l.target.target = true; })
-		.filter(function(l) { return l.target === d || l.source === d; })
-		.each(function() { this.parentNode.appendChild(this); });
+		function initializeSummaries(summary) {
+			$('#page-header').text(summary.project_name);
 
-	node
-		.classed("node--target", n => n.target)
-		.classed("node--source", n => n.source);
-}
+			const summaryStats =
+				"<tr>\
+					<th scope=\"row\">Total clones</th>\
+					<td>" + summary.total_clones + "</td>\
+				</tr>\
+				<tr>\
+					<th scope=\"row\">Duplicated code</th>\
+				<td>" + summary.duplicated_code + "</td>\
+			</tr>";
+			$('#summary-table').append(summaryStats);
+		}
 
-function mouseouted(d) {
-	link
-		.classed("link--target", false)
-		.classed("link--source", false);
+		function initializeFileView(allFiles, allClonePairs) {
+			const fileViewTable = $('#file-view-table');
 
-	node
-		.classed("node--target", false)
-		.classed("node--source", false);
-}
+			// populate file view with the files
+			var lineCounter = 1;
+			// Get files that are in the origin part of the clone pair
+			// In order to use this as a starting point
+			getOriginFiles(allFiles, allClonePairs)
+			.forEach(file => {
+				const cloneNum =
+					getClonePairsForFile(file.name, allClonePairs).length;
 
-d3.select(self.frameElement).style("height", diameter + "px");
+				const rowId = "file-view-row" + lineCounter;
+				const tr =
+					"<tr id=" + rowId + ">\
+						<td>" + lineCounter + "</td>\
+						<td>" + file.dir + "/" + file.name + "</td>\
+						<td>" + cloneNum + "</td>\
+					</tr>";
+				fileViewTable.append(tr);
 
-</script>
+				// row on click
+				$("#" + rowId).on('click', () => {
+					$("#" + rowId).siblings().removeClass("success")
+    				$("#" + rowId).addClass("success");
+				    initializeCloneView(file, allClonePairs);
+				});
+
+				lineCounter ++;
+			});
+		}
+
+		function initializeCloneView(origin, allClonePairs) {
+
+			// Clear table first
+			$('#clone-view-table tbody > tr').remove();
+
+			const cloneViewTable = $('#clone-view-table');
+
+			// populate file view with the files
+			var lineCounter = 1;
+			// Get clone pairs that have origin the given file
+			allClonePairs
+			.filter(clonePair => clonePair.origin.file === origin.name)
+			.forEach(clonePair => {
+				const rowId = "clone-view-row" + lineCounter;
+				var trClass = "";
+				if (clonePair.clone_type === "type-1") trClass="danger";
+				if (clonePair.clone_type === "type-2") trClass="warning";
+				if (clonePair.clone_type === "type-3") trClass="success";
+
+				const tr =
+					"<tr class=" + trClass + " id=" + rowId + ">\
+						<td>" + lineCounter + "</td>\
+						<td>" + clonePair.clone.file + "</td>\
+						<td>" + clonePair.clone_type + "</td>\
+					</tr>";
+				cloneViewTable.append(tr);
+
+				// row on click
+				$("#" + rowId).on('click', () => {
+				    showClonesInCodeView(clonePair);
+				});
+
+				lineCounter ++;
+			});
+		}
+
+		function initializeCodeView() {
+			$('#code-detail-view').mergely({
+				lcs: false,
+				wrap_lines: true,
+				editor_width: "400px",
+				editor_height: "400px",
+				cmsettings: {
+					mode: "java",
+					readOnly: true,
+					lineNumbers: true
+				},
+				lhs: setValue => setValue(""),
+				rhs: setValue => setValue("")
+			});
+		}
+
+		function showClonesInCodeView(clonePair) {
+			const originSourceCode = clonePair.origin.source_code;
+			const cloneSourceCode = clonePair.clone.source_code;
+
+			$('#code-detail-view').mergely('lhs', originSourceCode);
+			$('#code-detail-view').mergely('rhs', cloneSourceCode);
+		}
+
+		function initializeDiagram(allFiles, allClonePairs) {
+			// size of the wheel
+			const diameter = DIAMETER,
+				  radius = diameter / 2,
+				  innerRadius = radius - 120;
+
+			// Make a full circle
+			const cluster = d3.layout.cluster()
+					.size([DEGREES, innerRadius])
+					.sort(null)
+					.value(d => d.size);
+
+			const bundle = d3.layout.bundle();
+
+			const line = d3.svg.line.radial()
+					.interpolate("bundle")
+					.tension(TENSION)
+					.radius(d => d.y)
+					.angle(d => d.x / 180 * Math.PI);
+
+			// Setup dom elements
+			const svg = d3.select("#diagram").append("svg")
+				.attr("width", diameter)
+				.attr("height", diameter)
+			  .append("g")
+				.attr("transform", "translate(" + radius + "," + radius + ")");
+
+			var link = svg.append("g").selectAll(".link"),
+				node = svg.append("g").selectAll(".node");
+
+				// Setup nodes and links from the data
+				var nodes = cluster.nodes(fileHierarchy(allFiles, allClonePairs)),
+					links = fileClonePairs(nodes, allClonePairs);
+
+				// Construct the links between the nodes in the dom
+				link = link
+					.data(bundle(links))
+				  .enter().append("path")
+					.each(d => {
+						d.source = d[0];
+						d.target = d[d.length - 1];
+					})
+					.attr("class", "link")
+					.attr("d", line);
+
+				// Construct the nodes in the dom
+				node = node
+					.data(nodes.filter(n => !n.children))
+				  .enter().append("text")
+					.attr("class", "node")
+					.attr("dy", ".31em")
+					.attr("transform", d => "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"))
+					.style("text-anchor", d => d.x < 180 ? "start" : "end")
+					.text(d => d.key)
+					.on("mouseover", mouseovered)
+					.on("mousedown", mousedown)
+					.on("mouseout", mouseouted);
+
+			// Lazily construct the files as nodes.
+			function fileHierarchy(files, clonePairs) {
+				var map = {};
+
+				const find = (name, data) => {
+					var node = map[name], i;
+
+					if (!node) {
+
+						node = map[name] = data || {name: name, children: []};
+						if (name.length) {
+							node.parent = find(name.substring(0, i = name));
+							node.parent.children.push(node);
+
+							// set it's name as key
+							node.key = name.substring(i + 1);
+
+							// Add node's clone pair
+							node.clonePairs = clonePairs
+							.filter(clonepair => clonepair.origin.file == node.name)
+							.map(clonepair => clonepair);
+						}
+					}
+					return node;
+				}
+
+				files.forEach(d => find(d.name, d));
+
+				return map[""];
+			}
+
+			// Return a list of clone pairs for the given array of clone pairs.
+			function fileClonePairs(nodes, clonePairs) {
+				var map = {},
+					clones = [];
+
+				// Compute a map from name to node.
+				nodes.forEach(d => map[d.name] = d);
+
+				// For each clone pair, construct a link from the source to target node.
+				nodes.forEach(node => {
+					clonePairs
+					.filter(clonepair => node.name === clonepair.origin.file)
+					.forEach(clonepair => {
+						clones.push({
+							source: map[node.name],
+							target: map[clonepair.clone.file]
+						});
+					});
+				});
+
+				return clones;
+			}
+
+			function mousedown(d) {
+				// TODO: Load the clone vew
+				console.log(d);
+			}
+
+			function mouseovered(d) {
+				node
+					.each(n => n.target = n.source = false);
+
+				link
+					.classed("link--target", function(l) { if (l.target === d) return l.source.source = true; })
+					.classed("link--source", function(l) { if (l.source === d) return l.target.target = true; })
+					.filter(function(l) { return l.target === d || l.source === d; })
+					.each(function() { this.parentNode.appendChild(this); });
+
+				node
+					.classed("node--target", n => n.target)
+					.classed("node--source", n => n.source);
+			}
+
+			function mouseouted(d) {
+				link
+					.classed("link--target", false)
+					.classed("link--source", false);
+
+				node
+					.classed("node--target", false)
+					.classed("node--source", false);
+			}
+
+			d3.select(self.frameElement).style("height", diameter + "px");
+		}
+
+	</script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Clone Detector</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
+
+          <h1 id="page-header" class="page-header"></h1>
+
+          <div class="row placeholders">
+
+			<!-- Visualization -->
+			<div id="diagram" class="col-xs-6 col-sm-6 placeholder"></div>
+
+			<!-- Summaries -->
+            <div class="col-xs-6 col-sm-2 placeholder">
+				<div class="panel panel-default">
+			    <div class="panel-heading">Summary</div>
+			    <table id="summary-table" class="table">
+					<tbody>
+					</tbody>
+				</table>
+			  </div>
+            </div>
+          </div>
+
+		  <!-- File view -->
+          <h2 class="sub-header">File view</h2>
+          <div class="table-responsive">
+            <table id="file-view-table" class="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Origin File</th>
+                  <th>Number of clones</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+
+		  <!-- Clone view -->
+          <h2 class="sub-header">Clone view</h2>
+          <div class="table-responsive">
+            <table id="clone-view-table" class="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Clone File</th>
+                  <th>Clone Type</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+
+		  <!-- Code detail view -->
+		  <div class="container">
+			<div>
+				<h1>Code detail view</h1>
+				<div id="code-detail-view"></div>
+        </div>
+      </div>
+
+    </div>
+
+	<!--  Bootstrap scripts -->
+    <script src="libs/bootstrap.min.js"></script>
+    <script src="libs/vendor/holder.min.js"></script>
+  </body>
+</html>
