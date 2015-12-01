@@ -1,6 +1,5 @@
 module Test::CloneDetection::Utils::CloneStatementPairsTests
 
-import CloneDetection::Statements::CloneStatementPairs;
 import Test::CloneDetection::Utils::TestTreeProvider;
 import CloneDetection::AbstractClonePairs;
 import IO;
@@ -12,29 +11,6 @@ test bool testAddClone() {
     clones = addCloneToClonePairs(getTestTreeBig(), getTestTreeBig(), clones);
     
     return range(clones) == {sequence([getTestTreeBig()], [getTestTreeBig()])};
-}
-
-test bool testSubTreeExists() {
-    clones = newClonePairs();
-    
-    treeBig = getTestTreeBig();
-    treeBigClone = getTestTreeBig();
-    
-    treeSmall = getTestTreeSmall();
-    treeSmallClone = getTestTreeSmall();
-    
-    clones = addCloneToClonePairs(treeBig, treeBigClone, clones);
-    clones = addCloneToClonePairs(treeSmall, treeSmallClone, clones);
-    
-    return doesSubTreeExist(treeSmall, clones);
-}
-
-test bool testSubTreeDoesNotExists() {
-    clones = newClonePairs();
-    clones = addCloneToClonePairs(getTestTreeBig(), getTestTreeBig(), clones);
-    clones = addCloneToClonePairs(getTestTreeSmall(), getTestTreeSmall(), clones);
-    
-    return doesSubTreeExist(getTestTreeMedium(), clones) == false;
 }
 
 test bool testRemoveClone() {
@@ -65,19 +41,4 @@ test bool testRemoveClone2() {
     clones = removeCloneFromClonePairs(treeA, clones);
     
     return range(clones) == {sequence([treeB], [treeD])};
-}
-
-test bool testClearSubTreesFromSet() {
-    treeA = getTestTreeBig();
-    treeC = getTestTreeBig();
-    treeB = getTestTreeMedium();
-    treeD = getTestTreeSmall();
-    
-    clones = newClonePairs();
-    clones = addCloneToClonePairs(treeA, treeC, clones);
-    
-    clones = clearSubTrees(treeA, clones);
-    clones = clearSubTrees(treeC, clones);
-    
-    return range(clones) == {sequence([treeA], [treeC])};
 }

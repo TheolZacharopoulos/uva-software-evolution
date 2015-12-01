@@ -6,8 +6,20 @@ import IO;
 
 anno int node @ uniqueKey;
 
+@doc{
+Cache database for statements (nodes)
+}
 private map[tuple[int treeA, int treeB] cacheKey, real similarityFactor] statementsCache = ();
+
+@doc{
+Cache database for squences
+}
 private map[tuple[int treeA, int treeB, int length] cacheKey, real similarityFactor] sequencesCache = ();
+
+@doc{
+Cache database for flattened nodes
+}
+private map[int, set[node]] subNodesCache = ();
 
 @doc{
 Adds similarity factor to cache using treeID
@@ -45,7 +57,22 @@ real getCachedSimilarity(Sequence sequenceA, Sequence sequenceB) {
     treeA = sequenceA[0];
     treeB = sequenceB[0];
     
-    //println("Getting cached similarity...");
-    
     return sequencesCache[<treeA@uniqueKey, treeB@uniqueKey, size(sequenceA)>];
+}
+
+@doc{
+Check if flattened tree has been cached
+}
+bool areSubNodesCached(node subTree) = subNodesCache[subTree@uniqueKey]?;
+
+@doc{
+Retrieves flattened tree from the cache
+}
+set[node] getSubNodesCached(node subTree) = subNodesCache[subTree@uniqueKey];
+
+@doc{
+Put flattened tree into cache
+}
+void cacheSubNodes(node subTree, set[node] subNodes) {
+    subNodesCache[subTree@uniqueKey] = subNodes;
 }
