@@ -37,19 +37,13 @@
 
 	<!-- Initialization -->
 	<script>
-		var allFiles = {};
-		var allClonePairs = {};
 
 		// Read data file and initialize
 		d3.json(DATA_FILE, (error, data) => {
 			if (error) throw error;
 
-			// extract data
-			allFiles = data.files;
-			allClonePairs = data.clone_pairs;
-
-			// initializeDiagram(allFiles, allClonePairs);
-			initializeViews(allFiles, allClonePairs);
+			// initializeDiagram(data.files, data.clone_pairs);
+			initializeViews(data.summary, data.files, data.clone_pairs);
 		});
 
 		function getClonePairsForFile(filename, clonePairs) {
@@ -65,11 +59,27 @@
 				.map(file => file);
 		}
 
-		function initializeViews(allFiles, allClonePairs) {
+		function initializeViews(summary, allFiles, allClonePairs) {
 			$(document).ready(() => {
+				initializeSummaries(summary);
 				initializeCodeView();
 				initializeFileView(allFiles, allClonePairs);
 			});
+		}
+
+		function initializeSummaries(summary) {
+			$('#page-header').text(summary.project_name);
+			console.log(summary);
+			const summaryStats =
+				"<tr>\
+					<th scope=\"row\">Total clones</th>\
+					<td>" + summary.total_clones + "</td>\
+				</tr>\
+				<tr>\
+					<th scope=\"row\">Duplicated code</th>\
+				<td>" + summary.duplicated_code + "</td>\
+			</tr>";
+			$('#summary-table').append(summaryStats);
 		}
 
 		function initializeFileView(allFiles, allClonePairs) {
@@ -173,7 +183,7 @@
       <div class="row">
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
 
-          <h1 class="page-header">Project Name Here</h1>
+          <h1 id="page-header" class="page-header"></h1>
 
           <div class="row placeholders">
 
@@ -188,20 +198,8 @@
             <div class="col-xs-6 col-sm-2 placeholder">
 				<div class="panel panel-default">
 			    <div class="panel-heading">Summary</div>
-			    <table class="table">
+			    <table id="summary-table" class="table">
 					<tbody>
-						<tr>
-							<th scope="row">Total clones</th>
-							<td>100</td>
-						</tr>
-						<tr>
-							<th scope="row">Types of clones</th>
-							<td>1,2</td>
-						</tr>
-						<tr>
-							<th scope="row">Duplicated code</th>
-							<td>50%</td>
-						</tr>
 					</tbody>
 				</table>
 			  </div>

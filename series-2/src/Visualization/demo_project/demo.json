@@ -1,4 +1,10 @@
 {
+  "summary": {
+	  "project_name": "Small SQL",
+	  "total_clones": "124",
+	  "duplicated_code": "47%"
+  },
+
   "_comment_dirs": "*** Directories which include files with clones ***",
   "directories": [
       "dir_1",
