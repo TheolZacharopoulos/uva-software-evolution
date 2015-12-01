@@ -54,21 +54,20 @@ real getSimilarityFactor(node subTreeA, node subTreeB) {
     return similarityFactor;
 }
 
-private map[int, set[node]] subNodesCache = ();
-
-private set[node] collectNodes(node subTree) = subNodesCache[subTree@uniqueKey] when subNodesCache[subTree@uniqueKey]?;
+private set[node] collectNodes(node subTree) = getSubNodesCached(subTree) when areSubNodesCached(subTree);
 
 @doc{
 Collects children nodes in depth from a tree
 }
 private set[node] collectNodes(node subTree) {
     set[node] subTreeNodes = {};
+    
     visit (subTree) {
         case Statement n: subTreeNodes += n;
         case Declaration n: subTreeNodes += n;
     }
     
-    subNodesCache[subTree@uniqueKey] = subTreeNodes;
-    
+    cacheSubNodes(subTree, subTreeNodes);
+
     return subTreeNodes;
 }
