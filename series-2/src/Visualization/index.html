@@ -117,6 +117,8 @@
 
 			// Clear table first
 			$('#clone-view-table tbody > tr').remove();
+			$('#code-detail-view').mergely('lhs', "");
+			$('#code-detail-view').mergely('rhs', "");
 
 			const cloneViewTable = $('#clone-view-table');
 
@@ -228,7 +230,7 @@
 					.style("text-anchor", d => d.x < 180 ? "start" : "end")
 					.text(d => d.key)
 					.on("mouseover", mouseovered)
-					.on("mousedown", mousedown)
+					.on("mousedown", mousedown(allFiles, allClonePairs))
 					.on("mouseout", mouseouted);
 
 			// Lazily construct the files as nodes.
@@ -285,9 +287,12 @@
 				return clones;
 			}
 
-			function mousedown(d) {
-				// TODO: Load the clone vew
-				console.log(d);
+			function mousedown(allFiles, allClonePairs) {
+				return function(d) {
+					allFiles
+					.filter(file => file.name === d.key)
+					.forEach(file => initializeCloneView(file, allClonePairs));
+				}
 			}
 
 			function mouseovered(d) {
