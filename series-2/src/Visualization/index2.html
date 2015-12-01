@@ -18,6 +18,7 @@
 	<link href="styles/codemirror.css" rel="stylesheet">
 	<link href="styles/mergely.css" rel="stylesheet">
     <link href="styles/style.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="styles/diagram_style.css">
 
 	<!-- Scripts -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -27,19 +28,75 @@
 	<script src="libs/mergely.min.js"></script>
 	<script src="libs/searchcursor.js"></script>
 
+	<script src="libs/d3.min.js"></script>
+	<script src="libs/d3-jetpack.js"></script>
+	<script src="libs/underscore.js"></script>
+
+	<script src="js/Consts.js"></script>
+	<script src="js/Diagram.js"></script>
+
+	<!-- Initialization -->
+	<script>
+		var allFiles = {};
+		var allClonePairs = {};
+
+		// Read data file and initialize
+		d3.json(DATA_FILE, (error, data) => {
+			if (error) throw error;
+
+			// extract data
+			allFiles = data.files;
+			allClonePairs = data.clone_pairs;
+
+			// initializeDiagram(allFiles, allClonePairs);
+			initializeViews(allFiles, allClonePairs);
+		});
+
+		function getClonePairsForFile(filename, clonePairs) {
+			return clonePairs
+			.filter(clonePair => clonePair.origin.file === filename)
+			.map(clonePair => clonePair);
+		}
+
+		function getOriginFiles(files, clonePairs) {
+			const originNames = clonePairs.map(clonePair => clonePair.origin.file);
+			return files
+				.filter(file => originNames.indexOf(file.name) !== -1)
+				.map(file => file);
+		}
+
+		function initializeViews(allFiles, allClonePairs) {
+			$(document).ready(function() {
+				const fileViewTable = $('#file-view-table');
+
+				// populate file view with the files
+				var lineCounter = 1;
+
+				// Get files that are in the origin part of the clone pair
+				// In order to use this as a starting point
+				getOriginFiles(allFiles, allClonePairs)
+				.forEach(file => {
+					const cloneNum =
+						getClonePairsForFile(file.name, allClonePairs).length;
+					const tr =
+						"<tr>\
+                  			<td>" + lineCounter + "</td>\
+                  			<td>" + file.dir + "/" + file.name + "</td>\
+				  			<td>" + cloneNum + "</td>\
+            			</tr>";
+					fileViewTable.append(tr);
+					lineCounter ++;
+				});
+			});
+		}
+
+	</script>
   </head>
 
   <body>
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
           <a class="navbar-brand" href="#">Clone Detector</a>
         </div>
       </div>
@@ -48,14 +105,19 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
+
           <h1 class="page-header">Project Name Here</h1>
 
           <div class="row placeholders">
-            <div class="col-xs-6 col-sm-6 placeholder">
+
+			<!-- Visualization -->
+			<div class="col-xs-6 col-sm-6 placeholder">
               <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
               <h4>Visualization</h4>
               <span class="text-muted">Click on the files</span>
             </div>
+
+			<!-- Summaries -->
             <div class="col-xs-6 col-sm-2 placeholder">
 				<div class="panel panel-default">
 			    <div class="panel-heading">Summary</div>
@@ -79,10 +141,10 @@
             </div>
           </div>
 
-		  <!-- FILE VIEW -->
+		  <!-- File view -->
           <h2 class="sub-header">File view</h2>
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table id="file-view-table" class="table table-hover">
               <thead>
                 <tr>
                   <th>#</th>
@@ -91,20 +153,14 @@
                 </tr>
               </thead>
               <tbody>
-
-                <tr>
-                  <td>1</td>
-                  <td>File1.java</td>
-				  <td>3</td>
-                </tr>
               </tbody>
             </table>
           </div>
 
-		  <!-- CLONE VIEW -->
+		  <!-- Clone view -->
           <h2 class="sub-header">Clone view</h2>
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table id="clone-view-table" class="table table-hover">
               <thead>
                 <tr>
                   <th>#</th>
@@ -131,25 +187,28 @@
 			<div id="compare">
 			</div>
 
-			<!-- /.container -->
 			<script>
-			$(document).ready(function () {
+
+			const originSourceCode = "Class {\n \t private String name;\n}";
+			const cloneSourceCode = "Class {\n \t private String surname;\n}";
+
+			$(document).ready(() => {
 				$('#compare').mergely({
+					lcs: false,
+					wrap_lines: true,
+					editor_width: "400px",
+					editor_height: "400px",
 					cmsettings: {
-						mode: "javascript",
-						theme : 'pastel-on-dark',
+						mode: "java",
 						readOnly: true,
 						lineNumbers: true
 					},
-					lhs: function(setValue) {
-						setValue('Class {\n \t private String name;\n}');
-					},
-					rhs: function(setValue) {
-						setValue('Class {\n \t private String surname;\n}');
-					}
+					lhs: setValue => setValue(originSourceCode),
+					rhs: setValue => setValue(cloneSourceCode)
 				});
 			});
 			</script>
+
         </div>
       </div>
 

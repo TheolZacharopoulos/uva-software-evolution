@@ -11,6 +11,18 @@
 <script src="libs/d3-jetpack.js"></script>
 <script src="js/Consts.js"></script>
 <script>
+var allFiles = {};
+var allClonePairs = {};
+
+d3.json(DATA_FILE, (error, data) => {
+	if (error) throw error;
+
+	// extract data
+	allFiles = data.files;
+	allClonePairs = data.clone_pairs;
+
+	initializeDiagram(allFiles, allClonePairs);
+});
 
 // ==============================
 // Diagram
@@ -44,16 +56,9 @@ const svg = d3.select("body").append("svg")
 var link = svg.append("g").selectAll(".link"),
     node = svg.append("g").selectAll(".node");
 
-d3.json(DATA_FILE, readData);
-
 // Read the data
-function readData(error, data) {
-	if (error) throw error;
-
-	// extract data
-	const allFiles = data.files;
-	const allClonePairs = data.clone_pairs;
-
+function initializeDiagram(allFiles, allClonePairs) {
+	
 	// Setup nodes and links from the data
     var nodes = cluster.nodes(fileHierarchy(allFiles, allClonePairs)),
         links = fileClonePairs(nodes, allClonePairs);
@@ -167,55 +172,5 @@ function mouseouted(d) {
 }
 
 d3.select(self.frameElement).style("height", diameter + "px");
-
-// ==============================
-// Table
-// ==============================
-
-var clone_pairs = [
-	{ id: "clone_1", origin: "file1.java", clones: "5"},
-	{ id: "clone_2", origin: "file2.java", clones: "5"},
-	{ id: "clone_3", origin: "file3.java", clones: "5"}
-];
-
-// column definitions
-var columns = [
-    { head: 'ID', cl: 'title', html: ƒ('id') },
-    { head: 'Origin', cl: 'center', html: ƒ('origin') },
-    { head: '#clones', cl: 'center', html: ƒ('clones') }
-];
-
-// create table
-var table = d3.select('body')
-    .append('table');
-
-// create table header
-table.append('thead').append('tr')
-    .selectAll('th')
-    .data(columns).enter()
-    .append('th')
-    .attr('class', ƒ('cl'))
-    .text(ƒ('head'));
-
-// create table body
-table.append('tbody')
-    .selectAll('tr')
-    .data(clone_pairs).enter()
-    .append('tr')
-    .selectAll('td')
-    .data(function(row, i) {
-        return columns.map(function(c) {
-            // compute cell values for this specific row
-            var cell = {};
-            d3.keys(c).forEach(function(k) {
-                cell[k] = typeof c[k] == 'function' ? c[k](row,i) : c[k];
-            });
-            return cell;
-        });
-    }).enter()
-    .append('td')
-    .html(ƒ('html'))
-    .attr('class', ƒ('cl'));
-
 
 </script>
