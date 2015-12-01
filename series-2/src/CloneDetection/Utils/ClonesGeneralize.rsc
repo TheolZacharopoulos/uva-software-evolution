@@ -29,6 +29,8 @@ ClonePairs generalizeClones(ClonePairsSeq clonePairsSeq) {
     // * 1. ClonesToGeneralize = Clones
     ClonePairs clonesToGeneralize = clones;
     
+    println("Start generalizing...");
+    
     // * 2. While ClonesToGeneralize≠∅
     while (true) {
         
