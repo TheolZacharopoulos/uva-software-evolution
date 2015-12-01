@@ -17,7 +17,7 @@ Sequences extractSequencesFromAST(set[Declaration] ast) {
     Sequences sequences = [];
     
     bottom-up visit (ast) {
-        case Sequence sequence: {
+        case list[Statement] sequence: {
             if (size(sequence) >= MINIMUM_SEQUENCE_LENGTH) {
                 sequences += [sequence];
             }

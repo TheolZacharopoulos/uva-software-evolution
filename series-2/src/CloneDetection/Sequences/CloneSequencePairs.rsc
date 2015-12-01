@@ -21,7 +21,9 @@ ClonePairsSeq removeSequenceSubclones(Sequence origin, Sequence clone, ClonePair
     originKeys = getSequenceUniqueKeys(origin);
     cloneKeys  = getSequenceUniqueKeys(clone);
     
-    for (hashKeys <- clones, originKeys > hashKeys || cloneKeys > hashKeys) {
+    allKeys = originKeys + cloneKeys;
+    
+    for (hashKeys <- clones, allKeys > hashKeys) {
         clones = delete(clones, hashKeys);
     }
     

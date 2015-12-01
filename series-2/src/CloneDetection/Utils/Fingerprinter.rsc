@@ -12,6 +12,8 @@ import Node;
 import String;
 import CloneDetection::AbstractClonePairs;
 
+anno int node @ uniqueKey;
+
 str SIMILAR_ID = "Y";
 str SIMILAR_STR = "X";
 str SIMILAR_NUM = "6";
@@ -33,7 +35,13 @@ public str getPerfectFingerprint(tree) {
     return toString(cleanNode);
 }
 
-public str getBadFingerprint(tree) {
+private map[int, str] badFingerprintCache = ();
+
+public str getBadFingerprint(node tree) = badFingerprintCache[tree@uniqueKey] when badFingerprintCache[tree@uniqueKey]?;
+
+public str getBadFingerprint(node tree) {
+
+    uniqueKey = tree@uniqueKey;
 
     // remove literals and identifiers to make it dump
     tree = visit(tree) {
@@ -74,5 +82,9 @@ public str getBadFingerprint(tree) {
     cleanNode = delAnnotationsRec(tree);
     
     // get node as string
-    return toString(cleanNode);
+    fingerprint = toString(cleanNode);
+    
+    badFingerprintCache[uniqueKey] = fingerprint;
+    
+    return fingerprint;
 }

@@ -11,8 +11,8 @@ import lang::java::jdt::m3::AST;
 
 anno int node @ uniqueKey;
 
-real getSimilarityFactor(node subTreeA, node subTreeB) 
-    = getCachedSimilarity(subTreeA@uniqueKey, subTreeB@uniqueKey) when isSimilarityCached(subTreeA@uniqueKey, subTreeB@uniqueKey);
+real getSimilarityFactor(subTreeA, subTreeB) 
+    = getCachedSimilarity(subTreeA, subTreeB) when isSimilarityCached(subTreeA, subTreeB);
 
 @doc{
 Quick check for identical trees
@@ -22,24 +22,16 @@ real getSimilarityFactor(subTreeA, subTreeB) = 1.0 when subTreeA == subTreeB;
 @doc{
 Get similarity factor using two statements
 }
-real getSimilarityFactor(subTreeA, subTreeB) {
+real getSimilarityFactor(node subTreeA, node subTreeB) {
     
     subTreeAMass = getTreeMass(subTreeA);
     subTreeBMass = getTreeMass(subTreeB);
     
-    // Collect nodes for subTree A
-    set[Statement] subTreeANodes = {};
-    visit (subTreeA) {
-        case Statement n: subTreeANodes += n;
-    }
-    // Collect nodes for subTree B
-    set[Statement] subTreeBNodes = {};
-    visit (subTreeB) {
-        case Statement n: subTreeBNodes += n;
-    }
+    set[node] subTreeANodes = collectNodes(subTreeA);
+    set[node] subTreeBNodes = collectNodes(subTreeB);
     
     // Find shared nodes.
-    set[Statement] shared = { sharedNode |                        
+    set[node] shared = { sharedNode |                        
         origin <- subTreeANodes,
         clone <- subTreeBNodes,
         clone == origin,
@@ -57,7 +49,26 @@ real getSimilarityFactor(subTreeA, subTreeB) {
     real similarityFactor = toReal(2 * sharedNodes) / toReal((2 * sharedNodes) + subTreeADifferentNodes + subTreeBDifferentNodes);
     
     // Cache similarity
-    // cacheSimilarity(subTreeA@uniqueKey, subTreeB@uniqueKey, similarityFactor);
+    cacheSimilarity(subTreeA, subTreeB, similarityFactor);
     
     return similarityFactor;
+}
+
+private map[int, set[node]] subNodesCache = ();
+
+private set[node] collectNodes(node subTree) = subNodesCache[subTree@uniqueKey] when subNodesCache[subTree@uniqueKey]?;
+
+@doc{
+Collects children nodes in depth from a tree
+}
+private set[node] collectNodes(node subTree) {
+    set[node] subTreeNodes = {};
+    visit (subTree) {
+        case Statement n: subTreeNodes += n;
+        case Declaration n: subTreeNodes += n;
+    }
+    
+    subNodesCache[subTree@uniqueKey] = subTreeNodes;
+    
+    return subTreeNodes;
 }
