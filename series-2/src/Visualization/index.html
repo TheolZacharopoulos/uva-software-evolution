@@ -2,14 +2,19 @@
 <meta charset="utf-8">
 
 <head>
-<link rel="stylesheet" type="text/css" href="styles/style.css">
+<link rel="stylesheet" type="text/css" href="styles/diagram_style.css">
+<link rel="stylesheet" type="text/css" href="styles/editor_style.css">
 <head>
 
 <body>
 <script src="libs/d3.min.js"></script>
+<script src="libs/d3-jetpack.js"></script>
 <script src="js/Consts.js"></script>
 <script>
 
+// ==============================
+// Diagram
+// ==============================
 // size of the wheel
 const diameter = DIAMETER,
       radius = diameter / 2,
@@ -49,7 +54,8 @@ function readData(error, data) {
 	const allFiles = data.files;
 	const allClonePairs = data.clone_pairs;
 
-    var nodes = cluster.nodes(fileHierarchy(allFiles)),
+	// Setup nodes and links from the data
+    var nodes = cluster.nodes(fileHierarchy(allFiles, allClonePairs)),
         links = fileClonePairs(nodes, allClonePairs);
 
     // Construct the links between the nodes in the dom
@@ -57,13 +63,13 @@ function readData(error, data) {
         .data(bundle(links))
       .enter().append("path")
         .each(d => {
-			d.source = d[0],
+			d.source = d[0];
 			d.target = d[d.length - 1];
 		})
         .attr("class", "link")
         .attr("d", line);
 
-    // Construct the nodes in the dom
+	// Construct the nodes in the dom
     node = node
         .data(nodes.filter(n => !n.children))
       .enter().append("text")
@@ -73,14 +79,15 @@ function readData(error, data) {
         .style("text-anchor", d => d.x < 180 ? "start" : "end")
         .text(d => d.key)
         .on("mouseover", mouseovered)
+		.on("mousedown", mousedown)
         .on("mouseout", mouseouted);
 }
 
-// Lazily construct the files hierarchy from clonePairs.
-function fileHierarchy(files) {
+// Lazily construct the files as nodes.
+function fileHierarchy(files, clonePairs) {
 	var map = {};
 
-	function find(name, data) {
+	const find = (name, data) => {
 		var node = map[name], i;
 
 		if (!node) {
@@ -92,6 +99,11 @@ function fileHierarchy(files) {
 
 				// set it's name as key
 				node.key = name.substring(i + 1);
+
+				// Add node's clone pair
+				node.clonePairs = clonePairs
+				.filter(clonepair => clonepair.origin.file == node.name)
+				.map(clonepair => clonepair);
 			}
 		}
 		return node;
@@ -110,20 +122,23 @@ function fileClonePairs(nodes, clonePairs) {
 	// Compute a map from name to node.
 	nodes.forEach(d => map[d.name] = d);
 
-  // For each clone pair, construct a link from the source to target node.
-	nodes.forEach(d => {
-		clonePairs.forEach(clonepair => {
-
-			if (d.name === clonepair.origin.file) {
-				clones.push({
-					source: map[d.name],
-					target: map[clonepair.clone.file]
-				});
-			}
+    // For each clone pair, construct a link from the source to target node.
+ 	nodes.forEach(node => {
+		clonePairs
+		.filter(clonepair => node.name === clonepair.origin.file)
+	  	.forEach(clonepair => {
+			clones.push({
+				source: map[node.name],
+				target: map[clonepair.clone.file]
+			});
 		});
 	});
 
 	return clones;
+}
+
+function mousedown(d) {
+	console.log(d);
 }
 
 function mouseovered(d) {
@@ -152,5 +167,55 @@ function mouseouted(d) {
 }
 
 d3.select(self.frameElement).style("height", diameter + "px");
+
+// ==============================
+// Table
+// ==============================
+
+var clone_pairs = [
+	{ id: "clone_1", origin: "file1.java", clones: "5"},
+	{ id: "clone_2", origin: "file2.java", clones: "5"},
+	{ id: "clone_3", origin: "file3.java", clones: "5"}
+];
+
+// column definitions
+var columns = [
+    { head: 'ID', cl: 'title', html: ƒ('id') },
+    { head: 'Origin', cl: 'center', html: ƒ('origin') },
+    { head: '#clones', cl: 'center', html: ƒ('clones') }
+];
+
+// create table
+var table = d3.select('body')
+    .append('table');
+
+// create table header
+table.append('thead').append('tr')
+    .selectAll('th')
+    .data(columns).enter()
+    .append('th')
+    .attr('class', ƒ('cl'))
+    .text(ƒ('head'));
+
+// create table body
+table.append('tbody')
+    .selectAll('tr')
+    .data(clone_pairs).enter()
+    .append('tr')
+    .selectAll('td')
+    .data(function(row, i) {
+        return columns.map(function(c) {
+            // compute cell values for this specific row
+            var cell = {};
+            d3.keys(c).forEach(function(k) {
+                cell[k] = typeof c[k] == 'function' ? c[k](row,i) : c[k];
+            });
+            return cell;
+        });
+    }).enter()
+    .append('td')
+    .html(ƒ('html'))
+    .attr('class', ƒ('cl'));
+
 
 </script>

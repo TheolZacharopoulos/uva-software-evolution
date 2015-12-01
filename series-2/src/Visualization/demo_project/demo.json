@@ -35,64 +35,72 @@
     {
       "id": "clone_1",
 
+	  "clone_type": "type-1",
+
       "origin": {
         "file": "file_1.java",
-        "clone_start_line": 5,
-        "clone_end_line": 10
+        "start_line": 5,
+        "end_line": 10
       },
 
       "clone": {
         "file": "file_1.java",
-        "clone_start_line": 25,
-        "clone_end_line": 30
+        "start_line": 25,
+        "end_line": 30
       }
     },
 
     {
       "id": "clone_2",
 
+	  "clone_type": "type-1",
+
       "origin": {
         "file": "file_1.java",
-        "clone_start_line": 5,
-        "clone_end_line": 10
+		"start_line": 5,
+        "end_line": 10
       },
 
       "clone": {
         "file": "file_2.java",
-        "clone_start_line": 15,
-        "clone_end_line": 20
+        "start_line": 15,
+        "end_line": 20
       }
     },
 
 	{
 	  	"id": "clone_3",
 
-	  	"origin": {
+		"clone_type": "type-2",
+
+		"origin": {
 	  	  "file": "file_3.java",
-	  	  "clone_start_line": 5,
-	  	  "clone_end_line": 10
+		  "start_line": 5,
+          "end_line": 10
 	  	},
 
 	  	"clone": {
 	  	  "file": "file_5.java",
-	  	  "clone_start_line": 15,
-	  	  "clone_end_line": 20
+	  	  "start_line": 15,
+	  	  "end_line": 20
 	  	}
 	},
 
 	{
 	  	"id": "clone_4",
 
+		"clone_type": "type-2",
+
 	  	"origin": {
 	  	  "file": "file_4.java",
-	  	  "clone_start_line": 5,
-	  	  "clone_end_line": 10
+		  "start_line": 5,
+          "end_line": 10
 	  	},
 
 	  	"clone": {
 	  	  "file": "file_5.java",
-	  	  "clone_start_line": 15,
-	  	  "clone_end_line": 20
+	  	  "start_line": 15,
+	  	  "end_line": 20
 	  	}
 	}
 
