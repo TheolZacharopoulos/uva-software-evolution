@@ -14,7 +14,7 @@
 const diameter = DIAMETER,
       radius = diameter / 2,
       innerRadius = radius - 120;
-	  
+
 // Make a full circle
 const cluster = d3.layout.cluster()
 	    .size([DEGREES, innerRadius])
@@ -46,23 +46,24 @@ function readData(error, data) {
 	if (error) throw error;
 
 	// extract data
-	var clonePairs = data;
+	const allFiles = data.files;
+	const allClonePairs = data.clone_pairs;
 
-    var nodes = cluster.nodes(fileHierarchy(clonePairs)),
-        links = fileClonePairs(nodes);
+    var nodes = cluster.nodes(fileHierarchy(allFiles)),
+        links = fileClonePairs(nodes, allClonePairs);
 
-    // Contract the links between the nodes in the dom
+    // Construct the links between the nodes in the dom
     link = link
         .data(bundle(links))
       .enter().append("path")
-        .each(clonePair => {
-			clonePair.source = clonePair[0],
-			clonePair.target = clonePair[clonePair.length - 1];
+        .each(d => {
+			d.source = d[0],
+			d.target = d[d.length - 1];
 		})
         .attr("class", "link")
         .attr("d", line);
 
-    // // Contract the nodes in the dom
+    // Construct the nodes in the dom
     node = node
         .data(nodes.filter(n => !n.children))
       .enter().append("text")
@@ -75,73 +76,81 @@ function readData(error, data) {
         .on("mouseout", mouseouted);
 }
 
+// Lazily construct the files hierarchy from clonePairs.
+function fileHierarchy(files) {
+	var map = {};
+
+	function find(name, data) {
+		var node = map[name], i;
+
+		if (!node) {
+
+			node = map[name] = data || {name: name, children: []};
+			if (name.length) {
+				node.parent = find(name.substring(0, i = name));
+				node.parent.children.push(node);
+
+				// set it's name as key
+				node.key = name.substring(i + 1);
+			}
+		}
+		return node;
+	}
+
+	files.forEach(d => find(d.name, d));
+
+	return map[""];
+}
+
+// Return a list of clone pairs for the given array of clone pairs.
+function fileClonePairs(nodes, clonePairs) {
+	var map = {},
+		clones = [];
+
+	// Compute a map from name to node.
+	nodes.forEach(d => map[d.name] = d);
+
+  // For each clone pair, construct a link from the source to target node.
+	nodes.forEach(d => {
+		clonePairs.forEach(clonepair => {
+
+			if (d.name === clonepair.origin.file) {
+				clones.push({
+					source: map[d.name],
+					target: map[clonepair.clone.file]
+				});
+			}
+		});
+	});
+
+	return clones;
+}
+
 function mouseovered(d) {
-  node
-      .each( n => n.target = n.source = false);
+	node
+		.each(n => n.target = n.source = false);
 
-  link
-      .classed("link--target", function(l) { if (l.target === d) return l.source.source = true; })
-      .classed("link--source", function(l) { if (l.source === d) return l.target.target = true; })
-    .filter(function(l) { return l.target === d || l.source === d; })
-      .each(function() { this.parentNode.appendChild(this); });
+	link
+		.classed("link--target", function(l) { if (l.target === d) return l.source.source = true; })
+		.classed("link--source", function(l) { if (l.source === d) return l.target.target = true; })
+		.filter(function(l) { return l.target === d || l.source === d; })
+		.each(function() { this.parentNode.appendChild(this); });
 
-  node
-      .classed("node--target", n => n.target)
-      .classed("node--source", n => n.source);
+	node
+		.classed("node--target", n => n.target)
+		.classed("node--source", n => n.source);
 }
 
 function mouseouted(d) {
-  link
-      .classed("link--target", false)
-      .classed("link--source", false);
+	link
+		.classed("link--target", false)
+		.classed("link--source", false);
 
-  node
-      .classed("node--target", false)
-      .classed("node--source", false);
+	node
+		.classed("node--target", false)
+		.classed("node--source", false);
 }
 
 d3.select(self.frameElement).style("height", diameter + "px");
-
-// Lazily construct the files hierarchy from clonePairs.
-function fileHierarchy(clonePairs) {
-  var map = {};
-
-  function find(name, data) {
-    var node = map[name], i;
-
-    if (!node) {
-
-      node = map[name] = data || {name: name, children: []};
-      if (name.length) {
-        node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
-        node.parent.children.push(node);
-        node.key = name.substring(i + 1);
-      }
-    }
-    return node;
-  }
-
-  clonePairs.forEach(d => find(d.name, d));
-
-  return map[""];
-}
-
-// Return a list of clone pairs for the given array of files.
-function fileClonePairs(files) {
-  var map = {},
-      clones = [];
-
-  // Compute a map from name to file.
-  files.forEach(d => map[d.name] = d);
-
-  // For each clone, construct a link from the source to target file.
-  files.forEach(clonePair => {
-    if (clonePair.imports) clonePair.imports.forEach(clone => {
-      clones.push({source: map[clonePair.name], target: map[clone]});
-    });
-  });
-
-  return clones;
-}
 
 </script>
