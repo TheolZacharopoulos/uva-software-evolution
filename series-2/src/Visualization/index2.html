@@ -69,7 +69,7 @@
 
 		function initializeSummaries(summary) {
 			$('#page-header').text(summary.project_name);
-			console.log(summary);
+
 			const summaryStats =
 				"<tr>\
 					<th scope=\"row\">Total clones</th>\
@@ -105,7 +105,9 @@
 
 				// row on click
 				$("#" + rowId).on('click', () => {
-				     initializeCloneView(file, allClonePairs);
+					$("#" + rowId).siblings().removeClass("success")
+    				$("#" + rowId).addClass("success");
+				    initializeCloneView(file, allClonePairs);
 				});
 
 				lineCounter ++;
@@ -126,8 +128,13 @@
 			.filter(clonePair => clonePair.origin.file === origin.name)
 			.forEach(clonePair => {
 				const rowId = "clone-view-row" + lineCounter;
+				var trClass = "";
+				if (clonePair.clone_type === "type-1") trClass="danger";
+				if (clonePair.clone_type === "type-2") trClass="warning";
+				if (clonePair.clone_type === "type-3") trClass="success";
+
 				const tr =
-					"<tr id=" + rowId + ">\
+					"<tr class=" + trClass + " id=" + rowId + ">\
 						<td>" + lineCounter + "</td>\
 						<td>" + clonePair.clone.file + "</td>\
 						<td>" + clonePair.clone_type + "</td>\
@@ -136,7 +143,7 @@
 
 				// row on click
 				$("#" + rowId).on('click', () => {
-				     showClonesInCodeView(clonePair);
+				    showClonesInCodeView(clonePair);
 				});
 
 				lineCounter ++;
