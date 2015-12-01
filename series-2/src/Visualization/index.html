@@ -10,6 +10,9 @@
 <script src="libs/d3.min.js"></script>
 <script src="libs/d3-jetpack.js"></script>
 <script src="js/Consts.js"></script>
+
+<div id="diagram"> </div>
+
 <script>
 var allFiles = {};
 var allClonePairs = {};
@@ -29,63 +32,63 @@ d3.json(DATA_FILE, (error, data) => {
 // ==============================
 // size of the wheel
 const diameter = DIAMETER,
-      radius = diameter / 2,
-      innerRadius = radius - 120;
+	  radius = diameter / 2,
+	  innerRadius = radius - 120;
 
 // Make a full circle
 const cluster = d3.layout.cluster()
-	    .size([DEGREES, innerRadius])
-	    .sort(null)
-	    .value(d => d.size);
+		.size([DEGREES, innerRadius])
+		.sort(null)
+		.value(d => d.size);
 
 const bundle = d3.layout.bundle();
 
 const line = d3.svg.line.radial()
-	    .interpolate("bundle")
-	    .tension(TENSION)
-	    .radius(d => d.y)
-	    .angle(d => d.x / 180 * Math.PI);
+		.interpolate("bundle")
+		.tension(TENSION)
+		.radius(d => d.y)
+		.angle(d => d.x / 180 * Math.PI);
 
 // Setup dom elements
-const svg = d3.select("body").append("svg")
-    .attr("width", diameter)
-    .attr("height", diameter)
+const svg = d3.select("#diagram").append("svg")
+	.attr("width", diameter)
+	.attr("height", diameter)
   .append("g")
-    .attr("transform", "translate(" + radius + "," + radius + ")");
+	.attr("transform", "translate(" + radius + "," + radius + ")");
 
 var link = svg.append("g").selectAll(".link"),
-    node = svg.append("g").selectAll(".node");
+	node = svg.append("g").selectAll(".node");
 
 // Read the data
 function initializeDiagram(allFiles, allClonePairs) {
-	
-	// Setup nodes and links from the data
-    var nodes = cluster.nodes(fileHierarchy(allFiles, allClonePairs)),
-        links = fileClonePairs(nodes, allClonePairs);
 
-    // Construct the links between the nodes in the dom
-    link = link
-        .data(bundle(links))
-      .enter().append("path")
-        .each(d => {
+	// Setup nodes and links from the data
+	var nodes = cluster.nodes(fileHierarchy(allFiles, allClonePairs)),
+		links = fileClonePairs(nodes, allClonePairs);
+
+	// Construct the links between the nodes in the dom
+	link = link
+		.data(bundle(links))
+	  .enter().append("path")
+		.each(d => {
 			d.source = d[0];
 			d.target = d[d.length - 1];
 		})
-        .attr("class", "link")
-        .attr("d", line);
+		.attr("class", "link")
+		.attr("d", line);
 
 	// Construct the nodes in the dom
-    node = node
-        .data(nodes.filter(n => !n.children))
-      .enter().append("text")
-        .attr("class", "node")
-        .attr("dy", ".31em")
-        .attr("transform", d => "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"))
-        .style("text-anchor", d => d.x < 180 ? "start" : "end")
-        .text(d => d.key)
-        .on("mouseover", mouseovered)
+	node = node
+		.data(nodes.filter(n => !n.children))
+	  .enter().append("text")
+		.attr("class", "node")
+		.attr("dy", ".31em")
+		.attr("transform", d => "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"))
+		.style("text-anchor", d => d.x < 180 ? "start" : "end")
+		.text(d => d.key)
+		.on("mouseover", mouseovered)
 		.on("mousedown", mousedown)
-        .on("mouseout", mouseouted);
+		.on("mouseout", mouseouted);
 }
 
 // Lazily construct the files as nodes.
@@ -127,11 +130,11 @@ function fileClonePairs(nodes, clonePairs) {
 	// Compute a map from name to node.
 	nodes.forEach(d => map[d.name] = d);
 
-    // For each clone pair, construct a link from the source to target node.
- 	nodes.forEach(node => {
+	// For each clone pair, construct a link from the source to target node.
+	nodes.forEach(node => {
 		clonePairs
 		.filter(clonepair => node.name === clonepair.origin.file)
-	  	.forEach(clonepair => {
+		.forEach(clonepair => {
 			clones.push({
 				source: map[node.name],
 				target: map[clonepair.clone.file]
