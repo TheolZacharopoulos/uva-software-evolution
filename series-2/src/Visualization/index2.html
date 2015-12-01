@@ -66,28 +66,95 @@
 		}
 
 		function initializeViews(allFiles, allClonePairs) {
-			$(document).ready(function() {
-				const fileViewTable = $('#file-view-table');
-
-				// populate file view with the files
-				var lineCounter = 1;
-
-				// Get files that are in the origin part of the clone pair
-				// In order to use this as a starting point
-				getOriginFiles(allFiles, allClonePairs)
-				.forEach(file => {
-					const cloneNum =
-						getClonePairsForFile(file.name, allClonePairs).length;
-					const tr =
-						"<tr>\
-                  			<td>" + lineCounter + "</td>\
-                  			<td>" + file.dir + "/" + file.name + "</td>\
-				  			<td>" + cloneNum + "</td>\
-            			</tr>";
-					fileViewTable.append(tr);
-					lineCounter ++;
-				});
+			$(document).ready(() => {
+				initializeCodeView();
+				initializeFileView(allFiles, allClonePairs);
 			});
+		}
+
+		function initializeFileView(allFiles, allClonePairs) {
+			const fileViewTable = $('#file-view-table');
+
+			// populate file view with the files
+			var lineCounter = 1;
+			// Get files that are in the origin part of the clone pair
+			// In order to use this as a starting point
+			getOriginFiles(allFiles, allClonePairs)
+			.forEach(file => {
+				const cloneNum =
+					getClonePairsForFile(file.name, allClonePairs).length;
+
+				const rowId = "file-view-row" + lineCounter;
+				const tr =
+					"<tr id=" + rowId + ">\
+						<td>" + lineCounter + "</td>\
+						<td>" + file.dir + "/" + file.name + "</td>\
+						<td>" + cloneNum + "</td>\
+					</tr>";
+				fileViewTable.append(tr);
+
+				// row on click
+				$("#" + rowId).on('click', () => {
+				     initializeCloneView(file, allClonePairs);
+				});
+
+				lineCounter ++;
+			});
+		}
+
+		function initializeCloneView(origin, allClonePairs) {
+
+			// Clear table first
+			$('#clone-view-table tbody > tr').remove();
+
+			const cloneViewTable = $('#clone-view-table');
+
+			// populate file view with the files
+			var lineCounter = 1;
+			// Get clone pairs that have origin the given file
+			allClonePairs
+			.filter(clonePair => clonePair.origin.file === origin.name)
+			.forEach(clonePair => {
+				const rowId = "clone-view-row" + lineCounter;
+				const tr =
+					"<tr id=" + rowId + ">\
+						<td>" + lineCounter + "</td>\
+						<td>" + clonePair.clone.file + "</td>\
+						<td>" + clonePair.clone_type + "</td>\
+					</tr>";
+				cloneViewTable.append(tr);
+
+				// row on click
+				$("#" + rowId).on('click', () => {
+				     showClonesInCodeView(clonePair);
+				});
+
+				lineCounter ++;
+			});
+		}
+
+		function initializeCodeView() {
+			$('#code-detail-view').mergely({
+				lcs: false,
+				wrap_lines: true,
+				editor_width: "400px",
+				editor_height: "400px",
+				cmsettings: {
+					mode: "java",
+					readOnly: true,
+					lineNumbers: true
+				},
+				lhs: setValue => setValue(""),
+				rhs: setValue => setValue("")
+			});
+		}
+
+		function showClonesInCodeView(clonePair) {
+			const originSourceCode = clonePair.origin.source_code;
+			const cloneSourceCode = clonePair.clone.source_code;
+
+			$('#code-detail-view').mergely('lhs', originSourceCode);
+			$('#code-detail-view').mergely('rhs', cloneSourceCode);
 		}
 
 	</script>
@@ -169,46 +236,15 @@
                 </tr>
               </thead>
               <tbody>
-
-                <tr>
-                  <td>1</td>
-                  <td>File2.java</td>
-				  <td>Type 2</td>
-                </tr>
               </tbody>
             </table>
           </div>
 
 		  <!-- Code detail view -->
 		  <div class="container">
-
 			<div>
-			<h1>Code detail view</h1>
-			<div id="compare">
-			</div>
-
-			<script>
-
-			const originSourceCode = "Class {\n \t private String name;\n}";
-			const cloneSourceCode = "Class {\n \t private String surname;\n}";
-
-			$(document).ready(() => {
-				$('#compare').mergely({
-					lcs: false,
-					wrap_lines: true,
-					editor_width: "400px",
-					editor_height: "400px",
-					cmsettings: {
-						mode: "java",
-						readOnly: true,
-						lineNumbers: true
-					},
-					lhs: setValue => setValue(originSourceCode),
-					rhs: setValue => setValue(cloneSourceCode)
-				});
-			});
-			</script>
-
+				<h1>Code detail view</h1>
+				<div id="code-detail-view"></div>
         </div>
       </div>
 
