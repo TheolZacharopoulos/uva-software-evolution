@@ -47,8 +47,8 @@
 
 		function getClonePairsForFile(filename, clonePairs) {
 			return clonePairs
-			.filter(clonePair => clonePair.origin.file === filename)
-			.map(clonePair => clonePair);
+				.filter(clonePair => clonePair.origin.file === filename)
+				.map(clonePair => clonePair);
 		}
 
 		function getOriginFiles(files, clonePairs) {
@@ -176,6 +176,7 @@
 		}
 
 		function initializeDiagram(allFiles, allClonePairs) {
+
 			// size of the wheel
 			const diameter = DIAMETER,
 				  radius = diameter / 2,
@@ -197,10 +198,13 @@
 
 			// Setup dom elements
 			const svg = d3.select("#diagram").append("svg")
-				.attr("width", diameter)
-				.attr("height", diameter)
+				// .attr("width", diameter)
+				// .attr("height", diameter)
+				.attr("width", 700)
+				.attr("height", 380)
 			  .append("g")
-				.attr("transform", "translate(" + radius + "," + radius + ")");
+				// .attr("transform", "translate(" + radius + "," + radius + ")");
+				.attr("transform", "translate(" + 250 + "," + 160 + ")");
 
 			var link = svg.append("g").selectAll(".link"),
 				node = svg.append("g").selectAll(".node");
