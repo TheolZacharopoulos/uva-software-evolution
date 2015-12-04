@@ -103,3 +103,17 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+/*
+ * Scrollable table
+ */
+.bodycontainer {
+	max-height: 220px;
+	width: 100%;
+	margin: 0;
+	overflow-y: auto;
+}
+.table-scrollable {
+	margin: 0;
+	padding: 0; 
+}

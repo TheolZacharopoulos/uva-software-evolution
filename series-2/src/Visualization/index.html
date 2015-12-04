@@ -12,7 +12,7 @@
     <title>Clone detector</title>
 
     <!-- Bootstrap core CSS -->
-    <link type="text/css" href="styles/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="styles/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
 	<link type="text/css" href="styles/codemirror.css" rel="stylesheet">
@@ -293,7 +293,7 @@
 					allFiles
 					.filter(file => file.name === d.key)
 					.forEach(file => {
-						
+
 						// highlight file on fileview
 						const fileViewRowId = "#file-view-row-" + file.name.substring(0, i = file.name.lastIndexOf("."));
 						$(fileViewRowId).siblings().removeClass("info")
@@ -395,8 +395,8 @@
 
 				  <!-- File view -->
 		          <h2 class="sub-header">File view</h2>
-		          <div class="table-responsive">
-		            <table id="file-view-table" class="table table-hover">
+		          <div class="bodycontainer scrollable">
+		            <table id="file-view-table" class="table table-hover table-striped table-condensed table-scrollable">
 		              <thead>
 		                <tr>
 		                  <th>#</th>
@@ -414,7 +414,7 @@
 				  <!-- Clone view -->
 		          <h2 class="sub-header">Clone view</h2>
 		          <div class="table-responsive">
-		            <table id="clone-view-table" class="table table-hover">
+		            <table id="clone-view-table" class="table table-hover table-striped">
 		              <thead>
 		                <tr>
 		                  <th>#</th>
