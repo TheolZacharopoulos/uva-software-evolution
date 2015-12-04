@@ -93,7 +93,7 @@
 				const cloneNum =
 					getClonePairsForFile(file.name, allClonePairs).length;
 
-				const rowId = "file-view-row" + lineCounter;
+				const rowId = "file-view-row-" + file.name.substring(0, i = file.name.lastIndexOf("."));
 				const tr =
 					"<tr id=" + rowId + ">\
 						<td>" + lineCounter + "</td>\
@@ -104,8 +104,8 @@
 
 				// row on click
 				$("#" + rowId).on('click', () => {
-					$("#" + rowId).siblings().removeClass("success")
-    				$("#" + rowId).addClass("success");
+					$("#" + rowId).siblings().removeClass("info")
+    				$("#" + rowId).addClass("info");
 				    initializeCloneView(file, allClonePairs);
 				});
 
@@ -292,7 +292,13 @@
 				return function(d) {
 					allFiles
 					.filter(file => file.name === d.key)
-					.forEach(file => initializeCloneView(file, allClonePairs));
+					.forEach(file => {
+						const fileViewRowId = "#file-view-row-" + file.name.substring(0, i = file.name.lastIndexOf("."));
+						$(fileViewRowId).siblings().removeClass("info")
+	    				$(fileViewRowId).addClass("info");
+
+						initializeCloneView(file, allClonePairs);
+					});
 				}
 			}
 
