@@ -66,6 +66,27 @@
       }
     },
 
+	{
+      "id": "clone_1_2",
+
+	  "clone_type": "type-1",
+
+	  "origin": {
+	    "file": "file_1.java",
+	    "source_code": "Class {\n \t private String name;\n}",
+	    "start_line": 25,
+	    "end_line": 30
+		},
+
+      "clone": {
+        "file": "file_1.java",
+		"source_code": "Class {\n \t private String name;\n}",
+        "start_line": 5,
+        "end_line": 10
+      }
+
+    },
+
     {
       "id": "clone_2",
 
@@ -84,6 +105,27 @@
         "start_line": 15,
         "end_line": 20
       }
+    },
+
+	{
+      "id": "clone_2_2",
+
+	  "clone_type": "type-1",
+
+	  "origin": {
+        "file": "file_2.java",
+		"source_code": "if (a > 0) {\n System.out.println(\"Hello\");\n}",
+        "start_line": 15,
+        "end_line": 20
+	},
+
+	  "clone": {
+        "file": "file_1.java",
+		"source_code": "if (a > 0) {\n System.out.println(\"Hello\");\n}",
+		"start_line": 5,
+        "end_line": 10
+      }
+
     },
 
 	{
@@ -107,6 +149,27 @@
 	},
 
 	{
+	  	"id": "clone_3_2",
+
+		"clone_type": "type-2",
+
+		"origin": {
+		  "file": "file_5.java",
+		  "source_code": "if (xxx > 3) {\n return 4;\n}",
+		  "start_line": 15,
+		  "end_line": 20
+	  	},
+
+		"clone": {
+	  	  "file": "file_3.java",
+		  "source_code": "if (s > 21) {\n return 5;\n}",
+		  "start_line": 5,
+          "end_line": 10
+	  	}
+
+	},
+
+	{
 	  	"id": "clone_4",
 
 		"clone_type": "type-2",
@@ -125,6 +188,27 @@
 	  	  "end_line": 20
 	  	}
 	},
+
+	{
+	  	"id": "clone_4_2",
+
+		"clone_type": "type-2",
+
+		"origin": {
+		  "file": "file_5.java",
+		  "source_code": "while (true) {\n System.out.println(\"WHATS UP?!\");\n}",
+		  "start_line": 15,
+		  "end_line": 20
+	  	},
+
+	  	"clone": {
+	  	  "file": "file_4.java",
+		  "source_code": "while (true) {\n System.out.println(\"Hello\");\n}",
+		  "start_line": 5,
+          "end_line": 10
+	  	}
+	},
+
 	{
 	  	"id": "clone_5",
 
@@ -144,6 +228,28 @@
 	  	  "end_line": 20
 	  	}
 	},
+
+	{
+	  	"id": "clone_5_2",
+
+		"clone_type": "type-2",
+
+		"origin": {
+		  "file": "file_2.java",
+		  "source_code": "while (b > 5) {\n System.out.println(\"WHATS UP?!\");\n}",
+		  "start_line": 15,
+		  "end_line": 20
+	  	},
+
+	  	"clone": {
+	  	  "file": "file_4.java",
+		  "source_code": "while (a > 3) {\n System.out.println(\"Hello\");\n}",
+		  "start_line": 5,
+          "end_line": 10
+	  	}
+
+	},
+
 	{
 	  	"id": "clone_6",
 
@@ -162,6 +268,27 @@
 	  	  "start_line": 15,
 	  	  "end_line": 20
 	  	}
+	},
+
+	{
+	  	"id": "clone_6_2",
+
+		"clone_type": "type-2",
+
+		"origin": {
+		  "file": "file_1.java",
+		  "source_code": "if (b && c) {\n System.out.println(\"WHATS UP?!\");\n}",
+		  "start_line": 15,
+		  "end_line": 20
+	  	},
+
+	  	"clone": {
+	  	  "file": "file_2.java",
+		  "source_code": "if (a && b) {\n System.out.println(\"Hello\");\n}",
+		  "start_line": 5,
+          "end_line": 10
+	  	}
+
 	},
 
 	{
@@ -185,6 +312,27 @@
 	},
 
 	{
+	  	"id": "clone_7_2",
+
+		"clone_type": "type-3",
+
+		"origin": {
+		  "file": "file_6.java",
+		  "source_code": "while (true) {\n System.out.println(\"WHATS UP?!\");\n}",
+		  "start_line": 15,
+		  "end_line": 20
+	  	},
+
+	  	"clone": {
+	  	  "file": "file_4.java",
+		  "source_code": "while (true) {\n System.out.println(\"Hello\"); System.out.println(\"World\"); \n}",
+		  "start_line": 5,
+          "end_line": 10
+	  	}
+
+	},
+
+	{
 	  	"id": "clone_8",
 
 		"clone_type": "type-3",
@@ -202,6 +350,27 @@
 	  	  "start_line": 15,
 	  	  "end_line": 20
 	  	}
+	},
+
+	{
+	  	"id": "clone_8",
+
+		"clone_type": "type-3",
+
+		"origin": {
+		  "file": "file_7.java",
+		  "source_code": "persons.stream()\n\t.filter(Person::getAge > 18)\n\t.map(Person::getName)\n\t.collect(Collectors.toList())",
+		  "start_line": 15,
+		  "end_line": 20
+	  	},
+
+	  	"clone": {
+	  	  "file": "file_2.java",
+		  "source_code": "persons.stream()\n\t.map(Person::getAge)\n\t.collect(Collectors.toList())",
+		  "start_line": 5,
+          "end_line": 10
+	  	}
+
 	}
 
   ]
