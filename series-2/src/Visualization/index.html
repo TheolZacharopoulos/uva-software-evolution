@@ -230,7 +230,7 @@
 					.attr("transform", d => "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"))
 					.style("text-anchor", d => d.x < 180 ? "start" : "end")
 					.text(d => d.key)
-					.on("mouseover", mouseovered)
+					.on("mouseover", mouseovered(allFiles, allClonePairs))
 					.on("mousedown", mousedown(allFiles, allClonePairs))
 					.on("mouseout", mouseouted);
 
@@ -293,6 +293,8 @@
 					allFiles
 					.filter(file => file.name === d.key)
 					.forEach(file => {
+						
+						// highlight file on fileview
 						const fileViewRowId = "#file-view-row-" + file.name.substring(0, i = file.name.lastIndexOf("."));
 						$(fileViewRowId).siblings().removeClass("info")
 	    				$(fileViewRowId).addClass("info");
@@ -302,19 +304,36 @@
 				}
 			}
 
-			function mouseovered(d) {
-				node
-					.each(n => n.target = n.source = false);
+			function mouseovered(allFiles, allClonePairs) {
+				return function(d) {
+					node
+						.each(n => n.target = n.source = false);
 
-				link
-					.classed("link--target", function(l) { if (l.target === d) return l.source.source = true; })
-					.classed("link--source", function(l) { if (l.source === d) return l.target.target = true; })
-					.filter(function(l) { return l.target === d || l.source === d; })
-					.each(function() { this.parentNode.appendChild(this); });
+					link
+						.classed("link--target", function(l) { if (l.target === d) return l.source.source = true; })
+						.classed("link--source", function(l) { if (l.source === d) return l.target.target = true; })
+						.filter(function(l) { return l.target === d || l.source === d; })
+						.each(function() { this.parentNode.appendChild(this); });
 
-				node
-					.classed("node--target", n => n.target)
-					.classed("node--source", n => n.source);
+					node
+						.classed("node--target", n => n.target)
+						.classed("node--source", n => n.source);
+
+					// Clear clone view
+					$('#clone-view-table tbody > tr').remove();
+
+					// highlight file on fileview
+					allFiles
+					.filter(file => file.name === d.key)
+					.forEach(file => {
+						// highlight file on fileview
+						const fileViewRowId = "#file-view-row-" + file.name.substring(0, i = file.name.lastIndexOf("."));
+						$(fileViewRowId).siblings().removeClass("info")
+						$(fileViewRowId).addClass("info");
+
+						initializeCloneView(file, allClonePairs);
+					});
+				}
 			}
 
 			function mouseouted(d) {
@@ -325,6 +344,11 @@
 				node
 					.classed("node--target", false)
 					.classed("node--source", false);
+
+				// remove highlight from fileview
+				const fileViewRowId = "#file-view-row-" + d.key.substring(0, i = d.key.lastIndexOf("."));
+				$(fileViewRowId).siblings().removeClass("info")
+				$(fileViewRowId).addClass("info");
 			}
 
 			d3.select(self.frameElement).style("height", diameter + "px");
