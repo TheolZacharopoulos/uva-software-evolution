@@ -156,7 +156,7 @@
 				lcs: true,
 				wrap_lines: true,
 				editor_width: "400px",
-				editor_height: "400px",
+				editor_height: "200px",
 				cmsettings: {
 					mode: "java",
 					readOnly: true,
@@ -348,13 +348,13 @@
 
           <h1 id="page-header" class="page-header"></h1>
 
-          <div class="row placeholders">
+          <div class="row">
 
 			<!-- Visualization -->
-			<div id="diagram" class="col-xs-6 col-sm-6 placeholder"></div>
+			<div id="diagram" class="col-xs-6 col-sm-6" style="margin-bottom: -80px; margin-top: -80px;"></div>
 
 			<!-- Summaries -->
-            <div class="col-xs-6 col-sm-2 placeholder">
+            <div class="col-xs-6 col-sm-3">
 				<div class="panel panel-default">
 			    <div class="panel-heading">Summary</div>
 			    <table id="summary-table" class="table">
@@ -365,37 +365,45 @@
             </div>
           </div>
 
-		  <!-- File view -->
-          <h2 class="sub-header">File view</h2>
-          <div class="table-responsive">
-            <table id="file-view-table" class="table table-hover">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Origin File</th>
-                  <th>Number of clones</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
+		  <!-- Add the views in a table -->
+		  <div class="row">
+			  <div class="col-md-5">
 
-		  <!-- Clone view -->
-          <h2 class="sub-header">Clone view</h2>
-          <div class="table-responsive">
-            <table id="clone-view-table" class="table table-hover">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Clone File</th>
-                  <th>Clone Type</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
+				  <!-- File view -->
+		          <h2 class="sub-header">File view</h2>
+		          <div class="table-responsive">
+		            <table id="file-view-table" class="table table-hover">
+		              <thead>
+		                <tr>
+		                  <th>#</th>
+		                  <th>Origin File</th>
+		                  <th>Number of clones</th>
+		                </tr>
+		              </thead>
+		              <tbody>
+		              </tbody>
+		            </table>
+		          </div>
+			  </div>
+			  <div class="col-md-5">
+
+				  <!-- Clone view -->
+		          <h2 class="sub-header">Clone view</h2>
+		          <div class="table-responsive">
+		            <table id="clone-view-table" class="table table-hover">
+		              <thead>
+		                <tr>
+		                  <th>#</th>
+		                  <th>Clone File</th>
+		                  <th>Clone Type</th>
+		                </tr>
+		              </thead>
+		              <tbody>
+		              </tbody>
+		            </table>
+		          </div>
+			  </div>
+	      </div>
 
 		  <!-- Code detail view -->
 		  <div class="container">
