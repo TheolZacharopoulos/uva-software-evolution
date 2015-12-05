@@ -26,7 +26,8 @@
 }
 
 .node--target {
-  fill: #d62728;
+  /*fill: #d62728;*/
+  fill: #2ca02c;
 }
 
 .link--source,
@@ -41,4 +42,22 @@
 
 .link--target {
   stroke: #2ca02c;
+}
+
+.link--clone-type-1 {
+  stroke: darkred;
+  stroke-opacity: 1;
+  stroke-width: 2px;
+}
+
+.link--clone-type-2 {
+  stroke: darkorange;
+  stroke-opacity: 1;
+  stroke-width: 2px;
+}
+
+.link--clone-type-3 {
+  stroke: yellowgreen;
+  stroke-opacity: 1;
+  stroke-width: 2px;
 }
