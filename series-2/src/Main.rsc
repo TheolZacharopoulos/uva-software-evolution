@@ -6,7 +6,7 @@ import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 import lang::java::m3::Core;
 
-import CloneDetection::Utils::ClonesGeneralize;
+import CloneDetection::Strategy::TypeOne;
 import CloneDetection::CloneDetector;
 import CloneDetection::AbstractClonePairs;
 
@@ -29,6 +29,9 @@ private loc getCombinedSequenceLocation(Sequence sequence) {
     return uri(firstStmt@src.offset, length, <firstStmt@src.begin.line, firstStmt@src.begin.column>, <lastStmt@src.end.line, lastStmt@src.end.column>);
 }
 
+/**
+ * TODO Divide type 1, type 2 into separate strategies
+ */
 void main() {
     startProfiling = realTime() * 1.0;
     
@@ -42,11 +45,7 @@ void main() {
     // -------------------------------------------------
     startProfiling = realTime() * 1.0;
     
-    asts = putIdentifiers(asts);
-    println("Identifiers in place <((realTime() * 1.0) - startProfiling) / 1000> seconds...");
-    clonesSeqs = detectSequenceClones(asts);
-    
-    clonePairs = generalizeClones(clonesSeqs);
+    clonePairs = detectTypeOne(asts);
     
     for (cloneKey <- clonePairs) {
         if (sequence(originSeq, cloneSeq) := clonePairs[cloneKey]) {

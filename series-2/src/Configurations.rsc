@@ -15,7 +15,7 @@ public loc getProjectLocation() = smallSqlProjectLocation;
  * Get test project location.
  * @return a project location.
  */
-public loc getTestProjectLocation() = smallSqlProjectLocation;
+public loc getTestProjectLocation() = demoProjectLocation;
 
 /**
  * The mass threshold parameter specifies the minimum sub-tree mass (number of nodes) value 
@@ -39,4 +39,4 @@ public int TREE_DIFF_MASS_THRESHOLD = 10;
  * The similarity threshold parameter allows the user to specify
  * how similar two sub-trees should be.
  */
-public real SIMILARITY_THRESHOLD = 1.0;
+public real SIMILARITY_THRESHOLD = 0.8;

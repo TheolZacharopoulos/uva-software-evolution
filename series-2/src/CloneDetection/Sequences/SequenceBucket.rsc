@@ -16,13 +16,13 @@ SequenceBuckets newSequenceBuckets() = ();
 @doc{
 Place all subsequences of length (sequenceLength) into buckets according to subsequence hash
 }
-SequenceBuckets constructSequenceBuckets(Sequences subSequences) {
+SequenceBuckets constructSequenceBuckets(Sequences subSequences, fingerprinter) {
 
     SequenceBuckets sequenceBuckets = newSequenceBuckets();
     Sequences emptySequences = [];
     
     for (subSequence <- subSequences) {
-        str fingerprint = getBadSeqFingerprint(subSequence);
+        str fingerprint = fingerprinter(subSequence);
         sequenceBuckets[fingerprint] ? emptySequences += [subSequence];
     }
     return sequenceBuckets;
