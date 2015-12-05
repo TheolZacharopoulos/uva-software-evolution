@@ -33,8 +33,3 @@ int getLargestSequenceSize([])  = 0;
 int getLargestSequenceSize(Sequences sequences) {
     return max([size(sequence) | sequence <- sequences]);
 }
-
-@doc{
-Extracts all unique keys from a sequence
-}
-set[int] getSequenceUniqueKeys(Sequence sequence) = {statement@uniqueKey | statement <- sequence};

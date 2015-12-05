@@ -84,3 +84,8 @@ ClonePairsSeq removeSequenceSubclones(Sequence origin, Sequence clone, ClonePair
     
     return clones;
 }
+
+@doc{
+Extracts all unique keys from a sequence
+}
+set[int] getSequenceUniqueKeys(Sequence sequence) = {statement@uniqueKey | statement <- sequence};
