@@ -306,12 +306,34 @@
 
 			function mouseovered(allFiles, allClonePairs) {
 				return function(d) {
+					
+					// Clear clone view
+					$('#clone-view-table tbody > tr').remove();
+
+					// ====================================================
+					// Style the links according to the stongest Clone type
+					// set default color
+					var linkCls = "link--target";
+
+					getClonePairsForFile(d.key, allClonePairs)
+					.filter(clonePair => clonePair.clone_type === "type-3")
+					.forEach(() => linkCls = "link--clone-type-3");
+
+					getClonePairsForFile(d.key, allClonePairs)
+					.filter(clonePair => clonePair.clone_type === "type-2")
+					.forEach(() => linkCls = "link--clone-type-2");
+
+					getClonePairsForFile(d.key, allClonePairs)
+					.filter(clonePair => clonePair.clone_type === "type-1")
+					.forEach(() => linkCls = "link--clone-type-1");
+
+					// Paint the diagram
 					node
 						.each(n => n.target = n.source = false);
 
 					link
-						.classed("link--target", function(l) { if (l.target === d) return l.source.source = true; })
-						.classed("link--source", function(l) { if (l.source === d) return l.target.target = true; })
+						.classed(linkCls, function(l) { if (l.target === d) return l.source.source = true; })
+						.classed(linkCls, function(l) { if (l.source === d) return l.target.target = true; })
 						.filter(function(l) { return l.target === d || l.source === d; })
 						.each(function() { this.parentNode.appendChild(this); });
 
@@ -319,10 +341,8 @@
 						.classed("node--target", n => n.target)
 						.classed("node--source", n => n.source);
 
-					// Clear clone view
-					$('#clone-view-table tbody > tr').remove();
-
-					// highlight file on fileview
+					// =====================================
+					// Highlight file on fileview
 					allFiles
 					.filter(file => file.name === d.key)
 					.forEach(file => {
@@ -337,9 +357,14 @@
 			}
 
 			function mouseouted(d) {
+
+				// Remove highlight from diagram
 				link
 					.classed("link--target", false)
-					.classed("link--source", false);
+					.classed("link--source", false)
+					.classed("link--clone-type-1", false)
+					.classed("link--clone-type-2", false)
+					.classed("link--clone-type-3", false);
 
 				node
 					.classed("node--target", false)
