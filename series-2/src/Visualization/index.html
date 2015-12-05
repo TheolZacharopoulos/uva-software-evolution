@@ -47,8 +47,10 @@
 
 		function getClonePairsForFile(filename, clonePairs) {
 			return clonePairs
-				.filter(clonePair => clonePair.origin.file === filename)
-				.map(clonePair => clonePair);
+			.filter(clonePair =>
+				clonePair.origin.file === filename ||
+				clonePair.clone.file === filename)
+			.map(clonePair => clonePair);
 		}
 
 		function getOriginFiles(files, clonePairs) {
@@ -88,7 +90,7 @@
 			var lineCounter = 1;
 			// Get files that are in the origin part of the clone pair
 			// In order to use this as a starting point
-			getOriginFiles(allFiles, allClonePairs)
+			allFiles
 			.forEach(file => {
 				const cloneNum =
 					getClonePairsForFile(file.name, allClonePairs).length;
@@ -126,7 +128,10 @@
 			var lineCounter = 1;
 			// Get clone pairs that have origin the given file
 			allClonePairs
-			.filter(clonePair => clonePair.origin.file === origin.name)
+			.filter(clonePair =>
+				// check both origin and clone (since we don't have mirror info)
+				clonePair.origin.file === origin.name ||
+				clonePair.clone.file === origin.name)
 			.forEach(clonePair => {
 				const rowId = "clone-view-row" + lineCounter;
 				var trClass = "";
@@ -134,10 +139,14 @@
 				if (clonePair.clone_type === "type-2") trClass="warning";
 				if (clonePair.clone_type === "type-3") trClass="success";
 
+				// Since no mirror info, check the origin to define
+				// the filename of the clone.
+				const cloneFile = clonePair.origin.file === origin.name ?
+									clonePair.clone.file : clonePair.origin.file;
 				const tr =
 					"<tr class=" + trClass + " id=" + rowId + ">\
 						<td>" + lineCounter + "</td>\
-						<td>" + clonePair.clone.file + "</td>\
+						<td>" + cloneFile + "</td>\
 						<td>" + clonePair.clone_type + "</td>\
 					</tr>";
 				cloneViewTable.append(tr);
@@ -276,11 +285,19 @@
 				// For each clone pair, construct a link from the source to target node.
 				nodes.forEach(node => {
 					clonePairs
-					.filter(clonepair => node.name === clonepair.origin.file)
-					.forEach(clonepair => {
+
+					// check both origin and clone (since we don't have mirror info)
+					.filter(clonepair => node.name === clonepair.origin.file ||
+										 node.name === clonepair.clone.file)
+					.forEach(clonePair => {
+
+						// Since no mirror info, check the origin to define
+						// the filename of the clone.
+						const cloneFile = clonePair.origin.file === node.name ?
+										clonePair.clone.file : clonePair.origin.file;
 						clones.push({
 							source: map[node.name],
-							target: map[clonepair.clone.file]
+							target: map[cloneFile]
 						});
 					});
 				});
@@ -306,7 +323,7 @@
 
 			function mouseovered(allFiles, allClonePairs) {
 				return function(d) {
-					
+
 					// Clear clone view
 					$('#clone-view-table tbody > tr').remove();
 
@@ -332,8 +349,14 @@
 						.each(n => n.target = n.source = false);
 
 					link
-						.classed(linkCls, function(l) { if (l.target === d) return l.source.source = true; })
-						.classed(linkCls, function(l) { if (l.source === d) return l.target.target = true; })
+						// .classed(linkCls, function(l) { if (l.source === d) return l.source.source = true; })
+						// .classed(linkCls, function(l) { if (l.source === d) return l.target.target = true; })
+						.classed(linkCls, function(l) {
+							if (l.source === d || l.target === d) {
+								l.source.source = true;
+								return l.source.source = true;
+							}
+						})
 						.filter(function(l) { return l.target === d || l.source === d; })
 						.each(function() { this.parentNode.appendChild(this); });
 
