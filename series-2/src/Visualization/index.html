@@ -349,9 +349,9 @@
 						.each(n => n.target = n.source = false);
 
 					link
-						// .classed(linkCls, function(l) { if (l.source === d) return l.source.source = true; })
-						// .classed(linkCls, function(l) { if (l.source === d) return l.target.target = true; })
 						.classed(linkCls, function(l) {
+
+							// Since no mirrored
 							if (l.source === d || l.target === d) {
 								l.source.source = true;
 								return l.source.source = true;
