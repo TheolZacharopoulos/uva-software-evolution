@@ -5,13 +5,11 @@
 	  "duplicated_code": "47%"
   },
 
-  "_comment_dirs": "*** Directories which include files with clones ***",
   "directories": [
       "dir_1",
       "dir_2"
   ],
 
-  "_comment_files": "*** Files which include clones pairs, original or clone ***",
   "files": [
     {
       "name": "file_1.java",
@@ -51,7 +49,6 @@
     }
   ],
 
-  "_comment_clones": "*** Describe the clone pairs ***",
   "clone_pairs": [
 
     {
