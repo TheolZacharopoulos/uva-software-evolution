@@ -8,27 +8,10 @@ import Configurations;
 import Map;
 import Prelude;
 
-@doc{
-    Convert Clone pair sequence to Clone pair.
-}
-ClonePairs clonePairsSeqToClonePairs(ClonePairsSeq clonePairsSeq) {
-    ClonePairs clonePairs = newClonePairs();
-
-    for (cloneKey <- clonePairsSeq, sequence(Sequence origin, Sequence clone) := clonePairsSeq[cloneKey]) {
-        clonePairs = addCloneToClonePairs(origin, clone, clonePairs);
-    }
-    return clonePairs;
-}
-
-ClonePairs generalizeClones(ClonePairsSeq clonePairsSeq) {
-
-    // Bacause: C L A R I T Y 
-    ClonePairs clones = clonePairsSeqToClonePairs(clonePairsSeq);
+ClonePairs generalizeClones(ClonePairs clones, bool (node, node) areParentsEqual) {
     
     // * 1. ClonesToGeneralize = Clones
     ClonePairs clonesToGeneralize = clones;
-    
-    println("Start generalizing...");
     
     // * 2. While ClonesToGeneralize≠∅
     while (true) {
@@ -36,7 +19,7 @@ ClonePairs generalizeClones(ClonePairsSeq clonePairsSeq) {
         if (size(clonesToGeneralize) == 0) break;
         
         currentKey = toList(domain(clonesToGeneralize))[0];
-        pair = clonesToGeneralize[currentKey];
+        ClonePair pair = clonesToGeneralize[currentKey];
         
         // * 3. Remove clone(i,j) from ClonesToGeneralize
         clonesToGeneralize = delete(clonesToGeneralize, currentKey);
@@ -46,18 +29,17 @@ ClonePairs generalizeClones(ClonePairsSeq clonePairsSeq) {
         // * 4. If CompareClones(ParentOf(i), ParentOf(j)) > SimilarityThreshold
         parentOfOrigin = getParentOf(pair.origin);
         parentOfClone = getParentOf(pair.clone);
-        if (parentOfOrigin@uniqueKey != parentOfClone@uniqueKey && 
-            getSimilarityFactor(parentOfOrigin, parentOfClone) >= SIMILARITY_THRESHOLD) {
+        if (parentOfOrigin@uniqueKey != parentOfClone@uniqueKey && areParentsEqual(parentOfOrigin, parentOfClone)) {
         
             // * 5. RemoveClonePair(Clones,i,j)
             clones = removeCloneFromClonePairs(pair.origin, clones);
             clones = removeCloneFromClonePairs(pair.clone, clones);
             
             // * 6. AddClonePair(Clones, ParentOf(i), ParentOf(j))
-            clones = addCloneToClonePairs(parentOfOrigin, parentOfClone, clones); 
+            clones = addClonePair(parentOfOrigin, parentOfClone, clones); 
             
             // * 7. AddClonePair(ClonesToGeneralize, ParentOf(i),ParentOf(j))
-            clonesToGeneralize = addCloneToClonePairs(parentOfOrigin, parentOfClone, clonesToGeneralize);
+            clonesToGeneralize = addClonePair(parentOfOrigin, parentOfClone, clonesToGeneralize);
         }    
     }
 

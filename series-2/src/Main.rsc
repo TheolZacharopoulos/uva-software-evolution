@@ -6,8 +6,7 @@ import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 import lang::java::m3::Core;
 
-import CloneDetection::Strategy::TypeOne;
-import CloneDetection::CloneDetector;
+import CloneDetection::StrategyAggregate;
 import CloneDetection::AbstractClonePairs;
 
 import CloneDetection::Utils;
@@ -45,25 +44,16 @@ void main() {
     // -------------------------------------------------
     startProfiling = realTime() * 1.0;
     
-    clonePairs = detectTypeOne(asts);
+    clonePairs = detectClones(asts);
     
-    for (cloneKey <- clonePairs) {
-        if (sequence(originSeq, cloneSeq) := clonePairs[cloneKey]) {
-            if (size(originSeq) == 1) {
-                origin = originSeq[0];
-                clone = cloneSeq[0];
-                iprintln(origin@src);
-                println("-----");
-                iprintln(clone@src);
-                println("=========================================");
-            } else {
-                originSeqPath = getCombinedSequenceLocation(originSeq);
-                cloneSeqPath = getCombinedSequenceLocation(cloneSeq);
-                iprintln(originSeqPath);
-                println("-----");
-                iprintln(cloneSeqPath);
-                println("=========================================");
-            }
+    for (cloneKey <- clonePairs["type-1"]) {
+        if (sequence(originSeq, cloneSeq) := clonePairs["type-1"][cloneKey]) {
+            originSeqPath = getCombinedSequenceLocation(originSeq);
+            cloneSeqPath = getCombinedSequenceLocation(cloneSeq);
+            iprintln(originSeqPath);
+            println("-----<cloneKey> : <getSequenceUniqueKeys(cloneSeq)>");
+            iprintln(cloneSeqPath);
+            println("=========================================");
         }
     }
     

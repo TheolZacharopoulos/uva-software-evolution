@@ -16,7 +16,7 @@ SequenceBuckets newSequenceBuckets() = ();
 @doc{
 Place all subsequences of length (sequenceLength) into buckets according to subsequence hash
 }
-SequenceBuckets constructSequenceBuckets(Sequences subSequences, fingerprinter) {
+SequenceBuckets constructSequenceBuckets(Sequences subSequences, str (Sequence) fingerprinter) {
 
     SequenceBuckets sequenceBuckets = newSequenceBuckets();
     Sequences emptySequences = [];

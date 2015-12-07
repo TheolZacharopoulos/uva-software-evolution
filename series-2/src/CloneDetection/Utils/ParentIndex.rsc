@@ -12,23 +12,30 @@ anno int node @ uniqueKey;
 
 private map[int childOf, node parent] childrenToParent = ();
 
-void setChildrenFromAParent(subTree) {
+void collectChildrenToParentIndexFromAST(set[Declaration] asts) {
+    bottom-up visit (asts) {
+        case Statement subTree: setChildrenFromAParent(subTree);
+        case Declaration subTree: setChildrenFromAParent(subTree);
+    }
+}
+
+void clearParentIndex() {
+    childrenToParent = ();
+}
+
+private void setChildrenFromAParent(subTree) {
 
     int parentUniqueKey = subTree@uniqueKey;
     allChildrenNodes = getChildren(subTree);
     
     for (child <- allChildrenNodes) {
         switch (child) {
-            case Statement statement: {
-                childrenToParent[statement@uniqueKey] = subTree;
-            }
+            case Statement statement: childrenToParent[statement@uniqueKey] = subTree;
+            case Declaration declaration: childrenToParent[declaration@uniqueKey] = subTree;
             case list[Statement] block: {
                 for (statement <- block) {
                     childrenToParent[statement@uniqueKey] = subTree;
                 }
-            }
-            case Declaration declaration: {
-                childrenToParent[declaration@uniqueKey] = subTree;
             }
             case list[Declaration] declarations: {
                 for (declaration <- declarations) {

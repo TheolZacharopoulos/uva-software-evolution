@@ -8,7 +8,7 @@ import Set;
 
 test bool testAddClone() {
     clones = newClonePairs();
-    clones = addCloneToClonePairs(getTestTreeBig(), getTestTreeBig(), clones);
+    clones = addClonePair(getTestTreeBig(), getTestTreeBig(), clones);
     
     return range(clones) == {sequence([getTestTreeBig()], [getTestTreeBig()])};
 }
@@ -20,8 +20,8 @@ test bool testRemoveClone() {
     treeD = getTestTreeSmall();
     
     clones = newClonePairs();
-    clones = addCloneToClonePairs(treeA, treeC, clones);
-    clones = addCloneToClonePairs(treeB, treeD, clones);
+    clones = addClonePair(treeA, treeC, clones);
+    clones = addClonePair(treeB, treeD, clones);
     
     clones = removeCloneFromClonePairs(treeB, clones);
     
@@ -35,8 +35,8 @@ test bool testRemoveClone2() {
     treeD = getTestTreeSmall();
     
     clones = newClonePairs();
-    clones = addCloneToClonePairs(treeA, treeC, clones);
-    clones = addCloneToClonePairs(treeB, treeD, clones);
+    clones = addClonePair(treeA, treeC, clones);
+    clones = addClonePair(treeB, treeD, clones);
     
     clones = removeCloneFromClonePairs(treeA, clones);
     

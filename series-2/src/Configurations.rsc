@@ -15,7 +15,7 @@ public loc getProjectLocation() = smallSqlProjectLocation;
  * Get test project location.
  * @return a project location.
  */
-public loc getTestProjectLocation() = demoProjectLocation;
+public loc getTestProjectLocation() = smallSqlProjectLocation;
 
 /**
  * The mass threshold parameter specifies the minimum sub-tree mass (number of nodes) value 

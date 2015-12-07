@@ -1,34 +1,36 @@
 module CloneDetection::Strategy::TypeOne
 
-import CloneDetection::Utils::ASTIdentifier;
 import CloneDetection::Utils::Fingerprinter;
+import CloneDetection::Utils::ParentIndex;
 import CloneDetection::Utils::ClonesGeneralize;
 import CloneDetection::AbstractClonePairs;
 import CloneDetection::Statements::TreeSimilarity;
 import CloneDetection::Sequences::StatementSequences;
 import CloneDetection::Sequences::SubsequencesExtractor;
 import CloneDetection::Sequences::SequenceBucket;
-import CloneDetection::Sequences::SequenceSimilarity;
 import Configurations;
 
 import lang::java::m3::AST;
 import List;
+import Set;
 
 ClonePairs detectTypeOne(set[Declaration] asts) {
-    asts = putIdentifiers(asts);
-    clonesSeqs = detectSequenceClones(asts);
-    return generalizeClones(clonesSeqs);    
+    collectChildrenToParentIndexFromAST(asts);
+    clonesSeqs = detectSequenceClones(asts, getSeqFingerprint);
+    return generalizeClones(clonesSeqs, areParentsEqual);    
 }
 
-private ClonePairsSeq detectSequenceClones(set[Declaration] ast) {
+private bool areParentsEqual(node treeA, node treeB) = treeA == treeB;
+
+private ClonePairs detectSequenceClones(set[Declaration] ast, str (Sequence) fingerprinter) {
 
     Sequences allSequences = extractSequencesFromAST(ast);
     int maximumSequenceLength = getLargestSequenceSize(allSequences);
-    ClonePairsSeq cloneSequencePairs = newClonePairsSeq();
+    ClonePairs cloneSequencePairs = newClonePairs();
     
     for (sequenceLength <- [MINIMUM_SEQUENCE_LENGTH .. (maximumSequenceLength + 1)]) {
         Sequences subSequences = getSubSequences(allSequences, sequenceLength);
-        SequenceBuckets sequenceBuckets = constructSequenceBuckets(subSequences, getPerfectSeqFingerprint);
+        SequenceBuckets sequenceBuckets = constructSequenceBuckets(subSequences, fingerprinter);
         
         for (bucketHash <- sequenceBuckets) {
 
@@ -42,13 +44,18 @@ private ClonePairsSeq detectSequenceClones(set[Declaration] ast) {
                 Sequence originSubSeq = sequenceBuckets[bucketHash][originSeqIndex];
                 Sequence cloneSubSeq = sequenceBuckets[bucketHash][cloneSeqIndex];
 
-                // * RemoveSequenceSubclonesOf(clones, i, j, k)
-                cloneSequencePairs = removeSequenceSubclones(originSubSeq, cloneSubSeq, cloneSequencePairs);
-
-                // * AddSequenceClonePair(Clones, i, j, k)
-                cloneSequencePairs = addSeqClone(originSubSeq, cloneSubSeq, cloneSequencePairs);
+                if (!isOverlap(originSubSeq, cloneSubSeq)) {
+                    // * RemoveSequenceSubclonesOf(clones, i, j, k)
+                    cloneSequencePairs = removeSequenceSubclones(originSubSeq, cloneSubSeq, cloneSequencePairs);
+    
+                    // * AddSequenceClonePair(Clones, i, j, k)
+                    cloneSequencePairs = addClonePair(originSubSeq, cloneSubSeq, cloneSequencePairs);
+                }
             }
         }
-    }    
+    }
+    
     return cloneSequencePairs;
 }
+
+private bool isOverlap(Sequence origin, Sequence clone) = getSequenceUniqueKeys(origin) & getSequenceUniqueKeys(clone) != {};

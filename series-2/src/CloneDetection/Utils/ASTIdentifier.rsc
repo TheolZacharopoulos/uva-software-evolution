@@ -1,8 +1,5 @@
 module CloneDetection::Utils::ASTIdentifier
 
-import CloneDetection::Utils::ParentIndex;
-import CloneDetection::Utils::TreeMassIndex;
-
 import lang::java::m3::AST;
 import Prelude;
 
@@ -20,16 +17,12 @@ Creates unique identifiers for each node in the AST
         case Statement subTree: {
             counter += 1;
             subTree = subTree[@uniqueKey = counter];
-            setChildrenFromAParent(subTree);
-            addTreeWeight(subTree);
             
             insert subTree;
         }
         case Declaration subTree: {
             counter += 1;
             subTree = subTree[@uniqueKey = counter];
-            setChildrenFromAParent(subTree);
-            addTreeWeight(subTree);
             
             insert subTree;
         }

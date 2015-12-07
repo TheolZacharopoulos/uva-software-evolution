@@ -22,3 +22,7 @@ bool hasTreeWeight(node tree) = treeToWeight[tree@uniqueKey]?;
 int getTreeWeight(node tree) = treeToWeight[tree@uniqueKey] when treeToWeight[tree@uniqueKey]?;
 
 int getTreeWeight(list[node] sequence) = (1 | it + getTreeWeight(child) | child <- sequence);
+
+void clearTreeWeightIndex() {
+    treeToWeight = ();
+}
