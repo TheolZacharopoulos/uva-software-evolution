@@ -213,38 +213,50 @@
 				.attr("transform", "translate(" + radius + "," + radius + ")");
 
 			var link = svg.append("g").selectAll(".link"),
-				node = svg.append("g").selectAll(".node");
+          linkCircle = svg.append("g").selectAll("circle.link"),
+				  node = svg.append("g").selectAll(".node");
 
-				// Setup nodes and links from the data
-				var nodes = cluster.nodes(fileHierarchy(allFiles, allClonePairs)),
-					links = fileClonePairs(nodes, allClonePairs);
+			// Setup nodes and links from the data
+			var nodes = cluster.nodes(getFileHierarchy(allFiles, allClonePairs)),
+				links = getFileClonePairs(nodes, allClonePairs);
 
-				// Construct the links between the nodes in the dom
-				link = link
-					.data(bundle(links))
-				  .enter().append("path")
-					.each(d => {
-						d.source = d[0];
-						d.target = d[d.length - 1];
-					})
-					.attr("class", "link")
-					.attr("d", line);
+			// Construct the links between the nodes in the dom
+			link = link
+				.data(bundle(links))
+			  .enter().append("path")
+				.each(d => {
+					d.source = d[0];
+					d.target = d[d.length - 1];
+				})
+				.attr("class", "link")
+				.attr("d", line);
 
-				// Construct the nodes in the dom
-				node = node
-					.data(nodes.filter(n => !n.children))
-				  .enter().append("text")
-					.attr("class", "node")
-					.attr("dy", ".31em")
-					.attr("transform", d => "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"))
-					.style("text-anchor", d => d.x < 180 ? "start" : "end")
-					.text(d => d.key)
-					.on("mouseover", mouseovered(allFiles, allClonePairs))
-					.on("mousedown", mousedown(allFiles, allClonePairs))
-					.on("mouseout", mouseouted);
+      // Construct circular references for self-referencing links.
+      var linkCircles = links.filter(l => l.source.key === l.target.key);
+
+      const circleRad = 10;
+      linkCircle = linkCircle
+          .data(linkCircles, d => d.target.key)
+          .enter().insert("svg:circle", ".link")
+          .attr("class", "link")
+          .attr("r", d => circleRad)
+          .attr("transform", d => "rotate(" + (d.source.x - 90) + ")translate(" + (d.source.y + 8) + ",0)" + (d.source.x < 180 ? "" : "rotate(180)"));
+
+			// Construct the nodes in the dom
+			node = node
+				.data(nodes.filter(n => !n.children))
+			  .enter().append("text")
+				.attr("class", "node")
+				.attr("dy", ".31em")
+				.attr("transform", d => "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"))
+				.style("text-anchor", d => d.x < 180 ? "start" : "end")
+				.text(d => d.key)
+				.on("mouseover", mouseovered(allFiles, allClonePairs))
+				.on("mousedown", mousedown(allFiles, allClonePairs))
+				.on("mouseout", mouseouted);
 
 			// Lazily construct the files as nodes.
-			function fileHierarchy(files, clonePairs) {
+			function getFileHierarchy(files, clonePairs) {
 				var map = {};
 
 				const find = (name, data) => {
@@ -275,7 +287,7 @@
 			}
 
 			// Return a list of clone pairs for the given array of clone pairs.
-			function fileClonePairs(nodes, clonePairs) {
+			function getFileClonePairs(nodes, clonePairs) {
 				var map = {},
 					clones = [];
 
@@ -348,6 +360,18 @@
 					node
 						.each(n => n.target = n.source = false);
 
+          linkCircle
+						.classed(linkCls, function(l) {
+
+							// Since no mirrored
+							if (l.source === d || l.target === d) {
+								l.source.source = true;
+								return l.source.source = true;
+							}
+						})
+						.filter(function(l) { return l.target === d || l.source === d; })
+						.each(function() { this.parentNode.appendChild(this); });
+
 					link
 						.classed(linkCls, function(l) {
 
@@ -389,6 +413,13 @@
 					.classed("link--clone-type-2", false)
 					.classed("link--clone-type-3", false);
 
+        linkCircle
+					.classed("link--target", false)
+					.classed("link--source", false)
+					.classed("link--clone-type-1", false)
+					.classed("link--clone-type-2", false)
+					.classed("link--clone-type-3", false);
+
 				node
 					.classed("node--target", false)
 					.classed("node--source", false);
@@ -423,7 +454,8 @@
           <div class="row">
 
 			<!-- Visualization -->
-			<div id="diagram" class="col-xs-6 col-sm-6" style="margin-bottom: -80px; margin-top: -80px;"></div>
+			<!-- <div id="diagram" class="col-xs-6 col-sm-6" style="margin-bottom: -80px; margin-top: -80px;"></div> -->
+			<div id="diagram" class="col-xs-6 col-sm-6"></div>
 
 			<!-- Summaries -->
             <div class="col-xs-6 col-sm-3">

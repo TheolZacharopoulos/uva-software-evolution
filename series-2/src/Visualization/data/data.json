@@ -232,7 +232,28 @@
 	  	  "start_line": 15,
 	  	  "end_line": 20
 	  	}
+	},
+
+  {
+	  	"id": "clone_10",
+
+		  "clone_type": "type-1",
+
+	  	"origin": {
+	  	  "file": "file_8.java",
+		    "source_code": "System.out.println(\"1\");\nSystem.out.println(\"2\");\nSystem.out.println(\"3\");",
+		    "start_line": 5,
+          "end_line": 10
+	  	},
+
+	  	"clone": {
+	  	  "file": "file_8.java",
+		    "source_code": "System.out.println(\"1\");\nSystem.out.println(\"2\");\nSystem.out.println(\"3\");",
+	  	  "start_line": 15,
+	  	  "end_line": 20
+	  	}
 	}
+
   ]
 
 }
