@@ -8,7 +8,7 @@ data ResultSummary =
         ResultSummary(str projectName, int totalClones, int duplicatedCode);
         
 data CloneResult =
-         CloneResult(str file, str source);
+         CloneResult(str file, int startLine, int endLine, str source);
          
 data ClonePairsResult = 
         ClonePairsResult(str id, str cloneType, CloneResult origin, CloneResult clone);

@@ -11,114 +11,114 @@
    ],
 
    "files": [ 
-		{
+       {
           "name": "file_1.java", 
           "dir": "dir_1"
-        },
+       },
 
-		{
+       {
           "name": "file_2.java", 
           "dir": "dir_1"
-        },
+       },
 
-		{
+       {
           "name": "file_3.java", 
           "dir": "dir_2"
-        },
+       },
 
-		{
+       {
           "name": "file_4.java", 
           "dir": "dir_2"
-        },
+       },
 
-		{
+       {
           "name": "file_5.java", 
           "dir": "dir_2"
-        },
+       },
 
-		{
+       {
           "name": "file_6.java", 
           "dir": "dir_2"
-        },
+       },
 
-		{
+       {
           "name": "file_7.java", 
           "dir": "dir_2"
-        },
+       },
 
-		{
+       {
           "name": "file_8.java", 
           "dir": "dir_2"
-        },
+       },
 
-		{
+       {
           "name": "file_9.java", 
           "dir": "dir_2"
-        }
+       }
    ],
    
    "clone_pairs": [ 
-		{
+       {
            "id": "clone_1",
 
            "clone_type": "type-1",
 
            "origin": {
                "file": "file1.java",
-               "source": "Class {
-                           	 private String name;
-                          }"
+               "start_line": "5",
+               "end_line": "15",
+               "source": "Class {\n \t private String name;\n}"
            },
 
            "clone": {
                "file": "file1.java",
-               "source": "Class {
-                           	 private String name;
-                          }"
+               "start_line": "15",
+               "end_line": "25",
+               "source": "Class {\n \t private String name;\n}"
            }
 
-        },
+       },
 
-		{
+       {
            "id": "clone_2",
 
            "clone_type": "type-1",
 
            "origin": {
                "file": "file1.java",
-               "source": "Class {
-                           	 private String name;
-                          }"
+               "start_line": "5",
+               "end_line": "15",
+               "source": "Class {\n \t private String name;\n}"
            },
 
            "clone": {
                "file": "file2.java",
-               "source": "if (a > 0) {
-                           System.out.println(\"Hello\");
-                          }"
+               "start_line": "5",
+               "end_line": "15",
+               "source": "if (a > 0) {\n System.out.println(\"Hello\");\n}"
            }
 
-        },
+       },
 
-		{
+       {
            "id": "clone_3",
 
            "clone_type": "type-2",
 
            "origin": {
                "file": "file3.java",
-               "source": "if (s > 21) {
-                           return 5;
-                          }"
+               "start_line": "5",
+               "end_line": "15",
+               "source": "if (s > 21) {\n return 5;\n}"
            },
 
            "clone": {
                "file": "file5.java",
-               "source": "if (xxx > 3) {
-                           return 4;
-                          }"
+               "start_line": "5",
+               "end_line": "15",
+               "source": "if (xxx > 3) {\n return 4;\n}"
            }
 
-        }
+       }
    ]      
 }

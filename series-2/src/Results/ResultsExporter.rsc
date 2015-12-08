@@ -27,14 +27,16 @@ public void exportData() {
     
     list[ClonePairsResult] clonePairsResults = [
         ClonePairsResult("clone_1", "type-1", 
-            CloneResult("file1.java", "Class {\n \t private String name;\n}"),
-            CloneResult("file1.java", "Class {\n \t private String name;\n}")),
+            CloneResult("file1.java", 5, 15, "Class {\n \t private String name;\n}"),
+            CloneResult("file1.java", 15, 25, "Class {\n \t private String name;\n}")),
+            
         ClonePairsResult("clone_2", "type-1", 
-            CloneResult("file1.java", "Class {\n \t private String name;\n}"),
-            CloneResult("file2.java", "if (a \> 0) {\n System.out.println(\"Hello\");\n}")),
+            CloneResult("file1.java", 5, 15, "Class {\n \t private String name;\n}"),
+            CloneResult("file2.java", 5, 15, "if (a \> 0) {\n System.out.println(\"Hello\");\n}")),
+            
         ClonePairsResult("clone_3", "type-2", 
-            CloneResult("file3.java", "if (s \> 21) {\n return 5;\n}"),
-            CloneResult("file5.java", "if (xxx \> 3) {\n return 4;\n}"))
+            CloneResult("file3.java", 5, 15, "if (s \> 21) {\n return 5;\n}"),
+            CloneResult("file5.java", 5, 15, "if (xxx \> 3) {\n return 4;\n}"))
     ];
     
     // Start:
@@ -53,28 +55,34 @@ public void exportData() {
         '       \"<dirs[d]>\"<if (d != size(dirs)-1) {>,<}>\t<}>
         '   ],
         '
-        '   \"files\": [ <for (f <- [0 .. size(files)]) {>\n\t\t{
+        '   \"files\": [ <for (f <- [0 .. size(files)]) {>
+        '       {
         '          \"name\": \"<files[f]>\", 
         '          \"dir\": \"<invert(filesWithClones)[files[f]][0]>\"
-        '        }<if (f != size(files)-1) {>,\n<}><}>
+        '       }<if (f != size(files)-1) {>,\n<}><}>
         '   ],
         '   
-        '   \"clone_pairs\": [ <for (r <- [0 .. size(clonePairsResults)]) {>\n\t\t{
+        '   \"clone_pairs\": [ <for (r <- [0 .. size(clonePairsResults)]) {>
+        '       {
         '           \"id\": \"<clonePairsResults[r].id>\",
         '
         '           \"clone_type\": \"<clonePairsResults[r].cloneType>\",
         '
         '           \"origin\": {
         '               \"file\": \"<clonePairsResults[r].origin.file>\",
-        '               \"source\": \"<escape(clonePairsResults[r].origin.source, ("\"": "\\\""))>\"
+        '               \"start_line\": \"<clonePairsResults[r].origin.startLine>\",
+        '               \"end_line\": \"<clonePairsResults[r].origin.endLine>\",
+        '               \"source\": \"<escape(clonePairsResults[r].origin.source, ("\"": "\\\"", "\n": "\\n", "\t": "\\t"))>\"
         '           },
         '
         '           \"clone\": {
         '               \"file\": \"<clonePairsResults[r].clone.file>\",
-        '               \"source\": \"<escape(clonePairsResults[r].clone.source, ("\"": "\\\""))>\"
+        '               \"start_line\": \"<clonePairsResults[r].clone.startLine>\",
+        '               \"end_line\": \"<clonePairsResults[r].clone.endLine>\",
+        '               \"source\": \"<escape(clonePairsResults[r].clone.source, ("\"": "\\\"", "\n": "\\n", "\t": "\\t"))>\"
         '           }
         '
-        '        }<if (r != size(clonePairsResults)-1) {>,\n<}><}>
+        '       }<if (r != size(clonePairsResults)-1) {>,\n<}><}>
         '   ]      
         '}";
 
