@@ -61,27 +61,37 @@
 
 		function initializeViews(summary, allFiles, allClonePairs) {
 			$(document).ready(() => {
-				initializeSummaries(summary);
+				initializeSummaries(summary, allClonePairs);
 				initializeCodeView();
 				initializeFileView(allFiles, allClonePairs);
 			});
 		}
 
-		function initializeSummaries(summary) {
+		function initializeSummaries(summary, allClonePairs) {
 			$('#page-header').text((summary.project_name).toUpperCase());
+
+      const type1Clones = allClonePairs
+                    .filter(clonePair => clonePair.clone_type === TYPE_1)
+                    .reduce((prev, clonePair) => prev + 1, 0);
+
+      const type2Clones = allClonePairs
+                    .filter(clonePair => clonePair.clone_type === TYPE_2)
+                    .reduce((prev, clonePair) => prev + 1, 0);
+
+      const totalClones = type1Clones + type2Clones;
 
 			const summaryStats =
 				"<tr>\
 					<th scope=\"row\">Total Clones</th>\
-					<td>" + summary.total_clones + "</td>\
+					<td>" + totalClones + "</td>\
 				</tr>\
 				<tr>\
 					<th scope=\"row\">Type-1 Clones</th>\
-				<td>" + summary.type_1_clones + "</td>\
+				<td>" + type1Clones + "</td>\
 			</tr>\
       <tr>\
         <th scope=\"row\">Type-2 Clones</th>\
-        <td>" + summary.type_2_clones + "</td>\
+        <td>" + type2Clones + "</td>\
       </tr>";
 
 			$('#summary-table').append(summaryStats);
