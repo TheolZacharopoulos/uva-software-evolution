@@ -8,37 +8,17 @@ import Set;
 import Map;
 import String;
 import Results::ResultDefinitions;
+import Results::ResultsExtractor;
+import CloneDetection::StrategyAggregate;
 
 loc RESULTS_FILE = |project://Series-2/src/Visualization/data/results.json|; 
 
-public void exportData() {
+public void exportData(TypedPairs typedPairs) {
     ResultSummary summary = ResultSummary("Small Sql", 124, 47);
         
-    FilesWithClones filesWithClones = {
-        <"dir_1", "file_1.java">,
-        <"dir_1", "file_2.java">,
-        <"dir_2", "file_3.java">,
-        <"dir_2", "file_4.java">,
-        <"dir_2", "file_5.java">,
-        <"dir_2", "file_6.java">,
-        <"dir_2", "file_7.java">,
-        <"dir_2", "file_8.java">,
-        <"dir_2", "file_9.java">
-    };
+    FilesWithClones filesWithClones = extractFilesWithClones(typedPairs);
     
-    list[ClonePairsResult] clonePairsResults = [
-        ClonePairsResult("clone_1", "type-1", 
-            CloneResult("file_1.java", 5, 15, "Class {\n \t private String name;\n}"),
-            CloneResult("file_1.java", 15, 25, "Class {\n \t private String name;\n}")),
-            
-        ClonePairsResult("clone_2", "type-1", 
-            CloneResult("file_1.java", 5, 15, "Class {\n \t private String name;\n}"),
-            CloneResult("file_2.java", 5, 15, "if (a \> 0) {\n System.out.println(\"Hello\");\n}")),
-            
-        ClonePairsResult("clone_3", "type-2", 
-            CloneResult("file_3.java", 5, 15, "if (s \> 21) {\n return 5;\n}"),
-            CloneResult("file_5.java", 5, 15, "if (xxx \> 3) {\n return 4;\n}"))
-    ];
+    list[ClonePairsResult] clonePairsResults = extractClonePairsResult(typedPairs);
     
     // Start:
     list [str] dirs = toList(domain(filesWithClones));
@@ -73,14 +53,14 @@ public void exportData() {
         '               \"file\": \"<clonePairsResults[r].origin.file>\",
         '               \"start_line\": \"<clonePairsResults[r].origin.startLine>\",
         '               \"end_line\": \"<clonePairsResults[r].origin.endLine>\",
-        '               \"source_code\": \"<escape(clonePairsResults[r].origin.source, ("\"": "\\\"", "\n": "\\n", "\t": "\\t"))>\"
+        '               \"source_code\": \"<escape(clonePairsResults[r].origin.source, ("\"": "\\\"", "\n": "\\n", "\t": "\\t", "\r": "\\r"))>\"
         '           },
         '
         '           \"clone\": {
         '               \"file\": \"<clonePairsResults[r].clone.file>\",
         '               \"start_line\": \"<clonePairsResults[r].clone.startLine>\",
         '               \"end_line\": \"<clonePairsResults[r].clone.endLine>\",
-        '               \"source_code\": \"<escape(clonePairsResults[r].clone.source, ("\"": "\\\"", "\n": "\\n", "\t": "\\t"))>\"
+        '               \"source_code\": \"<escape(clonePairsResults[r].clone.source, ("\"": "\\\"", "\n": "\\n", "\t": "\\t", "\r": "\\r"))>\"
         '           }
         '
         '       }<if (r != size(clonePairsResults)-1) {>,\n<}><}>
