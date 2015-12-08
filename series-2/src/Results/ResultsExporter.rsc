@@ -10,13 +10,13 @@ import String;
 import Results::ResultDefinitions;
 import Results::ResultsExtractor;
 import CloneDetection::StrategyAggregate;
+import Results::ProjectNames;
+import Configurations;
 
-loc RESULTS_FILE = |cwd:///../src/Visualization/data/results.json|; 
-
-public void exportData(TypedPairs typedPairs) {
-    ResultSummary summary = ResultSummary("Small Sql", extractCloneQuantities(typedPairs));
+public void exportData(TypedPairs typedPairs, str project) {
+    ResultSummary summary = ResultSummary(getProjectName(project), extractCloneQuantities(typedPairs));
         
-    FilesWithClones filesWithClones = extractFilesWithClones(typedPairs);
+    FilesWithClones filesWithClones = extractFilesWithClones(typedPairs, project);
     
     list[ClonePairsResult] clonePairsResults = extractClonePairsResult(typedPairs);
     

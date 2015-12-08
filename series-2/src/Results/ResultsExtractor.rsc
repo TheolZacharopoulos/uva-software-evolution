@@ -8,7 +8,7 @@ import Prelude;
 
 anno loc node @ src;
 
-FilesWithClones extractFilesWithClones(TypedPairs typedPairs) {
+FilesWithClones extractFilesWithClones(TypedPairs typedPairs, str project) {
 
     FilesWithClones filesWithClones = {};
     
@@ -16,15 +16,15 @@ FilesWithClones extractFilesWithClones(TypedPairs typedPairs) {
         pair = typedPairs[cloneType][pairs];
         originLoc = getCombinedSequenceLocation(pair.origin);
         cloneLoc = getCombinedSequenceLocation(pair.clone);
-        filesWithClones += <removeBasePath(originLoc.parent.path), originLoc.file>;
-        filesWithClones += <removeBasePath(cloneLoc.parent.path), cloneLoc.file>;
+        filesWithClones += <removeBasePath(originLoc.parent.path, project), originLoc.file>;
+        filesWithClones += <removeBasePath(cloneLoc.parent.path, project), cloneLoc.file>;
     }
     
     return filesWithClones;
 }
 
-private str removeBasePath(str fullPath) {
-    return substring(fullPath, size(getProjectLocation().path));
+private str removeBasePath(str fullPath, str project) {
+    return substring(fullPath, size(getProjectLocation(project).path));
 }
 
 list[ClonePairsResult] extractClonePairsResult(TypedPairs typedPairs) {
@@ -50,7 +50,7 @@ list[ClonePairsResult] extractClonePairsResult(TypedPairs typedPairs) {
     return results;
 }
 
-map[str, int] extractCloneQuantities(TypedPairs typedPairs) = (cloneType: size(typedPairs[cloneType]) | cloneType <- typedPairs);
+map[str, int] extractCloneQuantities(TypedPairs typedPairs) = (cloneType: size(typedPairs[cloneType])/2 | cloneType <- typedPairs);
 
 private loc getCombinedSequenceLocation(Sequence sequence) {
     firstStmt = sequence[0];
