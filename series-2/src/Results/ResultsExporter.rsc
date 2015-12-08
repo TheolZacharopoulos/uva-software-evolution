@@ -28,16 +28,16 @@ public void exportData() {
     
     list[ClonePairsResult] clonePairsResults = [
         ClonePairsResult("clone_1", "type-1", 
-            CloneResult("file1.java", 5, 15, "Class {\n \t private String name;\n}"),
-            CloneResult("file1.java", 15, 25, "Class {\n \t private String name;\n}")),
+            CloneResult("file_1.java", 5, 15, "Class {\n \t private String name;\n}"),
+            CloneResult("file_1.java", 15, 25, "Class {\n \t private String name;\n}")),
             
         ClonePairsResult("clone_2", "type-1", 
-            CloneResult("file1.java", 5, 15, "Class {\n \t private String name;\n}"),
-            CloneResult("file2.java", 5, 15, "if (a \> 0) {\n System.out.println(\"Hello\");\n}")),
+            CloneResult("file_1.java", 5, 15, "Class {\n \t private String name;\n}"),
+            CloneResult("file_2.java", 5, 15, "if (a \> 0) {\n System.out.println(\"Hello\");\n}")),
             
         ClonePairsResult("clone_3", "type-2", 
-            CloneResult("file3.java", 5, 15, "if (s \> 21) {\n return 5;\n}"),
-            CloneResult("file5.java", 5, 15, "if (xxx \> 3) {\n return 4;\n}"))
+            CloneResult("file_3.java", 5, 15, "if (s \> 21) {\n return 5;\n}"),
+            CloneResult("file_5.java", 5, 15, "if (xxx \> 3) {\n return 4;\n}"))
     ];
     
     // Start:
@@ -73,14 +73,14 @@ public void exportData() {
         '               \"file\": \"<clonePairsResults[r].origin.file>\",
         '               \"start_line\": \"<clonePairsResults[r].origin.startLine>\",
         '               \"end_line\": \"<clonePairsResults[r].origin.endLine>\",
-        '               \"source\": \"<escape(clonePairsResults[r].origin.source, ("\"": "\\\"", "\n": "\\n", "\t": "\\t"))>\"
+        '               \"source_code\": \"<escape(clonePairsResults[r].origin.source, ("\"": "\\\"", "\n": "\\n", "\t": "\\t"))>\"
         '           },
         '
         '           \"clone\": {
         '               \"file\": \"<clonePairsResults[r].clone.file>\",
         '               \"start_line\": \"<clonePairsResults[r].clone.startLine>\",
         '               \"end_line\": \"<clonePairsResults[r].clone.endLine>\",
-        '               \"source\": \"<escape(clonePairsResults[r].clone.source, ("\"": "\\\"", "\n": "\\n", "\t": "\\t"))>\"
+        '               \"source_code\": \"<escape(clonePairsResults[r].clone.source, ("\"": "\\\"", "\n": "\\n", "\t": "\\t"))>\"
         '           }
         '
         '       }<if (r != size(clonePairsResults)-1) {>,\n<}><}>

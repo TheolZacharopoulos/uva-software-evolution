@@ -64,17 +64,17 @@
            "clone_type": "type-1",
 
            "origin": {
-               "file": "file1.java",
+               "file": "file_1.java",
                "start_line": "5",
                "end_line": "15",
-               "source": "Class {\n \t private String name;\n}"
+               "source_code": "Class {\n \t private String name;\n}"
            },
 
            "clone": {
-               "file": "file1.java",
+               "file": "file_1.java",
                "start_line": "15",
                "end_line": "25",
-               "source": "Class {\n \t private String name;\n}"
+               "source_code": "Class {\n \t private String name;\n}"
            }
 
        },
@@ -85,17 +85,17 @@
            "clone_type": "type-1",
 
            "origin": {
-               "file": "file1.java",
+               "file": "file_1.java",
                "start_line": "5",
                "end_line": "15",
-               "source": "Class {\n \t private String name;\n}"
+               "source_code": "Class {\n \t private String name;\n}"
            },
 
            "clone": {
-               "file": "file2.java",
+               "file": "file_2.java",
                "start_line": "5",
                "end_line": "15",
-               "source": "if (a > 0) {\n System.out.println(\"Hello\");\n}"
+               "source_code": "if (a > 0) {\n System.out.println(\"Hello\");\n}"
            }
 
        },
@@ -106,17 +106,17 @@
            "clone_type": "type-2",
 
            "origin": {
-               "file": "file3.java",
+               "file": "file_3.java",
                "start_line": "5",
                "end_line": "15",
-               "source": "if (s > 21) {\n return 5;\n}"
+               "source_code": "if (s > 21) {\n return 5;\n}"
            },
 
            "clone": {
-               "file": "file5.java",
+               "file": "file_5.java",
                "start_line": "5",
                "end_line": "15",
-               "source": "if (xxx > 3) {\n return 4;\n}"
+               "source_code": "if (xxx > 3) {\n return 4;\n}"
            }
 
        }
