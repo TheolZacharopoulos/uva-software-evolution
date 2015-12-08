@@ -14,7 +14,7 @@ import CloneDetection::StrategyAggregate;
 loc RESULTS_FILE = |cwd:///../src/Visualization/data/results.json|; 
 
 public void exportData(TypedPairs typedPairs) {
-    ResultSummary summary = ResultSummary("Small Sql", 124, 47);
+    ResultSummary summary = ResultSummary("Small Sql", extractCloneQuantities(typedPairs));
         
     FilesWithClones filesWithClones = extractFilesWithClones(typedPairs);
     
@@ -28,8 +28,8 @@ public void exportData(TypedPairs typedPairs) {
         "{ 
         '   \"summary\": {
         '       \"project_name\": \"<summary.projectName>\",
-        '       \"total_clones\": \"<summary.totalClones>\",
-        '       \"duplicated_code\": \"<summary.duplicatedCode>%\"
+        '       \"total_clones\": 0,
+        '       \"duplicated_code\": 0
         '   },
         '
         '   \"directories\": [ <for (d <- [0 .. size(dirs)]) {>\t
