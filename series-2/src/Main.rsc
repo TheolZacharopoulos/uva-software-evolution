@@ -8,6 +8,7 @@ import lang::java::m3::Core;
 
 import CloneDetection::StrategyAggregate;
 import CloneDetection::AbstractClonePairs;
+import Results::ResultsExporter;
 
 import CloneDetection::Utils;
 
@@ -16,17 +17,6 @@ import util::Benchmark;
 
 anno loc Statement @ src;
 anno loc node @ src;
-
-private loc getCombinedSequenceLocation(Sequence sequence) {
-    firstStmt = sequence[0];
-    lastStmt = last(sequence);
-    
-    length = lastStmt@src.offset + lastStmt@src.length - firstStmt@src.offset;
-    
-    uri = toLocation(firstStmt@src.uri);
-    
-    return uri(firstStmt@src.offset, length, <firstStmt@src.begin.line, firstStmt@src.begin.column>, <lastStmt@src.end.line, lastStmt@src.end.column>);
-}
 
 /**
  * TODO Divide type 1, type 2 into separate strategies
@@ -46,16 +36,7 @@ void main() {
     
     clonePairs = detectClones(asts);
     
-    for (cloneKey <- clonePairs["type-2"]) {
-        if (sequence(originSeq, cloneSeq) := clonePairs["type-2"][cloneKey]) {
-            originSeqPath = getCombinedSequenceLocation(originSeq);
-            cloneSeqPath = getCombinedSequenceLocation(cloneSeq);
-            iprintln(originSeqPath);
-            println("-----<cloneKey> : <getSequenceUniqueKeys(cloneSeq)>");
-            iprintln(cloneSeqPath);
-            println("=========================================");
-        }
-    }
+    exportData(clonePairs);
     
     endProfiling = realTime() * 1.0;
     totalTime = (endProfiling - startProfiling) / 1000;    

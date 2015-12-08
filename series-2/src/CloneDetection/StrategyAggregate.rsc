@@ -7,23 +7,24 @@ import CloneDetection::Utils::ParentIndex;
 import CloneDetection::Utils::ASTIdentifier;
 import CloneDetection::Utils::FingerprintCache;
 import CloneDetection::Utils::UniqueSequenceKeysCache;
+import Results::ResultDefinitions;
 
 import lang::java::m3::AST;
 import IO;
 import Set;
 import Map;
 
-alias CloneResults = map[str, ClonePairs];
+alias TypedPairs = map[str, ClonePairs];
 
 str TYPE_ONE = "type-1";
 str TYPE_TWO = "type-2";
 str TYPE_THREE = "type-3";
 
-CloneResults detectClones(set[Declaration] asts) {
+TypedPairs detectClones(set[Declaration] asts) {
     
     asts = putIdentifiers(asts);
 
-    CloneResults results = ();
+    TypedPairs results = ();
     results = addCloneResults(TYPE_ONE, detectTypeOne(asts), results);
     
     clearCache();
@@ -39,22 +40,22 @@ private void clearCache() {
     clearSequenceKeysCache();
 }
 
-private CloneResults addCloneResults(TYPE_ONE, ClonePairs pairs, CloneResults results) {
+private TypedPairs addCloneResults(TYPE_ONE, ClonePairs pairs, TypedPairs results) {
     return results[TYPE_ONE] = pairs;
 }
 
-private CloneResults addCloneResults(TYPE_TWO, ClonePairs pairs, CloneResults results) {
+private TypedPairs addCloneResults(TYPE_TWO, ClonePairs pairs, TypedPairs results) {
 
     results[TYPE_TWO] = pairs;
 
     return prioritizeCloneType(TYPE_ONE, TYPE_TWO, results);
 }
 
-private CloneResults addCloneResults(TYPE_THREE, ClonePairs pairs, CloneResults results) {
+private TypedPairs addCloneResults(TYPE_THREE, ClonePairs pairs, TypedPairs results) {
     return results[TYPE_THREE] = pairs;
 }
 
-private CloneResults prioritizeCloneType(str highPriorityType, str lowPriorityType, CloneResults results) {
+private TypedPairs prioritizeCloneType(str highPriorityType, str lowPriorityType, TypedPairs results) {
     if (!results[highPriorityType]? || !results[lowPriorityType]?) {
         return results;
     }
