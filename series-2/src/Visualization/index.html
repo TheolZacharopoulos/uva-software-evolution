@@ -340,8 +340,6 @@
 
 			function mousedown(allFiles, allClonePairs) {
 				return function(d) {
-          clearHighlightFromDiagram();
-          setupHighlightOnDiagram(d, allClonePairs);
 
 					allFiles
 					.filter(file => file.name === d.key)
@@ -383,9 +381,7 @@
 
 			function mouseouted(d) {
 
-        if ($('#clone-view-table tbody > tr').length == 0) {
-            clearHighlightFromDiagram();
-        }
+        clearHighlightFromDiagram();
 
         if (HIGHLIGHT_ON_MOUSEOVER) {
   				// remove highlight from fileview
