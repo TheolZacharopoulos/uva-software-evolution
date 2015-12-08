@@ -163,7 +163,7 @@
 			$('#code-detail-view').mergely({
 				lcs: true,
 				wrap_lines: true,
-				editor_width: "400px",
+				editor_width: "500px",
 				editor_height: "200px",
 				cmsettings: {
 					mode: "java",
@@ -218,6 +218,8 @@
 			// Setup nodes and links from the data
 			var nodes = cluster.nodes(getFileHierarchy(allFiles, allClonePairs)),
 				links = getFileClonePairs(nodes, allClonePairs);
+
+      links = links.filter(link => link.target !== undefined);
 
 			// Construct the links between the nodes in the dom
 			link = link
@@ -469,7 +471,7 @@
 
 		  <!-- Add the views in a table -->
 		  <div class="row">
-			  <div class="col-md-5">
+			  <div class="col-md-6">
 
 				  <!-- File view -->
 		          <h2 class="sub-header">File view</h2>
@@ -487,7 +489,7 @@
 		            </table>
 		          </div>
 			  </div>
-			  <div class="col-md-5">
+			  <div class="col-md-6">
 
 				  <!-- Clone view -->
 		          <h2 class="sub-header">Clone view</h2>
