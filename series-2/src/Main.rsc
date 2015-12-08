@@ -46,8 +46,8 @@ void main() {
     
     clonePairs = detectClones(asts);
     
-    for (cloneKey <- clonePairs["type-1"]) {
-        if (sequence(originSeq, cloneSeq) := clonePairs["type-1"][cloneKey]) {
+    for (cloneKey <- clonePairs["type-2"]) {
+        if (sequence(originSeq, cloneSeq) := clonePairs["type-2"][cloneKey]) {
             originSeqPath = getCombinedSequenceLocation(originSeq);
             cloneSeqPath = getCombinedSequenceLocation(cloneSeq);
             iprintln(originSeqPath);

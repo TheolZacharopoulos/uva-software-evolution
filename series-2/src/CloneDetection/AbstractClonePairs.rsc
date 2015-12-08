@@ -1,7 +1,6 @@
 module CloneDetection::AbstractClonePairs
 
 import CloneDetection::Sequences::StatementSequences;
-import CloneDetection::Utils::UniqueSequenceKeysCache;
 
 import lang::java::jdt::m3::AST;
 import Map;
@@ -70,16 +69,11 @@ ClonePairs removeSequenceSubclones(Sequence origin, Sequence clone, ClonePairs c
     return clones;
 }
 
-set[int] getSequenceUniqueKeys(Sequence sequence) = getCachedSequenceKeys(sequence) 
-    when isSequenceKeysCached(sequence);
-
 @doc{
 Extracts all unique keys from a sequence
 }
 set[int] getSequenceUniqueKeys(Sequence sequence) {
     uniqueKeys = {statement@uniqueKey | statement <- sequence};
-    
-    cacheSequenceKeys(sequence, uniqueKeys);
     
     return uniqueKeys;
 }
