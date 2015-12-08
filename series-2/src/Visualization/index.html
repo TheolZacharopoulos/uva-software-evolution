@@ -68,7 +68,7 @@
 		}
 
 		function initializeSummaries(summary) {
-			$('#page-header').text(summary.project_name);
+			$('#page-header').text((summary.project_name).toUpperCase());
 
 			const summaryStats =
 				"<tr>\
@@ -251,7 +251,7 @@
 				.attr("dy", ".31em")
 				.attr("transform", d => "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"))
 				.style("text-anchor", d => d.x < 180 ? "start" : "end")
-				.text(d => d.key)
+				.text(d => (d.key).split(".")[0])
 				.on("mouseover", mouseovered(allFiles, allClonePairs))
 				.on("mousedown", mousedown(allFiles, allClonePairs))
 				.on("mouseout", mouseouted);
@@ -337,9 +337,6 @@
 			function mouseovered(allFiles, allClonePairs) {
 				return function(d) {
 
-					// Clear clone view
-					$('#clone-view-table tbody > tr').remove();
-
 					// ====================================================
 					// Style the links according to the stongest Clone type
 					// set default color
@@ -389,18 +386,22 @@
 						.classed("node--target", n => n.target)
 						.classed("node--source", n => n.source);
 
-					// =====================================
-					// Highlight file on fileview
-					allFiles
-					.filter(file => file.name === d.key)
-					.forEach(file => {
-						// highlight file on fileview
-						const fileViewRowId = "#file-view-row-" + file.name.substring(0, i = file.name.lastIndexOf("."));
-						$(fileViewRowId).siblings().removeClass("info")
-						$(fileViewRowId).addClass("info");
+					if (HIGHLIGHT_ON_MOUSEOVER) {
+            // Highlight file on fileview
+            // Clear clone view
+            $('#clone-view-table tbody > tr').remove();
+            allFiles
+            .filter(file => file.name === d.key)
+            .forEach(file => {
+            	// highlight file on fileview
+            	const fileViewRowId = "#file-view-row-" + file.name.substring(0, i = file.name.lastIndexOf("."));
+            	$(fileViewRowId).siblings().removeClass("info")
+            	$(fileViewRowId).addClass("info");
 
-						initializeCloneView(file, allClonePairs);
-					});
+            	initializeCloneView(file, allClonePairs);
+            });
+          }
+
 				}
 			}
 
@@ -414,7 +415,7 @@
 					.classed("link--clone-type-2", false)
 					.classed("link--clone-type-3", false);
 
-        		linkCircle
+        linkCircle
 					.classed("link--target", false)
 					.classed("link--source", false)
 					.classed("link--clone-type-1", false)
@@ -425,10 +426,12 @@
 					.classed("node--target", false)
 					.classed("node--source", false);
 
-				// remove highlight from fileview
-				const fileViewRowId = "#file-view-row-" + d.key.substring(0, i = d.key.lastIndexOf("."));
-				$(fileViewRowId).siblings().removeClass("info")
-				$(fileViewRowId).addClass("info");
+        if (HIGHLIGHT_ON_MOUSEOVER) {
+  				// remove highlight from fileview
+  				const fileViewRowId = "#file-view-row-" + d.key.substring(0, i = d.key.lastIndexOf("."));
+  				$(fileViewRowId).siblings().removeClass("info")
+  				$(fileViewRowId).addClass("info");
+        }
 			}
 
 			d3.select(self.frameElement).style("height", diameter + "px");
@@ -454,19 +457,20 @@
 
           <div class="row">
 
-			<!-- Visualization -->
-			<div id="diagram" class="col-xs-6 col-sm-6" style="margin-bottom: -60px; margin-top: -60px;"></div>
+      			<!-- Visualization -->
+      			<!-- <div id="diagram" class="col-xs-6 col-sm-6" style="margin-bottom: -60px; margin-top: -60px;"></div> -->
+      			<div id="diagram" class="col-xs-6 col-sm-7"></div>
 
-			<!-- Summaries -->
+      			<!-- Summaries -->
             <div class="col-xs-6 col-sm-3">
-				<div class="panel panel-default">
-			    <div class="panel-heading">Summary</div>
-			    <table id="summary-table" class="table">
-					<tbody>
-					</tbody>
-				</table>
-			  </div>
-            </div>
+      				<div class="panel panel-default">
+      			    <div class="panel-heading">Summary</div>
+      			    <table id="summary-table" class="table">
+      					<tbody>
+      					</tbody>
+      				</table>
+      			  </div>
+              </div>
           </div>
 
 		  <!-- Add the views in a table -->
@@ -481,7 +485,7 @@
 		                <tr>
 		                  <th>#</th>
 		                  <th>Origin File</th>
-		                  <th>Number of clones</th>
+		                  <th>#clones</th>
 		                </tr>
 		              </thead>
 		              <tbody>
@@ -489,7 +493,7 @@
 		            </table>
 		          </div>
 			  </div>
-			  <div class="col-md-6">
+			  <div class="col-md-5">
 
 				  <!-- Clone view -->
 		          <h2 class="sub-header">Clone view</h2>
