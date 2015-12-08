@@ -2,7 +2,7 @@ module Results::ResultDefinitions
 
 import CloneDetection::AbstractClonePairs;
 
-alias FilesWithClones = lrel[str dir, str file];
+alias FilesWithClones = rel[str dir, str file];
 
 data ResultSummary = 
         ResultSummary(str projectName, int totalClones, int duplicatedCode);

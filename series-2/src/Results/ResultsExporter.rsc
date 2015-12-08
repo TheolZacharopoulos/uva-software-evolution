@@ -2,8 +2,9 @@ module Results::ResultsExporter
 
 import IO;
 import lang::json::IO;
-import ListRelation;
+import Relation;
 import List;
+import Set;
 import Map;
 import String;
 import Results::ResultDefinitions;
@@ -13,7 +14,7 @@ loc RESULTS_FILE = |project://Series-2/src/Visualization/data/results.json|;
 public void exportData() {
     ResultSummary summary = ResultSummary("Small Sql", 124, 47);
         
-    FilesWithClones filesWithClones = [
+    FilesWithClones filesWithClones = {
         <"dir_1", "file_1.java">,
         <"dir_1", "file_2.java">,
         <"dir_2", "file_3.java">,
@@ -23,7 +24,7 @@ public void exportData() {
         <"dir_2", "file_7.java">,
         <"dir_2", "file_8.java">,
         <"dir_2", "file_9.java">
-    ];
+    };
     
     list[ClonePairsResult] clonePairsResults = [
         ClonePairsResult("clone_1", "type-1", 
@@ -40,8 +41,8 @@ public void exportData() {
     ];
     
     // Start:
-    list [str] dirs = domain(filesWithClones);
-    list [str] files = range(filesWithClones);    
+    list [str] dirs = toList(domain(filesWithClones));
+    list [str] files = toList(range(filesWithClones));    
     
     str resultJson = 
         "{ 
@@ -58,7 +59,7 @@ public void exportData() {
         '   \"files\": [ <for (f <- [0 .. size(files)]) {>
         '       {
         '          \"name\": \"<files[f]>\", 
-        '          \"dir\": \"<invert(filesWithClones)[files[f]][0]>\"
+        '          \"dir\": \"<toList(invert(filesWithClones))[files[f]][0]>\"
         '       }<if (f != size(files)-1) {>,\n<}><}>
         '   ],
         '   
