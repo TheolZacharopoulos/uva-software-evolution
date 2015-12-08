@@ -134,9 +134,9 @@
 			.forEach(clonePair => {
 				const rowId = "clone-view-row" + lineCounter;
 				var trClass = "";
-				if (clonePair.clone_type === "type-1") trClass="danger";
-				if (clonePair.clone_type === "type-2") trClass="warning";
-				if (clonePair.clone_type === "type-3") trClass="success";
+				if (clonePair.clone_type === TYPE_1) trClass="danger";
+				if (clonePair.clone_type === TYPE_2) trClass="warning";
+				if (clonePair.clone_type === TYPE_3) trClass="info";
 
 				// Since no mirror info, check the origin to define
 				// the filename of the clone.
@@ -344,15 +344,15 @@
 					var linkCls = "link--target";
 
 					getClonePairsForFile(d.key, allClonePairs)
-					.filter(clonePair => clonePair.clone_type === "type-3")
+					.filter(clonePair => clonePair.clone_type === TYPE_3)
 					.forEach(() => linkCls = "link--clone-type-3");
 
 					getClonePairsForFile(d.key, allClonePairs)
-					.filter(clonePair => clonePair.clone_type === "type-2")
+					.filter(clonePair => clonePair.clone_type === TYPE_2)
 					.forEach(() => linkCls = "link--clone-type-2");
 
 					getClonePairsForFile(d.key, allClonePairs)
-					.filter(clonePair => clonePair.clone_type === "type-1")
+					.filter(clonePair => clonePair.clone_type === TYPE_1)
 					.forEach(() => linkCls = "link--clone-type-1");
 
 					// Paint the diagram

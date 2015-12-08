@@ -4,3 +4,7 @@ const DEGREES = 360;
 const TENSION = .85;
 const ELLIPSE_RAD_X = 15;
 const ELLIPSE_RAD_Y = 7;
+const TYPE_1 = "type-1";
+const TYPE_2 = "type-2";
+const TYPE_3 = "type-3";
+const TYPE_4 = "type-4";
