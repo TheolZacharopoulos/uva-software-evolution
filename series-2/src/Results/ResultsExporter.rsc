@@ -20,16 +20,20 @@ public void exportData(TypedPairs typedPairs) {
     
     list[ClonePairsResult] clonePairsResults = extractClonePairsResult(typedPairs);
     
-    // Start:
     list [str] dirs = toList(domain(filesWithClones));
-    list [str] files = toList(range(filesWithClones));    
+    list [str] files = toList(range(filesWithClones));
+    int type1ClonesNum = summary.cloneQuantities["type-1"] ? 0;
+    int type2ClonesNum = summary.cloneQuantities["type-2"] ? 0;
+    int type3ClonesNum = summary.cloneQuantities["type-3"] ? 0; 
+    int totalClones = type1ClonesNum + type2ClonesNum + type3ClonesNum;   
     
     str resultJson = 
         "{ 
         '   \"summary\": {
         '       \"project_name\": \"<summary.projectName>\",
-        '       \"total_clones\": 0,
-        '       \"duplicated_code\": 0
+        '       \"total_clones\": <totalClones>,
+        '       \"type_1_clones\": <type1ClonesNum>,
+        '       \"type_2_clones\": <type2ClonesNum>
         '   },
         '
         '   \"directories\": [ <for (d <- [0 .. size(dirs)]) {>\t

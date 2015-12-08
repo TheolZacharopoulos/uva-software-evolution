@@ -72,13 +72,18 @@
 
 			const summaryStats =
 				"<tr>\
-					<th scope=\"row\">Total clones</th>\
+					<th scope=\"row\">Total Clones</th>\
 					<td>" + summary.total_clones + "</td>\
 				</tr>\
 				<tr>\
-					<th scope=\"row\">Duplicated code</th>\
-				<td>" + summary.duplicated_code + "</td>\
-			</tr>";
+					<th scope=\"row\">Type-1 Clones</th>\
+				<td>" + summary.type_1_clones + "</td>\
+			</tr>\
+      <tr>\
+        <th scope=\"row\">Type-2 Clones</th>\
+        <td>" + summary.type_2_clones + "</td>\
+      </tr>";
+
 			$('#summary-table').append(summaryStats);
 		}
 
