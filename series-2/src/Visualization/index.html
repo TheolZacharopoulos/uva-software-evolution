@@ -233,14 +233,12 @@
 	      // Construct circular references for self-referencing links.
 	      var linkCircles = links.filter(l => l.source.key === l.target.key);
 
-	      const circleRadX = 15;
-	      const circleRadY = 7;
 	      linkCircle = linkCircle
 	          .data(linkCircles, d => d.target.key)
 	          .enter().insert("svg:ellipse", ".link")
 	          .attr("class", "link")
-	          .attr("rx", d => circleRadX)
-	          .attr("ry", d => circleRadY)
+	          .attr("rx", d => ELLIPSE_RAD_X)
+	          .attr("ry", d => ELLIPSE_RAD_Y)
 	          .attr("transform", d => "rotate(" + (d.source.x - 90) + ")translate(" + (d.source.y + 8) + ",0)" + (d.source.x < 180 ? "" : "rotate(180)"));
 
 			// Construct the nodes in the dom
