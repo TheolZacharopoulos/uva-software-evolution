@@ -2,7 +2,7 @@ module Configurations
 
 // some hardcoded project locations.
 private loc demoProjectLocation     = |project://demo_project|;
-private loc smallSqlProjectLocation = |project://smallsql0.21_src|;
+private loc smallSqlProjectLocation = |cwd:///../../series-1/system-for-analysis/smallsql0.21_src/src|;
 private loc hsqlProjectLocation     = |project://hsqldb_src|;
 
 /**
@@ -10,12 +10,6 @@ private loc hsqlProjectLocation     = |project://hsqldb_src|;
  * @return a project location.
  */
 public loc getProjectLocation() = smallSqlProjectLocation;
-
-/**
- * Get test project location.
- * @return a project location.
- */
-public loc getTestProjectLocation() = smallSqlProjectLocation;
 
 /**
  * The mass threshold parameter specifies the minimum sub-tree mass (number of nodes) value 

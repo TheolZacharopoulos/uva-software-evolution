@@ -6,224 +6,244 @@
    },
 
    "directories": [ 	
-       "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit",		
-       "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"	
+       "smallsql/junit",		
+       "smallsql/database"	
    ],
 
    "files": [ 
        {
           "name": "Index.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "dir": "smallsql/database"
        },
 
        {
           "name": "ExpressionFunctionSoundex.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "dir": "smallsql/database"
        },
 
        {
           "name": "TestOrderBy.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
+          "dir": "smallsql/junit"
        },
 
        {
           "name": "TableView.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "dir": "smallsql/database"
        },
 
        {
           "name": "TestResultSet.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
-       },
-
-       {
-          "name": "ExpressionFunctionLeft.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "TestJoins.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
-       },
-
-       {
-          "name": "Expression.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "LongTreeList.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "TestScrollable.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
-       },
-
-       {
-          "name": "ExpressionValue.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "TestDataTypes.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
-       },
-
-       {
-          "name": "TestStatement.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
-       },
-
-       {
-          "name": "Identity.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "TestOther.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
-       },
-
-       {
-          "name": "TestDBMetaData.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
-       },
-
-       {
-          "name": "TestOperatoren.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
-       },
-
-       {
-          "name": "MemoryStream.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "ExpressionFunctionReturnP1.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "StoreImpl.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "ExpressionArithmetic.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "BenchTest.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
-       },
-
-       {
-          "name": "TestAlterTable.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
-       },
-
-       {
-          "name": "IndexDescription.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "ExpressionFunctionReturnP1Number.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "ExpressionFunction.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "BasicTestCase.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
-       },
-
-       {
-          "name": "Utils.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
-       },
-
-       {
-          "name": "SSResultSetMetaData.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "dir": "smallsql/junit"
        },
 
        {
           "name": "ExpressionFunctionTruncate.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "dir": "smallsql/database"
        },
 
        {
-          "name": "DateTime.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "name": "TestExceptions.java", 
+          "dir": "smallsql/junit"
        },
 
        {
-          "name": "AllTests.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
+          "name": "ExpressionFunctionLeft.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "TestJoins.java", 
+          "dir": "smallsql/junit"
+       },
+
+       {
+          "name": "Expression.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "LongTreeList.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "TestScrollable.java", 
+          "dir": "smallsql/junit"
+       },
+
+       {
+          "name": "ExpressionValue.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "TestDataTypes.java", 
+          "dir": "smallsql/junit"
+       },
+
+       {
+          "name": "TestStatement.java", 
+          "dir": "smallsql/junit"
+       },
+
+       {
+          "name": "ExpressionFunctionRound.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "Identity.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "TestOther.java", 
+          "dir": "smallsql/junit"
+       },
+
+       {
+          "name": "TestDBMetaData.java", 
+          "dir": "smallsql/junit"
+       },
+
+       {
+          "name": "TestOperatoren.java", 
+          "dir": "smallsql/junit"
+       },
+
+       {
+          "name": "MemoryStream.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "ExpressionFunctionReturnP1.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "StoreImpl.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "ExpressionArithmetic.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "BenchTest.java", 
+          "dir": "smallsql/junit"
        },
 
        {
           "name": "ExpressionName.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "dir": "smallsql/database"
        },
 
        {
-          "name": "TestGroupBy.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
+          "name": "ExpressionFunctionConvert.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "View.java", 
+          "dir": "smallsql/database"
        },
 
        {
           "name": "SSResultSet.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "TestAlterTable.java", 
+          "dir": "smallsql/junit"
+       },
+
+       {
+          "name": "IndexDescription.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "ExpressionFunctionReturnP1Number.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "ExpressionFunction.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "BasicTestCase.java", 
+          "dir": "smallsql/junit"
+       },
+
+       {
+          "name": "Utils.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "SSResultSetMetaData.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "DateTime.java", 
+          "dir": "smallsql/database"
+       },
+
+       {
+          "name": "AllTests.java", 
+          "dir": "smallsql/junit"
+       },
+
+       {
+          "name": "TestGroupBy.java", 
+          "dir": "smallsql/junit"
        },
 
        {
           "name": "TestDeleteUpdate.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
+          "dir": "smallsql/junit"
        },
 
        {
           "name": "TestTransactions.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
+          "dir": "smallsql/junit"
        },
 
        {
           "name": "TestAlterTable2.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/junit"
+          "dir": "smallsql/junit"
        },
 
        {
           "name": "SQLTokenizer.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "dir": "smallsql/database"
        },
 
        {
           "name": "ExpressionFunctionTimestampDiff.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "dir": "smallsql/database"
        },
 
        {
           "name": "ExpressionFunctionRight.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "dir": "smallsql/database"
        },
 
        {
           "name": "SQLParser.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "dir": "smallsql/database"
        },
 
        {
           "name": "Table.java", 
-          "dir": "/home/yoan/UvA/uva-software-evolution/series-1/system-for-analysis/smallsql0.21_src/src/smallsql/database"
+          "dir": "smallsql/database"
        }
    ],
    

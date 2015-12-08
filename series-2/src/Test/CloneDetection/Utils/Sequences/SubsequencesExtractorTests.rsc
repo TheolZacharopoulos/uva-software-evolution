@@ -3,7 +3,7 @@ module Test::CloneDetection::Utils::Sequences::SubsequencesExtractorTests
 import CloneDetection::Sequences::SubsequencesExtractor;
 import Test::CloneDetection::Utils::TestTreeProvider;
 
-import lang::java::jdt::m3::AST;
+import lang::java::m3::AST;
 
 test bool testGetSubSequences() {
     testSequence = [

@@ -4,7 +4,7 @@ import CloneDetection::Utils::Fingerprinter;
 import CloneDetection::Sequences::StatementSequences;
 import CloneDetection::AbstractClonePairs;
 
-import lang::java::jdt::m3::AST;
+import lang::java::m3::AST;
 
 alias SequenceBuckets = map[str, Sequences];
 

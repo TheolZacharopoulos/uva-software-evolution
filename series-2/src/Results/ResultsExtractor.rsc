@@ -3,20 +3,29 @@ module Results::ResultsExtractor
 import CloneDetection::AbstractClonePairs;
 import Results::ResultDefinitions;
 import CloneDetection::StrategyAggregate;
+import Configurations;
 import Prelude;
 
 anno loc node @ src;
 
 FilesWithClones extractFilesWithClones(TypedPairs typedPairs) {
+
     FilesWithClones filesWithClones = {};
     
     for (cloneType <- typedPairs, pairs <- typedPairs[cloneType]) {
         pair = typedPairs[cloneType][pairs];
         originLoc = getCombinedSequenceLocation(pair.origin);
-        filesWithClones += <originLoc.parent.path, originLoc.file>;
+        cloneLoc = getCombinedSequenceLocation(pair.clone);
+        filesWithClones += <removeBasePath(originLoc.parent.path), originLoc.file>;
+        filesWithClones += <removeBasePath(cloneLoc.parent.path), cloneLoc.file>;
     }
     
     return filesWithClones;
+}
+
+private str removeBasePath(str fullPath) { 
+    str basePath = getProjectLocation().path;
+    return substring(fullPath, size(basePath) + 1);
 }
 
 list[ClonePairsResult] extractClonePairsResult(TypedPairs typedPairs) {

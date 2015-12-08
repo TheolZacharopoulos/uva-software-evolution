@@ -2,7 +2,7 @@ module CloneDetection::AbstractClonePairs
 
 import CloneDetection::Sequences::StatementSequences;
 
-import lang::java::jdt::m3::AST;
+import lang::java::m3::AST;
 import Map;
 
 anno int node @ uniqueKey;

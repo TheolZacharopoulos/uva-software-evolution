@@ -7,7 +7,7 @@ import CloneDetection::Utils::SimilarityCache;
 import Set;
 import Node;
 import util::Math;
-import lang::java::jdt::m3::AST;
+import lang::java::m3::AST;
 
 anno int node @ uniqueKey;
 

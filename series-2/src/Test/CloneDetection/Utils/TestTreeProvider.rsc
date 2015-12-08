@@ -1,7 +1,7 @@
 module Test::CloneDetection::Utils::TestTreeProvider
 
 import CloneDetection::Utils::ASTIdentifier;
-import lang::java::jdt::m3::AST;
+import lang::java::m3::AST;
 
 data TestTree = TestNodeA(TestTree l, TestTree r) | TestNodeB(int number) | TestNodeC(str text);
 

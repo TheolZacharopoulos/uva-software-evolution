@@ -11,7 +11,7 @@ import Results::ResultDefinitions;
 import Results::ResultsExtractor;
 import CloneDetection::StrategyAggregate;
 
-loc RESULTS_FILE = |project://Series-2/src/Visualization/data/results.json|; 
+loc RESULTS_FILE = |cwd:///../src/Visualization/data/results.json|; 
 
 public void exportData(TypedPairs typedPairs) {
     ResultSummary summary = ResultSummary("Small Sql", 124, 47);

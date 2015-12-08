@@ -6,7 +6,7 @@ import Exception;
 import Node;
 import List;
 import IO;
-import lang::java::jdt::m3::AST;
+import lang::java::m3::AST;
 
 int getTreeMass(tree) = getTreeWeight(tree);
 

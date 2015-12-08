@@ -1,6 +1,6 @@
 module CloneDetection::Utils::ASTUnifier
 
-import lang::java::jdt::m3::AST;
+import lang::java::m3::AST;
 import IO;
 import List;
 import Set;
