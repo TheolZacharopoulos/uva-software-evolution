@@ -23,9 +23,8 @@ FilesWithClones extractFilesWithClones(TypedPairs typedPairs) {
     return filesWithClones;
 }
 
-private str removeBasePath(str fullPath) { 
-    str basePath = getProjectLocation().path;
-    return substring(fullPath, size(basePath) + 1);
+private str removeBasePath(str fullPath) {
+    return substring(fullPath, size(getProjectLocation().path));
 }
 
 list[ClonePairsResult] extractClonePairsResult(TypedPairs typedPairs) {
@@ -51,16 +50,16 @@ list[ClonePairsResult] extractClonePairsResult(TypedPairs typedPairs) {
     return results;
 }
 
+map[str, int] extractCloneQuantities(TypedPairs typedPairs) = (cloneType: size(typedPairs[cloneType]) | cloneType <- typedPairs);
+
 private loc getCombinedSequenceLocation(Sequence sequence) {
     firstStmt = sequence[0];
     
-    if (size(sequence) == 1) return firstStmt@src;
-    
     lastStmt = last(sequence);
     
-    length = lastStmt@src.offset + lastStmt@src.length - firstStmt@src.offset;
+    length = lastStmt@src.offset + lastStmt@src.length - firstStmt@src.offset + firstStmt@src.begin.column;
     
     uri = toLocation(firstStmt@src.uri);
     
-    return uri(firstStmt@src.offset, length, <firstStmt@src.begin.line, firstStmt@src.begin.column>, <lastStmt@src.end.line, lastStmt@src.end.column>);
+    return uri(firstStmt@src.offset - firstStmt@src.begin.column, length, <firstStmt@src.begin.line, 0>, <lastStmt@src.end.line, lastStmt@src.end.column>);
 }
