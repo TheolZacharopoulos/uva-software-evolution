@@ -12,3 +12,7 @@ Furthermore, this counts even only when you are trying to read annotation values
 ### Flaws in the paper
 
 - There is a flaw in the generalization algorithm as defined in ICSM98. Simply put, if you have clone methods in the same class their parents will result to be identical, because the class is the same. Therefore the generalization goes from methods to the whole compilation unit and brings back results such as _Class A identical to class A_.
+
+### Eclipse problems with M3
+
+Sometimes M3 fragments can be remembered by Eclipse and lead to mismatch. `unregisterLocations("java", "");` can help with this.

@@ -8,10 +8,12 @@ import CloneDetection::Statements::TreeSimilarity;
 import CloneDetection::Sequences::StatementSequences;
 import CloneDetection::Sequences::SubsequencesExtractor;
 import CloneDetection::Sequences::SequenceBucket;
+import CloneDetection::Utils::ProgressTracker;
 import Configurations;
 
 import lang::java::m3::AST;
 import List;
+import IO;
 import Set;
 
 ClonePairs detectTypeOne(set[Declaration] asts) {
@@ -28,12 +30,20 @@ private ClonePairs detectSequenceClones(set[Declaration] ast, str (Sequence) fin
     int maximumSequenceLength = getLargestSequenceSize(allSequences);
     ClonePairs cloneSequencePairs = newClonePairs();
     
-    for (sequenceLength <- [MINIMUM_SEQUENCE_LENGTH .. (maximumSequenceLength + 1)]) {
+    sequenceLengths = [MINIMUM_SEQUENCE_LENGTH .. (maximumSequenceLength + 1)];
+    
+    startProgress("sequence-clones", size(sequenceLengths));
+    
+    for (sequenceLength <- sequenceLengths) {
         Sequences subSequences = getSubSequences(allSequences, sequenceLength);
         SequenceBuckets sequenceBuckets = constructSequenceBuckets(subSequences, fingerprinter);
         
+        advanceProgress("sequence-clones", 1);
+        
         for (bucketHash <- sequenceBuckets) {
-
+            
+            indicateProgressWork("sequence-clones");
+            
             sequencesIndeces = index(sequenceBuckets[bucketHash]);
 
             // * For each subsequence i and j in same bucket
@@ -45,6 +55,7 @@ private ClonePairs detectSequenceClones(set[Declaration] ast, str (Sequence) fin
                 Sequence cloneSubSeq = sequenceBuckets[bucketHash][cloneSeqIndex];
 
                 if (!isOverlap(originSubSeq, cloneSubSeq)) {
+                    
                     // * RemoveSequenceSubclonesOf(clones, i, j, k)
                     cloneSequencePairs = removeSequenceSubclones(originSubSeq, cloneSubSeq, cloneSequencePairs);
     
@@ -54,6 +65,8 @@ private ClonePairs detectSequenceClones(set[Declaration] ast, str (Sequence) fin
             }
         }
     }
+    
+    endProgress("sequence-clones");
     
     return cloneSequencePairs;
 }

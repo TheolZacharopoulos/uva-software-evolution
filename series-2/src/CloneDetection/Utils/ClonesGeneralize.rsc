@@ -3,6 +3,7 @@ module CloneDetection::Utils::ClonesGeneralize
 import CloneDetection::AbstractClonePairs;
 import CloneDetection::Statements::TreeSimilarity;
 import CloneDetection::Utils::ParentIndex;
+import CloneDetection::Utils::ProgressTracker;
 import Configurations;
 
 import Map;
@@ -13,10 +14,14 @@ ClonePairs generalizeClones(ClonePairs clones, bool (node, node) areParentsEqual
     // * 1. ClonesToGeneralize = Clones
     ClonePairs clonesToGeneralize = clones;
     
+    startProgress("generalize-clones", size(clones));
+    
     // * 2. While ClonesToGeneralize≠∅
     while (true) {
         
         if (size(clonesToGeneralize) == 0) break;
+        
+        advanceProgress("generalize-clones", 1);
         
         currentKey = toList(domain(clonesToGeneralize))[0];
         ClonePair pair = clonesToGeneralize[currentKey];
@@ -40,8 +45,11 @@ ClonePairs generalizeClones(ClonePairs clones, bool (node, node) areParentsEqual
             
             // * 7. AddClonePair(ClonesToGeneralize, ParentOf(i),ParentOf(j))
             clonesToGeneralize = addClonePair(parentOfOrigin, parentOfClone, clonesToGeneralize);
-        }    
+            increaseProgressTotal("generalize-clones", 1);
+        }
     }
+    
+    endProgress("generalize-clones");
 
     return clones;
 }
