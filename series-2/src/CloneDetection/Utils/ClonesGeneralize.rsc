@@ -1,6 +1,6 @@
 module CloneDetection::Utils::ClonesGeneralize
 
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 import CloneDetection::Statements::TreeSimilarity;
 import CloneDetection::Utils::ParentIndex;
 import CloneDetection::Utils::ProgressTracker;

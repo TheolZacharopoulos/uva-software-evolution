@@ -3,7 +3,7 @@ module CloneDetection::Strategy::TypeOne
 import CloneDetection::Utils::Fingerprinter;
 import CloneDetection::Utils::ParentIndex;
 import CloneDetection::Utils::ClonesGeneralize;
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 import CloneDetection::Statements::TreeSimilarity;
 import CloneDetection::Sequences::StatementSequences;
 import CloneDetection::Sequences::SubsequencesExtractor;

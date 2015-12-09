@@ -1,6 +1,6 @@
 module CloneDetection::Utils::SimilarityCache
 
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 import List;
 import IO;
 

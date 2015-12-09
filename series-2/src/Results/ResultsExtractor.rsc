@@ -1,6 +1,6 @@
 module Results::ResultsExtractor
 
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 import Results::ResultDefinitions;
 import CloneDetection::StrategyAggregate;
 import Configurations;

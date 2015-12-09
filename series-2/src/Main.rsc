@@ -2,7 +2,7 @@ module Main
 
 import Configurations;
 import CloneDetection::StrategyAggregate;
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 import Results::ResultsExporter;
 import CloneDetection::Utils;
 

@@ -1,4 +1,4 @@
-module CloneDetection::AbstractClonePairs
+module CloneDetection::ClonePairs
 
 import CloneDetection::Sequences::StatementSequences;
 

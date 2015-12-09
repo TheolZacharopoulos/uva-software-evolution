@@ -2,7 +2,7 @@ module CloneDetection::StrategyAggregate
 
 import CloneDetection::Strategy::TypeOne;
 import CloneDetection::Strategy::TypeTwo;
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 import CloneDetection::Utils::ParentIndex;
 import CloneDetection::Utils::ASTIdentifier;
 import CloneDetection::Utils::FingerprintCache;

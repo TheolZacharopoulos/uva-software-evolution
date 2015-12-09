@@ -1,7 +1,7 @@
 module Test::CloneDetection::Utils::CloneStatementPairsTests
 
 import Test::CloneDetection::Utils::TestTreeProvider;
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 import IO;
 import Map;
 import Set;

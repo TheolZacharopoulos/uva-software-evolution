@@ -2,7 +2,7 @@ module CloneDetection::Sequences::SequenceSimilarity
 
 import CloneDetection::Statements::TreeSimilarity;
 import CloneDetection::Sequences::StatementSequences;
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 import CloneDetection::Utils::SimilarityCache;
 
 import List;

@@ -2,7 +2,7 @@ module CloneDetection::Sequences::SequenceBucket
 
 import CloneDetection::Utils::Fingerprinter;
 import CloneDetection::Sequences::StatementSequences;
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 
 import lang::java::m3::AST;
 
