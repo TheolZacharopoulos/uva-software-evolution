@@ -1,5 +1,5 @@
 const DATA_FILE = "data/results.json?" + Math.random();
-const DIAMETER = 1000;
+const DIAMETER = 500;
 const DEGREES = 360;
 const TENSION = .85;
 const ELLIPSE_RAD_X = 15;
