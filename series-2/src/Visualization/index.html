@@ -132,6 +132,9 @@
 
 			// Clear table first
 			$('#clone-view-table tbody > tr').remove();
+            $('#code-detail-view-origin').text("");
+            $('#code-detail-view-clone').text("");
+            
 			$('#code-detail-view').mergely('lhs', "");
 			$('#code-detail-view').mergely('rhs', "");
 
@@ -194,8 +197,13 @@
             const originSourceCode = clonePair.origin.source_code;
             const cloneSourceCode = clonePair.clone.source_code;
 
+            const originFilename = clonePair.origin.file;
             const originStartLine = clonePair.origin.start_line;
+            const originEndLine = clonePair.origin.end_line;
+
+            const cloneFilename = clonePair.clone.file;
             const cloneStartLine = clonePair.clone.start_line;
+            const cloneEndLine = clonePair.clone.end_line;
 
             $('#code-detail-view').mergely('lhs', originSourceCode);
             $('#code-detail-view').mergely('rhs', cloneSourceCode);
@@ -205,6 +213,12 @@
                 lhs_firstLineNumber: originStartLine,
                 rhs_firstLineNumber: cloneStartLine
             });
+
+            $('#code-detail-view-origin')
+                .text("Filename: " + originFilename + " | From line: " + originStartLine + " to " + originEndLine);
+
+            $('#code-detail-view-clone')
+                .text("Filename: " + cloneFilename + " | From line: " + cloneStartLine + " to " + cloneEndLine);
 		}
 
 		function initializeDiagram(allFiles, allClonePairs) {
@@ -375,6 +389,9 @@
                         // Highlight file on fileview
                         // Clear clone view
                         $('#clone-view-table tbody > tr').remove();
+                        $('#code-detail-view-origin').text("");
+                        $('#code-detail-view-clone').text("");
+
                         allFiles
                         .filter(file => file.name === d.key)
                         .forEach(file => {
@@ -559,7 +576,20 @@
 		  <div class="container">
 			<div>
 				<h1>Code detail view</h1>
+
+                <table class="table col-xs-4 col-sm-2">
+                  <thead>
+                    <tr>
+                      <th id="code-detail-view-origin"></th>
+                      <th id="code-detail-view-clone"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+
 				<div id="code-detail-view"></div>
+
         </div>
       </div>
 
