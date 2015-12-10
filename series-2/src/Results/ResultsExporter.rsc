@@ -50,14 +50,14 @@ public void exportData(TypedPairs typedPairs, str project) {
         '               \"file\": \"<clonePairsResults[r].origin.file>\",
         '               \"start_line\": \"<clonePairsResults[r].origin.startLine>\",
         '               \"end_line\": \"<clonePairsResults[r].origin.endLine>\",
-        '               \"source_code\": \"<escape(clonePairsResults[r].origin.source, ("\"": "\\\"", "\n": "\\n", "\t": "\\t", "\r": "\\r"))>\"
+        '               \"source_code\": \"<escapeSourceCode(clonePairsResults[r].origin.source)>\"
         '           },
         '
         '           \"clone\": {
         '               \"file\": \"<clonePairsResults[r].clone.file>\",
         '               \"start_line\": \"<clonePairsResults[r].clone.startLine>\",
         '               \"end_line\": \"<clonePairsResults[r].clone.endLine>\",
-        '               \"source_code\": \"<escape(clonePairsResults[r].clone.source, ("\"": "\\\"", "\n": "\\n", "\t": "\\t", "\r": "\\r"))>\"
+        '               \"source_code\": \"<escapeSourceCode(clonePairsResults[r].clone.source)>\"
         '           }
         '
         '       }<if (r != size(clonePairsResults)-1) {>,\n<}><}>
@@ -65,4 +65,20 @@ public void exportData(TypedPairs typedPairs, str project) {
         '}";
 
      writeFile(RESULTS_FILE, resultJson);
+}
+
+private str escapeSourceCode(str code) {
+
+    map[str, str] replaceMap = (
+        "\"": "\\\"", 
+        "\\": "\\\\", 
+        "\n": "\\n", 
+        "\b": "\\b", 
+        "\f": "\\f", 
+        "\t": "\\t", 
+        "\r": "\\r",
+        "\\s": "\\\\s"
+    );
+
+    return escape(code, replaceMap);
 }

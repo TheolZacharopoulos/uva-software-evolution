@@ -1,6 +1,6 @@
 module CloneDetection::Utils::UniqueSequenceKeysCache
 
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 import List;
 
 anno int node @ uniqueKey;

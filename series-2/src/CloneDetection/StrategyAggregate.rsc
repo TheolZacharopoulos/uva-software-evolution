@@ -2,9 +2,8 @@ module CloneDetection::StrategyAggregate
 
 import CloneDetection::Strategy::TypeOne;
 import CloneDetection::Strategy::TypeTwo;
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 import CloneDetection::Utils::ParentIndex;
-import CloneDetection::Utils::ASTIdentifier;
 import CloneDetection::Utils::FingerprintCache;
 import CloneDetection::Utils::UniqueSequenceKeysCache;
 import Results::ResultDefinitions;
@@ -20,16 +19,16 @@ str TYPE_ONE = "type-1";
 str TYPE_TWO = "type-2";
 str TYPE_THREE = "type-3";
 
-TypedPairs detectClones(set[Declaration] asts) {
-    
-    asts = putIdentifiers(asts);
+TypedPairs detectClones(set[Declaration] asts, int minSequenceLength) {
 
+    clearCache();
+    
     TypedPairs results = ();
-    results = addCloneResults(TYPE_ONE, detectTypeOne(asts), results);
+    results = addCloneResults(TYPE_ONE, detectTypeOne(asts, minSequenceLength), results);
     
     clearCache();
     
-    results = addCloneResults(TYPE_TWO, detectTypeTwo(asts), results);
+    results = addCloneResults(TYPE_TWO, detectTypeTwo(asts, minSequenceLength), results);
     
     return results;
 }

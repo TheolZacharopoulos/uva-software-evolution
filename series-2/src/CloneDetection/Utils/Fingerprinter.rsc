@@ -7,7 +7,7 @@ module CloneDetection::Utils::Fingerprinter
 import Node;
 import String;
 import lang::java::m3::AST;
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 import CloneDetection::Utils::FingerprintCache;
 import CloneDetection::Utils::ASTUnifier;
 

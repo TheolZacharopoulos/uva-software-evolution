@@ -1,6 +1,6 @@
 module Results::ResultDefinitions
 
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 
 alias FilesWithClones = rel[str dir, str file];
 

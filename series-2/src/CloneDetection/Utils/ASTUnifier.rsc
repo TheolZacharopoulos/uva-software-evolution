@@ -29,8 +29,6 @@ public &E unifyAST(&E tree) {
         case l:\label(_, body) => replaceNode(\label(SIMILAR_ID, body), l)
         case en:\enum(_, a, b, c) => replaceNode(\enum(SIMILAR_ID, a, b, c), en)
         case im:\import(_) => replaceNode(\import(SIMILAR_ID), im)
-        case pk:\package(_) => replaceNode(\package(SIMILAR_ID), pk)
-        case pkg:\package(a, _) => replaceNode(\package(a, SIMILAR_ID), pkg)
         case tp:\typeParameter(_, a) => replaceNode(\typeParameter(SIMILAR_ID, a), tp)
         case ann:\annotationType(_, a) => replaceNode(\annotationType(SIMILAR_ID, a), ann)
         case annT:\annotationTypeMember(a, _) => replaceNode(\annotationTypeMember(a, SIMILAR_ID), annT)

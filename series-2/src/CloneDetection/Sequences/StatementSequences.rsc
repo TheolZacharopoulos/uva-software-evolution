@@ -1,7 +1,7 @@
 module CloneDetection::Sequences::StatementSequences
 
 import Configurations;
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 import List;
 import lang::java::m3::AST;
 
@@ -12,13 +12,13 @@ anno int Declaration @ uniqueKey;
 @doc{
 Get all possible sequences from the AST
 }
-Sequences extractSequencesFromAST(set[Declaration] ast) {
+Sequences extractSequencesFromAST(set[Declaration] ast, minSequenceLength) {
     
     Sequences sequences = [];
     
     bottom-up visit (ast) {
         case list[Statement] sequence: {
-            if (size(sequence) >= MINIMUM_SEQUENCE_LENGTH) {
+            if (size(sequence) >= minSequenceLength) {
                 sequences += [sequence];
             }
         }

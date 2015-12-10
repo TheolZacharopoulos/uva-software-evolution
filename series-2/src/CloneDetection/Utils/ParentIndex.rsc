@@ -1,6 +1,6 @@
 module CloneDetection::Utils::ParentIndex
 
-import CloneDetection::AbstractClonePairs;
+import CloneDetection::ClonePairs;
 
 import lang::java::m3::AST;
 import Node;
