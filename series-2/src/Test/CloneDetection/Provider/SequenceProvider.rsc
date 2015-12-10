@@ -4,7 +4,7 @@ import lang::java::m3::AST;
 
 anno int node @ uniqueKey;
 
-list[node] getTestSequenceOne() {
+list[Statement] getTestSequenceOne() {
     return [
       expressionStatement(methodCall(
           false,
@@ -30,7 +30,7 @@ list[node] getTestSequenceOne() {
     ];
 }
 
-list[node] getTestSequenceOneExactClone() {
+list[Statement] getTestSequenceOneExactClone() {
     return [
       expressionStatement(methodCall(
           false,
@@ -56,7 +56,7 @@ list[node] getTestSequenceOneExactClone() {
     ];
 }
 
-list[node] getTestSequenceTwo() {
+list[Statement] getTestSequenceTwo() {
     return [
       expressionStatement(methodCall(
           false,
@@ -82,7 +82,7 @@ list[node] getTestSequenceTwo() {
     ];
 }
 
-list[node] getTestSequenceTwoExactClone() {
+list[Statement] getTestSequenceTwoExactClone() {
     return [
       expressionStatement(methodCall(
           false,
