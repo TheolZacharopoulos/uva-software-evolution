@@ -177,6 +177,7 @@
 			$('#code-detail-view').mergely({
 				lcs: true,
 				wrap_lines: true,
+                ignorews: true,
 				editor_width: "500px",
 				editor_height: "200px",
 				cmsettings: {
@@ -200,6 +201,10 @@
             $('#code-detail-view').mergely('rhs', cloneSourceCode);
 
             // TODO: Change start line of lhs and rhs
+            $('#code-detail-view').mergely('options', {
+                lhs_firstLineNumber: originStartLine,
+                rhs_firstLineNumber: cloneStartLine
+            });
 		}
 
 		function initializeDiagram(allFiles, allClonePairs) {
