@@ -17,9 +17,9 @@ import List;
 import IO;
 import Set;
 
-ClonePairs detectTypeOne(set[Declaration] asts) {
+ClonePairs detectTypeOne(set[Declaration] asts, int minSequenceLength) {
     collectChildrenToParentIndexFromAST(asts);
-    clonesSeqs = detectSequenceClones(asts, MINIMUM_SEQUENCE_LENGTH, getSeqFingerprint);
+    clonesSeqs = detectSequenceClones(asts, minSequenceLength, getSeqFingerprint);
     return generalizeClones(clonesSeqs, areParentsEqual);    
 }
 

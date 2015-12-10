@@ -29,11 +29,14 @@ ClonePairs generalizeClones(ClonePairs clones, bool (node, node) areParentsEqual
         // * 3. Remove clone(i,j) from ClonesToGeneralize
         clonesToGeneralize = delete(clonesToGeneralize, currentKey);
         
-        if (!hasParent(pair.origin)) continue;
+        if (!hasParent(pair.origin)) {
+            continue;
+        }
         
         // * 4. If CompareClones(ParentOf(i), ParentOf(j)) > SimilarityThreshold
         parentOfOrigin = getParentOf(pair.origin);
         parentOfClone = getParentOf(pair.clone);
+        
         if (parentOfOrigin@uniqueKey != parentOfClone@uniqueKey && areParentsEqual(parentOfOrigin, parentOfClone)) {
         
             // * 5. RemoveClonePair(Clones,i,j)

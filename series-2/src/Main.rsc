@@ -5,6 +5,7 @@ import CloneDetection::StrategyAggregate;
 import CloneDetection::ClonePairs;
 import Results::ResultsExporter;
 import CloneDetection::Utils;
+import CloneDetection::Utils::ASTIdentifier;
 
 import Prelude;
 import util::Benchmark;
@@ -20,11 +21,12 @@ int main(list[str] args) {
     // load asts
     profileStart("Loading AST..");
     asts = createAstsFromDirectory(getProjectLocation(args[0]), false, javaVersion="1.8");
+    asts = putIdentifiers(asts);
     astsTime = profileEnd("Asts loaded in :time: seconds");
     
     // detect clones
     profileStart("Detecting clones. Grab a coffee, can take a while...");
-    clonePairs = detectClones(asts);
+    clonePairs = detectClones(asts, MINIMUM_SEQUENCE_LENGTH);
     clonesTime = profileEnd("Clones detected in :time: seconds");
     
     // data export

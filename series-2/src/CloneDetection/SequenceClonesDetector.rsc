@@ -10,12 +10,12 @@ import Prelude;
 
 ClonePairs detectSequenceClones(set[Declaration] ast, int minSequenceLength, str (Sequence) fingerprinter) {
 
-    Sequences allSequences = extractSequencesFromAST(ast);
+    Sequences allSequences = extractSequencesFromAST(ast, minSequenceLength);
+    
     int maximumSequenceLength = getLargestSequenceSize(allSequences);
     ClonePairs cloneSequencePairs = newClonePairs();
     
     sequenceLengths = [minSequenceLength .. (maximumSequenceLength + 1)];
-    
     startProgress("sequence-clones", size(sequenceLengths));
     
     for (sequenceLength <- sequenceLengths) {
