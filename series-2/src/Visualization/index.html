@@ -305,7 +305,7 @@
             	.text(d => (d.key).split(".")[0])
             	.on("mouseover", mouseovered(allFiles, allClonePairs))
             	.on("mousedown", mousedown(allFiles, allClonePairs))
-            	.on("mouseout", mouseouted);
+            	.on("mouseout", mouseouted(allClonePairs));
 
             // Keep state of selected pair on diagram
             var selectedPair;
@@ -386,8 +386,10 @@
 
                         initializeCloneView(file, allClonePairs);
 
-                        selectedPair = d.key;
-                        clearHighlightFromDiagram();
+                        // Keep the selected pair.
+                        selectedPair = d;
+
+                        // Highlight the clone pair on the diagram.
                         setupHighlightOnDiagram(d, allClonePairs);
             		});
             	}
@@ -396,7 +398,7 @@
             function mouseovered(allFiles, allClonePairs) {
             	return function(d) {
 
-            		setupHighlightOnDiagram(d, allClonePairs);
+    		         setupHighlightOnDiagram(d, allClonePairs);
 
             		if (HIGHLIGHT_ON_MOUSEOVER) {
                         // Highlight file on fileview
@@ -419,96 +421,111 @@
             	}
             }
 
-			function mouseouted(d) {
+			function mouseouted(allClonePairs) {
+            	return function(d) {
 
-                // TODO: Clear all but the selected
+                    // If there is something seletected, then clear all except this
+                    // otherwise, clear all.
+                    if (selectedPair !== undefined) {
+                        clearHighlightExceptOne(selectedPair, allClonePairs);
+                    } else {
+                        clearHighlightFromDiagram();
+                    }
 
-                clearHighlightFromDiagram();
-
-                if (HIGHLIGHT_ON_MOUSEOVER) {
+                    if (HIGHLIGHT_ON_MOUSEOVER) {
           				// remove highlight from fileview
           				const fileViewRowId = "#file-view-row-" + d.key.substring(0, i = d.key.lastIndexOf("."));
           				$(fileViewRowId).siblings().removeClass("info")
           				$(fileViewRowId).addClass("info");
+                    }
                 }
-			}
+            }
 
-      function clearHighlightFromDiagram() {
+            function clearHighlightFromDiagram() {
 
-        // Remove highlight from diagram
-        link
-          .classed("link--target", false)
-          .classed("link--source", false)
-          .classed("link--clone-type-1", false)
-          .classed("link--clone-type-2", false)
-          .classed("link--clone-type-3", false);
+                // Remove highlight from diagram
+                link
+                  .classed("link--target", false)
+                  .classed("link--source", false)
+                  .classed("link--clone-type-1", false)
+                  .classed("link--clone-type-2", false)
+                  .classed("link--clone-type-3", false);
 
-        linkCircle
-          .classed("link--target", false)
-          .classed("link--source", false)
-          .classed("link--clone-type-1", false)
-          .classed("link--clone-type-2", false)
-          .classed("link--clone-type-3", false);
+                linkCircle
+                  .classed("link--target", false)
+                  .classed("link--source", false)
+                  .classed("link--clone-type-1", false)
+                  .classed("link--clone-type-2", false)
+                  .classed("link--clone-type-3", false);
 
-        node
-          .classed("node--target", false)
-          .classed("node--source", false);
-      }
+              node
+                  .classed("node--target", false)
+                  .classed("node--source", false);
+            }
 
-      function setupHighlightOnDiagram(d, allClonePairs) {
+            function clearHighlightExceptOne(clonePairOriginToKeep, allClonePairs) {
 
-            // ====================================================
-            // Style the links according to the stongest Clone type
-            // set default color
-            var linkCls = "link--target";
+                clearHighlightFromDiagram();
 
-            getClonePairsForFile(d.key, allClonePairs)
-            .filter(clonePair => clonePair.clone_type === TYPE_3)
-            .forEach(() => linkCls = "link--clone-type-3");
+                if (clonePairOriginToKeep !== undefined) {
+                    setupHighlightOnDiagram(clonePairOriginToKeep, allClonePairs);
+                }
+            }
 
-            getClonePairsForFile(d.key, allClonePairs)
-            .filter(clonePair => clonePair.clone_type === TYPE_2)
-            .forEach(() => linkCls = "link--clone-type-2");
+            function setupHighlightOnDiagram(d, allClonePairs) {
 
-            getClonePairsForFile(d.key, allClonePairs)
-            .filter(clonePair => clonePair.clone_type === TYPE_1)
-            .forEach(() => linkCls = "link--clone-type-1");
+                // ====================================================
+                // Style the links according to the stongest Clone type
+                // set default color
+                var linkCls = "link--target";
 
-            // Paint the diagram
-            node
-              .each(n => n.target = n.source = false);
+                getClonePairsForFile(d.key, allClonePairs)
+                .filter(clonePair => clonePair.clone_type === TYPE_3)
+                .forEach(() => linkCls = "link--clone-type-3");
 
-            linkCircle
-              .classed(linkCls, l => {
+                getClonePairsForFile(d.key, allClonePairs)
+                .filter(clonePair => clonePair.clone_type === TYPE_2)
+                .forEach(() => linkCls = "link--clone-type-2");
 
-                // Since no mirrored
-                if (l.source === d || l.target === d) {
+                getClonePairsForFile(d.key, allClonePairs)
+                .filter(clonePair => clonePair.clone_type === TYPE_1)
+                .forEach(() => linkCls = "link--clone-type-1");
+
+                // Paint the diagram
+                node
+                  .each(n => n.target = n.source = false);
+
+                linkCircle
+                  .classed(linkCls, l => {
+
+                    // Since no mirrored
+                    if (l.source === d || l.target === d) {
+                          l.source.source = true;
+                          return l.source.source = true;
+                    }
+                })
+                .filter(function(l) { return l.target === d || l.source === d; })
+                .each(function() { this.parentNode.appendChild(this); });
+
+                link
+                  .classed(linkCls, function(l) {
+
+                    // Since no mirrored
+                    if (l.source === d || l.target === d) {
                       l.source.source = true;
                       return l.source.source = true;
-                }
-            })
-            .filter(function(l) { return l.target === d || l.source === d; })
-            .each(function() { this.parentNode.appendChild(this); });
+                    }
+                  })
+                  .filter(function(l) { return l.target === d || l.source === d; })
+                  .each(function() { this.parentNode.appendChild(this); });
 
-            link
-              .classed(linkCls, function(l) {
+                node
+                  .classed("node--target", n => n.target)
+                  .classed("node--source", n => n.source);
+              }
 
-                // Since no mirrored
-                if (l.source === d || l.target === d) {
-                  l.source.source = true;
-                  return l.source.source = true;
-                }
-              })
-              .filter(function(l) { return l.target === d || l.source === d; })
-              .each(function() { this.parentNode.appendChild(this); });
-
-            node
-              .classed("node--target", n => n.target)
-              .classed("node--source", n => n.source);
-          }
-
-			d3.select(self.frameElement).style("height", diameter + "px");
-		}
+            	d3.select(self.frameElement).style("height", diameter + "px");
+            }
 
 	</script>
   </head>
