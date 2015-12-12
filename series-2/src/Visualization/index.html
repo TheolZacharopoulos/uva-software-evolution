@@ -36,13 +36,37 @@
 	<!-- Initialization -->
 	<script>
 
-		// Read data file and initialize
-		d3.json(DATA_FILE, (error, data) => {
-			if (error) throw error;
+        function clearData() {
+            $("#diagram").empty();
 
-			initializeDiagram(data.files, data.clone_pairs);
-			initializeViews(data.summary, data.files, data.clone_pairs);
-		});
+            // Clear clone view
+			$('#clone-view-table tbody > tr').remove();
+            $('#code-detail-view-origin').text("");
+            $('#code-detail-view-clone').text("");
+
+            initializeCodeView();
+            $('#code-detail-view').mergely('lhs', "");
+            $('#code-detail-view').mergely('rhs', "");
+
+            // Clear summaries view
+			$('#summary-table tbody > tr').remove();
+
+            // Clear summaries view
+			$('#file-view-table tbody > tr').remove();
+        }
+
+        function loadVisualization(resultsFile) {
+
+            clearData();
+
+            // Read data file and initialize
+    		d3.json(resultsFile, (error, data) => {
+    			if (error) throw error;
+
+    			initializeDiagram(data.files, data.clone_pairs);
+    			initializeViews(data.summary, data.files, data.clone_pairs);
+    		});
+        }
 
 		function getClonePairsForFile(filename, clonePairs) {
 			return clonePairs
@@ -68,7 +92,7 @@
 		}
 
 		function initializeSummaries(summary, allClonePairs) {
-			$('#page-header').text((summary.project_name).toUpperCase());
+			$('#page-header').text(summary.project_name);
 
 			const type1Clones = allClonePairs
 			            .filter(clonePair => clonePair.clone_type === TYPE_1)
@@ -433,29 +457,29 @@
                 }
 			}
 
-      function clearHighlightFromDiagram() {
+        function clearHighlightFromDiagram() {
 
-        // Remove highlight from diagram
-        link
-          .classed("link--target", false)
-          .classed("link--source", false)
-          .classed("link--clone-type-1", false)
-          .classed("link--clone-type-2", false)
-          .classed("link--clone-type-3", false);
+            // Remove highlight from diagram
+            link
+              .classed("link--target", false)
+              .classed("link--source", false)
+              .classed("link--clone-type-1", false)
+              .classed("link--clone-type-2", false)
+              .classed("link--clone-type-3", false);
 
-        linkCircle
-          .classed("link--target", false)
-          .classed("link--source", false)
-          .classed("link--clone-type-1", false)
-          .classed("link--clone-type-2", false)
-          .classed("link--clone-type-3", false);
+            linkCircle
+              .classed("link--target", false)
+              .classed("link--source", false)
+              .classed("link--clone-type-1", false)
+              .classed("link--clone-type-2", false)
+              .classed("link--clone-type-3", false);
 
-        node
-          .classed("node--target", false)
-          .classed("node--source", false);
-      }
+            node
+              .classed("node--target", false)
+              .classed("node--source", false);
+        }
 
-      function setupHighlightOnDiagram(d, allClonePairs) {
+        function setupHighlightOnDiagram(d, allClonePairs) {
 
             // ====================================================
             // Style the links according to the stongest Clone type
@@ -507,8 +531,8 @@
               .classed("node--source", n => n.source);
           }
 
-			d3.select(self.frameElement).style("height", diameter + "px");
-		}
+        	d3.select(self.frameElement).style("height", diameter + "px");
+        }
 
 	</script>
   </head>
@@ -521,6 +545,29 @@
         </div>
       </div>
     </nav>
+
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Select Project
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a href="#" id="hsqlSelected">Hyper Sql</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#" id="smallsqlSelected">Small Sql</a></li>
+      </ul>
+    </div>
+
+    <script>
+    $('#hsqlSelected').click(function(e) {
+        e.preventDefault();// prevent the default anchor functionality
+        loadVisualization(HSQL_RESULTS_FILE);
+    });
+    $('#smallsqlSelected').click(function(e) {
+        e.preventDefault();// prevent the default anchor functionality
+        loadVisualization(SMALLSQL_RESULTS_FILE);
+    });
+    </script>
 
     <div class="container-fluid">
       <div class="row">
