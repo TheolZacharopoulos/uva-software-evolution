@@ -259,7 +259,7 @@
 			// size of the wheel
 			var diameter = DIAMETER;
             if (totalClones > 1000) {
-                diameter = DIAMETER * 1.7;
+                diameter = DIAMETER * 1.8;
             }
 
 			const radius = diameter / 2;
@@ -281,8 +281,8 @@
 
 			// Setup dom elements
 			const svg = d3.select("#diagram").append("svg")
-				.attr("width", diameter)
-				.attr("height", diameter)
+				.attr("width", diameter * 1.2)
+				.attr("height", diameter * 1.2)
 			  .append("g")
 				.attr("transform", "translate(" + radius + "," + radius + ")");
 
@@ -410,8 +410,7 @@
 
                         initializeCloneView(file, allClonePairs);
 
-                        selectedPair = d.key;
-                        clearHighlightFromDiagram();
+                        selectedPair = d;
                         setupHighlightOnDiagram(d, allClonePairs);
             		});
             	}
