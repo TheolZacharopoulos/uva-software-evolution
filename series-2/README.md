@@ -1,5 +1,8 @@
 # Clone Detector
 
+## Hot to run
+`rascal Main <smallsql|hsql>`
+
 ## Specification
 
 ### Input
