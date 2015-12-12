@@ -134,7 +134,7 @@
 			$('#clone-view-table tbody > tr').remove();
             $('#code-detail-view-origin').text("");
             $('#code-detail-view-clone').text("");
-            
+
 			$('#code-detail-view').mergely('lhs', "");
 			$('#code-detail-view').mergely('rhs', "");
 
@@ -186,7 +186,7 @@
 				cmsettings: {
 					mode: "java",
 					readOnly: true,
-					lineNumbers: true
+					// lineNumbers: true
 				},
 				lhs: setValue => setValue(""),
 				rhs: setValue => setValue("")
@@ -215,18 +215,31 @@
             });
 
             $('#code-detail-view-origin')
-                .text("Filename: " + originFilename + " | From line: " + originStartLine + " to " + originEndLine);
+                .text(originFilename + ": <" + originStartLine + ", " + originEndLine + ">");
 
             $('#code-detail-view-clone')
-                .text("Filename: " + cloneFilename + " | From line: " + cloneStartLine + " to " + cloneEndLine);
+                .text(cloneFilename + ": <" + cloneStartLine + ", " + cloneEndLine + ">");
 		}
 
 		function initializeDiagram(allFiles, allClonePairs) {
 
+            // Get number of clones
+            const type1Clones = allClonePairs
+			            .filter(clonePair => clonePair.clone_type === TYPE_1)
+			            .reduce((prev, clonePair) => prev + 1, 0);
+			const type2Clones = allClonePairs
+			            .filter(clonePair => clonePair.clone_type === TYPE_2)
+			            .reduce((prev, clonePair) => prev + 1, 0);
+			const totalClones = type1Clones + type2Clones;
+
 			// size of the wheel
-			const diameter = DIAMETER,
-				  radius = diameter / 2,
-				  innerRadius = radius - 120;
+			var diameter = DIAMETER;
+            if (totalClones > 1000) {
+                diameter = DIAMETER * 1.7;
+            }
+
+			const radius = diameter / 2;
+			const innerRadius = radius - 120;
 
 			// Make a full circle
 			const cluster = d3.layout.cluster()
@@ -577,7 +590,7 @@
 			<div>
 				<h1>Code detail view</h1>
 
-                <table class="table col-xs-4 col-sm-2">
+                <table class="table col-xs-2">
                   <thead>
                     <tr>
                       <th id="code-detail-view-origin"></th>
