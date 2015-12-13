@@ -110,20 +110,20 @@
 
 			const summaryStats =
 				"<tr>\
-					<th scope=\"row\">Total Clones</th>\
-					<td>" + totalClones + "</td>\
+					<th class=\"danger\" scope=\"row\">Type-1 Clones</th>\
+					<td class=\"danger\">" + type1Clones + "</td>\
 				</tr>\
 				<tr>\
-					<th scope=\"row\">Type-1 Clones</th>\
-					<td>" + type1Clones + "</td>\
-				</tr>\
-				<tr>\
-					<th scope=\"row\">Type-2 Clones</th>\
-					<td>" + type2Clones + "</td>\
+					<th class=\"warning\" scope=\"row\">Type-2 Clones</th>\
+					<td class=\"warning\">" + type2Clones + "</td>\
 				</tr>\
                 <tr>\
-					<th scope=\"row\">Type-3 Clones</th>\
-					<td>" + type3Clones + "</td>\
+					<th class=\"info\" scope=\"row\">Type-3 Clones</th>\
+					<td class=\"info\">" + type3Clones + "</td>\
+				</tr>\
+                <tr>\
+					<th class=\"success\" scope=\"row\">Total Clones</th>\
+					<td class=\"success\">" + totalClones + "</td>\
 				</tr>";
 
 			$('#summary-table').append(summaryStats);
