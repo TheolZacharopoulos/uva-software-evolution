@@ -133,20 +133,20 @@
        {
            "id": "clone_5",
 
-           "clone_type": "type-3",
+           "clone_type": "type-2",
 
            "origin": {
-               "file": "file_6.java",
-               "start_line": "79",
-               "end_line": "90",
-               "source_code": "\t\t\tcon.createStatement().execute(\"Create Table Scrollable (i counter, v varchar(20))\");\r\n\t\t\tassertRowCount( 0, \"Select * from Scrollable\");\r\n\r\n\t\t\tcon.createStatement().execute(\"Insert Into Scrollable(v) Values('qwert')\");\r\n\t\t\tassertRowCount( 1, \"Select * from Scrollable\");\r\n\t\t\tassertRowCount( 0, \"Select * from Scrollable Where 1=0\");\r\n\r\n            Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);\r\n            testNextWithWhereAssert( st.executeQuery(\"Select * from Scrollable Where 1=0\") );\r\n            testNextWithWhereAssert( st.executeQuery(\"Select * from Scrollable Where 1=0 Order By v\") );\r\n            testNextWithWhereAssert( st.executeQuery(\"Select v from Scrollable Where 1=0 Group By v\") );\r\n            testNextWithWhereAssert( st.executeQuery(\"Select v from Scrollable Where 1=0 Group By v Order By v\") );"
+               "file": "file_5.java",
+               "start_line": "453",
+               "end_line": "459",
+               "source_code": "\t\t\t\treturn buf.toString();\r\n\t\t\tcase 107: // Mon dd, yyyy\r\n\t\t\t\tbuf.append( SHORT_MONTHS[ details.month ]);\r\n\t\t\t\tbuf.append(' ');\r\n\t\t\t\tformatNumber( details.day, 2, buf);\r\n\t\t\t\tbuf.append(',');\r\n\t\t\t\tbuf.append(' ');"
            },
 
            "clone": {
                "file": "file_6.java",
-               "start_line": "147",
-               "end_line": "159",
-               "source_code": "\t\t\tcon.createStatement().execute(\"Create Table Scrollable (i counter, v varchar(20))\");\r\n\t\t\tassertRowCount( 0, \"Select * from Scrollable\");\r\n\r\n\t\t\tcon.createStatement().execute(\"Insert Into Scrollable(v) Values('qwert')\");\r\n\t\t\tassertRowCount( 1, \"Select * from Scrollable\");\r\n\t\t\tassertRowCount( 0, \"Select * from Scrollable Where 1=0\");\r\n\r\n            Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);\r\n            testPreviousWithWhereAssert( st.executeQuery(\"Select * from Scrollable Where 1=0\") );\r\n            testPreviousWithWhereAssert( st.executeQuery(\"Select * from Scrollable Where 1=0 Order By v\") );\r\n            testPreviousWithWhereAssert( st.executeQuery(\"Select v from Scrollable Where 1=0 Group By v\") );\r\n            testPreviousWithWhereAssert( st.executeQuery(\"Select v from Scrollable Where 1=0 Group By v Order By v\") );\r\n            testPreviousWithWhereAssert( st.executeQuery(\"Select v from Scrollable Group By v Having 1=0 Order By v\") );"
+               "start_line": "445",
+               "end_line": "451",
+               "source_code": "\t\t\t\treturn buf.toString();\r\n\t\t\tcase 7: // Mon dd, yy\r\n\t\t\t\tbuf.append( SHORT_MONTHS[ details.month ]);\r\n\t\t\t\tbuf.append(' ');\r\n\t\t\t\tformatNumber( details.day, 2, buf);\r\n\t\t\t\tbuf.append(',');\r\n\t\t\t\tbuf.append(' ');"
            }
 
        },
@@ -157,38 +157,17 @@
            "clone_type": "type-3",
 
            "origin": {
-               "file": "file_6.java",
-               "start_line": "352",
-               "end_line": "370",
-               "source_code": "            case SQLTokenizer.BIT:\r\n            case SQLTokenizer.BOOLEAN:\r\n\t\t\t\treturn getBoolean() ? 10000 : 0;\r\n            case SQLTokenizer.TINYINT:\r\n            case SQLTokenizer.SMALLINT:\r\n            case SQLTokenizer.INT:\r\n\t\t\t\treturn getIntImpl() * 10000;\r\n            case SQLTokenizer.BIGINT:\r\n                return getLongImpl() * 10000;\r\n\t\t\tcase SQLTokenizer.REAL:\r\n                return Utils.doubleToMoney( getFloatImpl() );\r\n\t\t\tcase SQLTokenizer.FLOAT:\r\n\t\t\tcase SQLTokenizer.DOUBLE:\r\n            case SQLTokenizer.NUMERIC:\r\n            case SQLTokenizer.DECIMAL:\r\n                return Utils.doubleToMoney( getDoubleImpl() );\r\n            case SQLTokenizer.MONEY:\r\n            case SQLTokenizer.SMALLMONEY:\r\n\t\t\t\treturn getMoneyImpl();"
-           },
-
-           "clone": {
                "file": "file_5.java",
-               "start_line": "403",
-               "end_line": "415",
-               "source_code": "            case SQLTokenizer.BIT:\r\n            case SQLTokenizer.BOOLEAN:\r\n                return (obj.equals(Boolean.TRUE));\r\n            case SQLTokenizer.TINYINT:\r\n            case SQLTokenizer.SMALLINT:\r\n            case SQLTokenizer.INT:\r\n            case SQLTokenizer.BIGINT:\r\n                return ((Number)obj).intValue() != 0;\r\n            case SQLTokenizer.REAL:\r\n            case SQLTokenizer.DOUBLE:\r\n            case SQLTokenizer.MONEY:\r\n                return ((Number)obj).doubleValue() != 0;\r\n            default: return Utils.string2boolean( obj.toString() );"
-           }
-
-       },
-
-       {
-           "id": "clone_7",
-
-           "clone_type": "type-3",
-
-           "origin": {
-               "file": "file_5.java",
-               "start_line": "1110",
-               "end_line": "1115",
-               "source_code": "                case SQLTokenizer.PARENTHESIS_R:\r\n                    break Loop;\r\n                case SQLTokenizer.COMMA:\r\n                    continue;\r\n                default:\r\n                    throw new Error();"
+               "start_line": "98",
+               "end_line": "103",
+               "source_code": "                            case Join.LEFT_JOIN:\r\n                            case Join.FULL_JOIN:\r\n                                isOuterValid = false;\r\n                                isBeforeFirst = false;\r\n                                right.nullRow();\r\n                                return true;"
            },
 
            "clone": {
                "file": "file_7.java",
-               "start_line": "1043",
-               "end_line": "1048",
-               "source_code": "                case SQLTokenizer.PARENTHESIS_R:\r\n                    return list;\r\n                case SQLTokenizer.COMMA:\r\n                    continue;\r\n                default:\r\n                    throw new Error();"
+               "start_line": "135",
+               "end_line": "139",
+               "source_code": "                                case Join.LEFT_JOIN:\r\n                                case Join.FULL_JOIN:\r\n                                    isOuterValid = false;\r\n                                    right.nullRow();\r\n                                    return true;"
            }
 
        }
