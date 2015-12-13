@@ -102,7 +102,11 @@
 			            .filter(clonePair => clonePair.clone_type === TYPE_2)
 			            .reduce((prev, clonePair) => prev + 1, 0);
 
-			const totalClones = type1Clones + type2Clones;
+            const type3Clones = allClonePairs
+			            .filter(clonePair => clonePair.clone_type === TYPE_3)
+			            .reduce((prev, clonePair) => prev + 1, 0);
+
+			const totalClones = type1Clones + type2Clones + type3Clones;
 
 			const summaryStats =
 				"<tr>\
@@ -116,6 +120,10 @@
 				<tr>\
 					<th scope=\"row\">Type-2 Clones</th>\
 					<td>" + type2Clones + "</td>\
+				</tr>\
+                <tr>\
+					<th scope=\"row\">Type-3 Clones</th>\
+					<td>" + type3Clones + "</td>\
 				</tr>";
 
 			$('#summary-table').append(summaryStats);
