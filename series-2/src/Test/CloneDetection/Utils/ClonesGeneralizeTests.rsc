@@ -8,6 +8,9 @@ import CloneDetection::Utils::ClonesGeneralize;
 import IO;
 
 test bool testGeneralizeClones() {
+
+    clearParentIndex();
+
     collectChildrenToParentIndexFromAST({getTestSequenceParentOne()});
     collectChildrenToParentIndexFromAST({getTestSequenceParentOneExactClone()});
     

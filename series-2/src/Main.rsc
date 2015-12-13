@@ -26,7 +26,7 @@ int main(list[str] args) {
     
     // detect clones
     profileStart("Detecting clones. Grab a coffee, can take a while...");
-    clonePairs = detectClones(asts, MINIMUM_SEQUENCE_LENGTH);
+    clonePairs = detectClones(asts, MINIMUM_SEQUENCE_LENGTH, MAXIMUM_SEQUENCE_GAP);
     clonesTime = profileEnd("Clones detected in :time: seconds");
     
     // data export

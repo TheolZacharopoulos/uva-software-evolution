@@ -19,6 +19,8 @@ void collectChildrenToParentIndexFromAST(set[Declaration] asts) {
     }
 }
 
+map[int childOf, node parent] getParentIndex() = childrenToParent;
+
 void clearParentIndex() {
     childrenToParent = ();
 }

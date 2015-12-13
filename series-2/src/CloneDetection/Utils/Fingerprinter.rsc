@@ -22,6 +22,10 @@ public str getSeqFingerprint(Sequence seq) {
     return ("" | it + getFingerprint(st) | st <- seq);
 }
 
+public set[str] getSeqFingerprintAsSet(Sequence seq) {
+    return {getFingerprint(st) | st <- seq};
+}
+
 public str getFingerprint(node tree) = getCachedFingerprint(tree) when isFingerprintCached(tree);
 
 public str getFingerprint(node tree) {

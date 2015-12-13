@@ -8,3 +8,10 @@ list[list[node]] getTestSequencesOne() {
         getTestSequenceOneExactClone()
     ];
 }
+
+list[list[node]] getTestSequencesTwo() {
+    return [
+        getTestSequenceOne(),
+        getTestSequenceTwo()
+    ];
+}

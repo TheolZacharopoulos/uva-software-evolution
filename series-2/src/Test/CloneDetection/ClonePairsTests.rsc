@@ -13,7 +13,7 @@ test bool testAddClonePairUsingSequences() {
     
     clones = addClonePair(sequenceOrigin, sequenceClone, clones);
     
-    return clones == ({1, 2, 3}: sequence(sequenceOrigin, sequenceClone));
+    return clones == ({1, 2, 3, 42}: sequence(sequenceOrigin, sequenceClone));
 }
 
 test bool testAddClonePairUsingNodes() {
@@ -50,7 +50,7 @@ test bool testRemoveCloneFromClonePairsUsingSequences() {
     clones = removeCloneFromClonePairs(getTestSequenceOne(), clones);
     
     return clones == (
-        {4, 5, 6}: sequence(getTestSequenceOneExactClone(), getTestSequenceOne())
+        {4, 5, 6, 45}: sequence(getTestSequenceOneExactClone(), getTestSequenceOne())
     );
 }
 
@@ -62,7 +62,7 @@ test bool testRemoveCloneFromClonePairsReturnSame() {
     clones = removeCloneFromClonePairs(getTestSequenceOne(), clones);
     
     return clones == (
-        {4, 5, 6}: sequence(getTestSequenceOneExactClone(), getTestSequenceOne())
+        {4, 5, 6, 45}: sequence(getTestSequenceOneExactClone(), getTestSequenceOne())
     );
 }
 
@@ -78,8 +78,8 @@ test bool testRemoveSequenceSubclones() {
     clones = removeSequenceSubclones(getTestSequenceOne(), getTestSequenceOneExactClone(), clones);
     
     return clones == (
-        {7, 8, 9}: sequence(getTestSequenceOneExactClone(), getTestSequenceOne())
+        {7, 8, 9, 23}: sequence(getTestSequenceTwo(), getTestSequenceTwoExactClone())
     );
 }
 
-test bool testGetSequenceUniqueKeys() = getSequenceUniqueKeys(getTestSequenceOne()) == {1, 2, 3};
+test bool testGetSequenceUniqueKeys() = getSequenceUniqueKeys(getTestSequenceOne()) == {1, 2, 3, 42};

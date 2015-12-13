@@ -2,6 +2,7 @@ module CloneDetection::StrategyAggregate
 
 import CloneDetection::Strategy::TypeOne;
 import CloneDetection::Strategy::TypeTwo;
+import CloneDetection::Strategy::TypeThree;
 import CloneDetection::ClonePairs;
 import CloneDetection::Utils::ParentIndex;
 import CloneDetection::Utils::FingerprintCache;
@@ -19,7 +20,7 @@ str TYPE_ONE = "type-1";
 str TYPE_TWO = "type-2";
 str TYPE_THREE = "type-3";
 
-TypedPairs detectClones(set[Declaration] asts, int minSequenceLength) {
+TypedPairs detectClones(set[Declaration] asts, int minSequenceLength, int maxSequenceGap) {
 
     clearCache();
     
@@ -29,6 +30,12 @@ TypedPairs detectClones(set[Declaration] asts, int minSequenceLength) {
     clearCache();
     
     results = addCloneResults(TYPE_TWO, detectTypeTwo(asts, minSequenceLength), results);
+    
+    clearCache();
+    
+    results = addCloneResults(TYPE_THREE, detectTypeThree(asts, minSequenceLength, maxSequenceGap), results);
+    
+    clearCache();
     
     return results;
 }

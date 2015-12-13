@@ -34,6 +34,11 @@ public int TREE_MASS_THRESHOLD = 0;
 public int MINIMUM_SEQUENCE_LENGTH = 5;
 
 /**
+ * The minimum number of sequences which will be considered for comparing
+ */
+public int MAXIMUM_SEQUENCE_GAP = 10;
+
+/**
  * The difference of mass threshold parameter is used in the similarity algorithm.
  * Simply put, when comparing two trees and the difference between their masses is more then 
  * the number in TREE_DIFF_MASS_THRESHOLD the trees will be ignored (e.g. similarity will be forced to 0).

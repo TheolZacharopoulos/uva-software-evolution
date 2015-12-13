@@ -2,10 +2,11 @@ module Test::CloneDetection::Utils::ASTUnifierTests
 
 import CloneDetection::Utils::ASTUnifier;
 import Test::CloneDetection::Provider::SequenceProvider;
-import Prelude;
 import lang::java::m3::AST;
 
-test bool testUnifyAST() = unifyAST(getTestSequenceOne()) == [                                                                 
+test bool testUnifyAST() {
+
+    return unifyAST(getTestSequenceOne()) == [
       expressionStatement(methodCall(
           false,
           qualifiedName(
@@ -32,5 +33,12 @@ test bool testUnifyAST() = unifyAST(getTestSequenceOne()) == [
           "print",
           [stringLiteral("X")]))[
         @uniqueKey=3
-      ]
+      ],
+      declarationStatement(variables(
+        \int(),
+        [variable(
+            "Y",
+            0,
+            number("6"))])[@uniqueKey=41])[@uniqueKey=42]
     ];
+}

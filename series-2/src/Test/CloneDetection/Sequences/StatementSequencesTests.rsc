@@ -5,4 +5,4 @@ import Test::CloneDetection::Provider::SequencesProvider;
 
 test bool getLargestSequenceSizeZero() = getLargestSequenceSize([]) == 0;
 
-test bool getLargestSequenceSize() = getLargestSequenceSize(getTestSequencesOne()) == 3;
+test bool getLargestSequenceSize() = getLargestSequenceSize(getTestSequencesOne()) == 4;

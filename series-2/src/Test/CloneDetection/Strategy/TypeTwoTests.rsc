@@ -9,5 +9,6 @@ import IO;
 test bool testDetectTypeTwo() {
     clearParentIndex();
     clones = detectTypeTwo({getTestCompilationUnitOne(), getTestCompilationUnitTwo()}, 2);
-    return clones == ({17}: sequence([unifyAST(getTestClassOne())], [unifyAST(getTestClassTwo())]));
+    
+    return clones == ({18}: sequence([unifyAST(getTestClassOne())], [unifyAST(getTestClassTwo())]));
 }
