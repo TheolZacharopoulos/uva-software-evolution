@@ -2,9 +2,6 @@
 
 Our tool is inspired by: *SolidSDD* [1] and *IntelliJ Idea IDE* [2] clone detector
 
-## Structure View:
-The diagram used is the **Hierarchical Edge Bundle**.
-
 ### Our tool supports the following questions:
 - How are clones distributed vs file structure
 - How code clones are distributed between files
@@ -12,7 +9,9 @@ The diagram used is the **Hierarchical Edge Bundle**.
 - What kind of clones does a given file contain
 - Which files are affected by a given clone
 
-## On the Hierarchical edge bundle diagram:
+## Structure View:
+The diagram used is the **Hierarchical Edge Bundle**.
+
 ### The Nodes:
 - Are clone locations
 - Are files in the file system which include clones
