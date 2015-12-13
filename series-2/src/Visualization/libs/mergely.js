@@ -530,6 +530,7 @@ jQuery.extend(Mgly.CodeMirrorDiffView.prototype, {
 	},
 	_setOptions: function(opts) {
 		jQuery.extend(this.settings, opts);
+
 		if (this.settings.hasOwnProperty('rhs_margin')) {
 			// dynamically swap the margin
 			if (this.settings.rhs_margin == 'left') {

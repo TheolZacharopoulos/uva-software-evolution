@@ -515,7 +515,10 @@
   // is needed.
   function maybeUpdateLineNumberWidth(cm) {
     if (!cm.options.lineNumbers) return false;
-    var doc = cm.doc, last = lineNumberFor(cm.options, doc.first + doc.size - 1), display = cm.display;
+    var doc = cm.doc,
+        last = lineNumberFor(cm.options, doc.first + doc.size - 1),
+        display = cm.display;
+
     if (last.length != display.lineNumChars) {
       var test = display.measure.appendChild(elt("div", [elt("div", last)],
                                                  "CodeMirror-linenumber CodeMirror-gutter-elt"));
@@ -864,6 +867,7 @@
       lineView.node.removeChild(lineView.gutter);
       lineView.gutter = null;
     }
+
     var markers = lineView.line.gutterMarkers;
     if (cm.options.lineNumbers || markers) {
       var wrap = ensureLineWrapped(lineView);
@@ -871,18 +875,25 @@
         wrap.insertBefore(elt("div", null, "CodeMirror-gutter-wrapper", "position: absolute; left: " +
                               (cm.options.fixedGutter ? dims.fixedPos : -dims.gutterTotalWidth) + "px"),
                           lineView.text);
-      if (cm.options.lineNumbers && (!markers || !markers["CodeMirror-linenumbers"]))
+
+      if (cm.options.lineNumbers && (!markers || !markers["CodeMirror-linenumbers"])) {
         lineView.lineNumber = gutterWrap.appendChild(
-          elt("div", lineNumberFor(cm.options, lineN),
-              "CodeMirror-linenumber CodeMirror-gutter-elt",
-              "left: " + dims.gutterLeft["CodeMirror-linenumbers"] + "px; width: "
-              + cm.display.lineNumInnerWidth + "px"));
+                            elt("div", lineNumberFor(cm.options, lineN),
+                              "CodeMirror-linenumber CodeMirror-gutter-elt",
+                              "left: " + dims.gutterLeft["CodeMirror-linenumbers"] +
+                              "px; width: " + cm.display.lineNumInnerWidth + "px"));
+      }
+
       if (markers) for (var k = 0; k < cm.options.gutters.length; ++k) {
-        var id = cm.options.gutters[k], found = markers.hasOwnProperty(id) && markers[id];
-        if (found)
+        var id = cm.options.gutters[k],
+            found = markers.hasOwnProperty(id) && markers[id];
+
+        if (found) {
           gutterWrap.appendChild(elt("div", [found], "CodeMirror-gutter-elt", "left: " +
                                      dims.gutterLeft[id] + "px; width: " + dims.gutterWidth[id] + "px"));
+         }
       }
+
     }
   }
 
