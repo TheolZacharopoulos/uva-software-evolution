@@ -13,3 +13,4 @@ const TYPE_3 = "type-3";
 const TYPE_4 = "type-4";
 
 const HIGHLIGHT_ON_MOUSEOVER = false;
+const KEEP_SELECTED_HIGHLIGHT = false;

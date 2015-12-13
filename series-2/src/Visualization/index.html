@@ -324,7 +324,7 @@
             	.text(d => (d.key).split(".")[0])
             	.on("mouseover", mouseovered(allFiles, allClonePairs))
             	.on("mousedown", mousedown(allFiles, allClonePairs))
-            	.on("mouseout", mouseouted);
+            	.on("mouseout", mouseouted(allFiles, allClonePairs));
 
             // Keep state of selected pair on diagram
             var selectedPair;
@@ -437,17 +437,25 @@
             	}
             }
 
-			function mouseouted(d) {
+			function mouseouted(allFiles, allClonePairs) {
+                return function (d) {
 
-                clearHighlightFromDiagram();
+                    // Clear all selected pairs highlight
+                    clearHighlightFromDiagram();
 
-                if (HIGHLIGHT_ON_MOUSEOVER) {
-          				// remove highlight from fileview
-          				const fileViewRowId = "#file-view-row-" + d.key.substring(0, i = d.key.lastIndexOf("."));
-          				$(fileViewRowId).siblings().removeClass("info")
-          				$(fileViewRowId).addClass("info");
-                }
-			}
+                    // if there is a selected pair with click, highlight only this one.
+                    if (KEEP_SELECTED_HIGHLIGHT && selectedPair !== undefined) {
+                        setupHighlightOnDiagram(d, allClonePairs);
+                    }
+
+                    if (HIGHLIGHT_ON_MOUSEOVER) {
+              				// remove highlight from fileview
+              				const fileViewRowId = "#file-view-row-" + d.key.substring(0, i = d.key.lastIndexOf("."));
+              				$(fileViewRowId).siblings().removeClass("info")
+              				$(fileViewRowId).addClass("info");
+                    }
+    			}
+            }
 
             function clearHighlightFromDiagram() {
 
