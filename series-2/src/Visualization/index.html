@@ -210,7 +210,7 @@
 				cmsettings: {
 					mode: "java",
 					readOnly: true,
-					// lineNumbers: true
+					lineNumbers: false
 				},
 				lhs: setValue => setValue(""),
 				rhs: setValue => setValue("")
@@ -232,12 +232,7 @@
             $('#code-detail-view').mergely('lhs', originSourceCode);
             $('#code-detail-view').mergely('rhs', cloneSourceCode);
 
-            // TODO: Change start line of lhs and rhs
-            $('#code-detail-view').mergely('options', {
-                lhs_firstLineNumber: originStartLine,
-                rhs_firstLineNumber: cloneStartLine
-            });
-
+            // Show lines which include the clones
             $('#code-detail-view-origin')
                 .text(originFilename + ": <" + originStartLine + ", " + originEndLine + ">");
 
@@ -561,11 +556,11 @@
 
     <script>
     $('#hsqlSelected').click(function(e) {
-        e.preventDefault();// prevent the default anchor functionality
+        e.preventDefault();
         loadVisualization(HSQL_RESULTS_FILE);
     });
     $('#smallsqlSelected').click(function(e) {
-        e.preventDefault();// prevent the default anchor functionality
+        e.preventDefault();
         loadVisualization(SMALLSQL_RESULTS_FILE);
     });
     </script>

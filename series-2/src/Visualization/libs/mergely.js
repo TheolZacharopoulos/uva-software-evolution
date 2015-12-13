@@ -531,15 +531,6 @@ jQuery.extend(Mgly.CodeMirrorDiffView.prototype, {
 	_setOptions: function(opts) {
 		jQuery.extend(this.settings, opts);
 
-		// TODO: FIX THIS
-		if (this.settings.hasOwnProperty('lhs_firstLineNumber')) {
-			// this.lhs_cmsettings.firstLineNumber = this.settings.lhs_firstLineNumber;
-		}
-
-		if (this.settings.hasOwnProperty('rhs_firstLineNumber')) {
-			// this.rhs_cmsettings.firstLineNumber = this.settings.rhs_firstLineNumber;
-		}
-
 		if (this.settings.hasOwnProperty('rhs_margin')) {
 			// dynamically swap the margin
 			if (this.settings.rhs_margin == 'left') {
