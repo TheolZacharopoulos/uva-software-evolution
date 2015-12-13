@@ -64,7 +64,7 @@ public void exportData(TypedPairs typedPairs, str project) {
         '   ]      
         '}";
 
-     writeFile(RESULTS_FILE, resultJson);
+     writeFile(RESULTS_FILE_DIR + "results_<project>.json", resultJson);
 }
 
 private str escapeSourceCode(str code) {

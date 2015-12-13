@@ -8,7 +8,7 @@ private loc smallSqlProjectLocation = |cwd:///../../series-1/system-for-analysis
 private loc hsqlProjectLocation     = |cwd:///../../series-1/system-for-analysis/hsqldb-2.3.1/hsqldb/src|;
 
 public str PROJECT_KEY_SMALL_SQL = "smallsql";
-public str PROJECT_KEY_HSQLDB    = "hsqldb";
+public str PROJECT_KEY_HSQLDB    = "hsql";
 public str PROJECT_KEY_DEMO    = "demo";
 
 /**
@@ -54,4 +54,4 @@ public real SIMILARITY_THRESHOLD = 0.8;
 /**
  * Path to the output json file
  */
-public loc RESULTS_FILE = |cwd:///../src/Visualization/data/results.json|;
+public loc RESULTS_FILE_DIR = |cwd:///../src/Visualization/data/|;
