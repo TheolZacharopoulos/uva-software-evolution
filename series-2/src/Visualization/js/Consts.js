@@ -1,3 +1,4 @@
+const DEMO_RESULTS_FILE = "data/results_demo.json?" + Math.random();
 const HSQL_RESULTS_FILE = "data/results_hsql.json?" + Math.random();
 const SMALLSQL_RESULTS_FILE = "data/results_smallsql.json?" + Math.random();
 

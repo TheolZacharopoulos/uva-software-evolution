@@ -1,0 +1,196 @@
+{
+   "summary": {
+       "project_name": "Demo Project"
+   },
+
+   "directories": [
+       "dir_1",
+       "dir_2"
+   ],
+
+   "files": [
+
+       {
+          "name": "file_1.java",
+          "dir": "dir_1"
+       },
+
+       {
+          "name": "file_2.java",
+          "dir": "dir_1"
+       },
+
+       {
+          "name": "file_3.java",
+          "dir": "dir_2"
+      },
+
+      {
+         "name": "file_4.java",
+         "dir": "dir_2"
+      },
+
+      {
+         "name": "file_5.java",
+         "dir": "dir_2"
+      },
+
+      {
+         "name": "file_6.java",
+         "dir": "dir_2"
+      },
+
+      {
+         "name": "file_7.java",
+         "dir": "dir_2"
+      }
+   ],
+
+   "clone_pairs": [
+       {
+           "id": "clone_1",
+
+           "clone_type": "type-1",
+
+           "origin": {
+               "file": "file_1.java",
+               "start_line": "5",
+               "end_line": "15",
+               "source_code": "Class {\n \t private String name;\n}"
+           },
+
+           "clone": {
+               "file": "file_1.java",
+               "start_line": "15",
+               "end_line": "25",
+               "source_code": "Class {\n \t private String name;\n}"
+           }
+
+       },
+
+       {
+           "id": "clone_2",
+
+           "clone_type": "type-1",
+
+           "origin": {
+               "file": "file_1.java",
+               "start_line": "5",
+               "end_line": "15",
+               "source_code": "Class {\n \t private String name;\n}"
+           },
+
+           "clone": {
+               "file": "file_2.java",
+               "start_line": "5",
+               "end_line": "15",
+               "source_code": "if (a > 0) {\n System.out.println(\"Hello\");\n}"
+           }
+
+       },
+
+       {
+           "id": "clone_3",
+
+           "clone_type": "type-2",
+
+           "origin": {
+               "file": "file_3.java",
+               "start_line": "5",
+               "end_line": "15",
+               "source_code": "if (s > 21) {\n return 5;\n}"
+           },
+
+           "clone": {
+               "file": "file_5.java",
+               "start_line": "5",
+               "end_line": "15",
+               "source_code": "if (xxx > 3) {\n return 4;\n}"
+           }
+
+       },
+       {
+           "id": "clone_4",
+
+           "clone_type": "type-3",
+
+           "origin": {
+               "file": "file_4.java",
+               "start_line": "207",
+               "end_line": "213",
+               "source_code": "            case ADD:       return left.getInt() + right.getInt();\r\n            case SUB:       return left.getInt() - right.getInt();\r\n            case MUL:       return left.getInt() * right.getInt();\r\n            case DIV:       return left.getInt() / right.getInt();\r\n            case NEGATIVE:  return               - left.getInt();\r\n            case MOD:\t\treturn left.getInt() % right.getInt();\r\n            case BIT_NOT:   return               ~ left.getInt();"
+           },
+
+           "clone": {
+               "file": "file_3.java",
+               "start_line": "767",
+               "end_line": "777",
+               "source_code": "\t\t\t\t\tcase ADD:\r\n\t\t\t\t\tcase SUB:\r\n\t\t\t\t\t\treturn Math.max(left.getScale(), right.getScale());\r\n\t\t\t\t\tcase MUL:\r\n\t\t\t\t\t\treturn left.getScale() + right.getScale();\r\n\t\t\t\t\tcase DIV:\r\n\t\t\t\t\t\treturn Math.max(left.getScale()+5, right.getScale()+4);\r\n\t\t\t\t\tcase NEGATIVE:\r\n\t\t\t\t\t\treturn left.getScale();\r\n\t\t\t\t\tcase MOD:\r\n\t\t\t\t\t\treturn 0;"
+           }
+
+       },
+
+       {
+           "id": "clone_5",
+
+           "clone_type": "type-3",
+
+           "origin": {
+               "file": "file_6.java",
+               "start_line": "79",
+               "end_line": "90",
+               "source_code": "\t\t\tcon.createStatement().execute(\"Create Table Scrollable (i counter, v varchar(20))\");\r\n\t\t\tassertRowCount( 0, \"Select * from Scrollable\");\r\n\r\n\t\t\tcon.createStatement().execute(\"Insert Into Scrollable(v) Values('qwert')\");\r\n\t\t\tassertRowCount( 1, \"Select * from Scrollable\");\r\n\t\t\tassertRowCount( 0, \"Select * from Scrollable Where 1=0\");\r\n\r\n            Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);\r\n            testNextWithWhereAssert( st.executeQuery(\"Select * from Scrollable Where 1=0\") );\r\n            testNextWithWhereAssert( st.executeQuery(\"Select * from Scrollable Where 1=0 Order By v\") );\r\n            testNextWithWhereAssert( st.executeQuery(\"Select v from Scrollable Where 1=0 Group By v\") );\r\n            testNextWithWhereAssert( st.executeQuery(\"Select v from Scrollable Where 1=0 Group By v Order By v\") );"
+           },
+
+           "clone": {
+               "file": "file_6.java",
+               "start_line": "147",
+               "end_line": "159",
+               "source_code": "\t\t\tcon.createStatement().execute(\"Create Table Scrollable (i counter, v varchar(20))\");\r\n\t\t\tassertRowCount( 0, \"Select * from Scrollable\");\r\n\r\n\t\t\tcon.createStatement().execute(\"Insert Into Scrollable(v) Values('qwert')\");\r\n\t\t\tassertRowCount( 1, \"Select * from Scrollable\");\r\n\t\t\tassertRowCount( 0, \"Select * from Scrollable Where 1=0\");\r\n\r\n            Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);\r\n            testPreviousWithWhereAssert( st.executeQuery(\"Select * from Scrollable Where 1=0\") );\r\n            testPreviousWithWhereAssert( st.executeQuery(\"Select * from Scrollable Where 1=0 Order By v\") );\r\n            testPreviousWithWhereAssert( st.executeQuery(\"Select v from Scrollable Where 1=0 Group By v\") );\r\n            testPreviousWithWhereAssert( st.executeQuery(\"Select v from Scrollable Where 1=0 Group By v Order By v\") );\r\n            testPreviousWithWhereAssert( st.executeQuery(\"Select v from Scrollable Group By v Having 1=0 Order By v\") );"
+           }
+
+       },
+
+       {
+           "id": "clone_6",
+
+           "clone_type": "type-3",
+
+           "origin": {
+               "file": "file_6.java",
+               "start_line": "352",
+               "end_line": "370",
+               "source_code": "            case SQLTokenizer.BIT:\r\n            case SQLTokenizer.BOOLEAN:\r\n\t\t\t\treturn getBoolean() ? 10000 : 0;\r\n            case SQLTokenizer.TINYINT:\r\n            case SQLTokenizer.SMALLINT:\r\n            case SQLTokenizer.INT:\r\n\t\t\t\treturn getIntImpl() * 10000;\r\n            case SQLTokenizer.BIGINT:\r\n                return getLongImpl() * 10000;\r\n\t\t\tcase SQLTokenizer.REAL:\r\n                return Utils.doubleToMoney( getFloatImpl() );\r\n\t\t\tcase SQLTokenizer.FLOAT:\r\n\t\t\tcase SQLTokenizer.DOUBLE:\r\n            case SQLTokenizer.NUMERIC:\r\n            case SQLTokenizer.DECIMAL:\r\n                return Utils.doubleToMoney( getDoubleImpl() );\r\n            case SQLTokenizer.MONEY:\r\n            case SQLTokenizer.SMALLMONEY:\r\n\t\t\t\treturn getMoneyImpl();"
+           },
+
+           "clone": {
+               "file": "file_5.java",
+               "start_line": "403",
+               "end_line": "415",
+               "source_code": "            case SQLTokenizer.BIT:\r\n            case SQLTokenizer.BOOLEAN:\r\n                return (obj.equals(Boolean.TRUE));\r\n            case SQLTokenizer.TINYINT:\r\n            case SQLTokenizer.SMALLINT:\r\n            case SQLTokenizer.INT:\r\n            case SQLTokenizer.BIGINT:\r\n                return ((Number)obj).intValue() != 0;\r\n            case SQLTokenizer.REAL:\r\n            case SQLTokenizer.DOUBLE:\r\n            case SQLTokenizer.MONEY:\r\n                return ((Number)obj).doubleValue() != 0;\r\n            default: return Utils.string2boolean( obj.toString() );"
+           }
+
+       },
+
+       {
+           "id": "clone_7",
+
+           "clone_type": "type-3",
+
+           "origin": {
+               "file": "file_5.java",
+               "start_line": "1110",
+               "end_line": "1115",
+               "source_code": "                case SQLTokenizer.PARENTHESIS_R:\r\n                    break Loop;\r\n                case SQLTokenizer.COMMA:\r\n                    continue;\r\n                default:\r\n                    throw new Error();"
+           },
+
+           "clone": {
+               "file": "file_7.java",
+               "start_line": "1043",
+               "end_line": "1048",
+               "source_code": "                case SQLTokenizer.PARENTHESIS_R:\r\n                    return list;\r\n                case SQLTokenizer.COMMA:\r\n                    continue;\r\n                default:\r\n                    throw new Error();"
+           }
+
+       }
+   ]
+}

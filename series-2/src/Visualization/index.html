@@ -36,6 +36,9 @@
 	<!-- Initialization -->
 	<script>
 
+        // Start by loading small sql
+        loadVisualization(SMALLSQL_RESULTS_FILE);
+
         function clearData() {
             $("#diagram").empty();
 
@@ -560,6 +563,8 @@
                   <li><a href="#" id="hsqlSelected">Hyper Sql</a></li>
                   <li role="separator" class="divider"></li>
                   <li><a href="#" id="smallsqlSelected">Small Sql</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#" id="demoSelected">Demo Project</a></li>
                 </ul>
               </li>
             </ul>
@@ -578,6 +583,10 @@
     $('#smallsqlSelected').click(function(e) {
         e.preventDefault();
         loadVisualization(SMALLSQL_RESULTS_FILE);
+    });
+    $('#demoSelected').click(function(e) {
+        e.preventDefault();
+        loadVisualization(DEMO_RESULTS_FILE);
     });
     </script>
 
