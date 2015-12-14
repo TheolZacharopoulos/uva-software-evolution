@@ -1,0 +1,175 @@
+{
+   "summary": {
+       "project_name": "Demo Project"
+   },
+
+   "directories": [
+       "dir_1",
+       "dir_2"
+   ],
+
+   "files": [
+
+       {
+          "name": "file_1.java",
+          "dir": "dir_1"
+       },
+
+       {
+          "name": "file_2.java",
+          "dir": "dir_1"
+       },
+
+       {
+          "name": "file_3.java",
+          "dir": "dir_2"
+      },
+
+      {
+         "name": "file_4.java",
+         "dir": "dir_2"
+      },
+
+      {
+         "name": "file_5.java",
+         "dir": "dir_2"
+      },
+
+      {
+         "name": "file_6.java",
+         "dir": "dir_2"
+      },
+
+      {
+         "name": "file_7.java",
+         "dir": "dir_2"
+      }
+   ],
+
+   "clone_pairs": [
+       {
+           "id": "clone_1",
+
+           "clone_type": "type-1",
+
+           "origin": {
+               "file": "file_1.java",
+               "start_line": "5",
+               "end_line": "15",
+               "source_code": "Class {\n \t private String name;\n}"
+           },
+
+           "clone": {
+               "file": "file_1.java",
+               "start_line": "15",
+               "end_line": "25",
+               "source_code": "Class {\n \t private String name;\n}"
+           }
+
+       },
+
+       {
+           "id": "clone_2",
+
+           "clone_type": "type-1",
+
+           "origin": {
+               "file": "file_1.java",
+               "start_line": "5",
+               "end_line": "15",
+               "source_code": "Class {\n \t private String name;\n}"
+           },
+
+           "clone": {
+               "file": "file_2.java",
+               "start_line": "5",
+               "end_line": "15",
+               "source_code": "if (a > 0) {\n System.out.println(\"Hello\");\n}"
+           }
+
+       },
+
+       {
+           "id": "clone_3",
+
+           "clone_type": "type-2",
+
+           "origin": {
+               "file": "file_3.java",
+               "start_line": "5",
+               "end_line": "15",
+               "source_code": "if (s > 21) {\n return 5;\n}"
+           },
+
+           "clone": {
+               "file": "file_5.java",
+               "start_line": "5",
+               "end_line": "15",
+               "source_code": "if (xxx > 3) {\n return 4;\n}"
+           }
+
+       },
+       {
+           "id": "clone_4",
+
+           "clone_type": "type-3",
+
+           "origin": {
+               "file": "file_4.java",
+               "start_line": "207",
+               "end_line": "213",
+               "source_code": "            case ADD:       return left.getInt() + right.getInt();\r\n            case SUB:       return left.getInt() - right.getInt();\r\n            case MUL:       return left.getInt() * right.getInt();\r\n            case DIV:       return left.getInt() / right.getInt();\r\n            case NEGATIVE:  return               - left.getInt();\r\n            case MOD:\t\treturn left.getInt() % right.getInt();\r\n            case BIT_NOT:   return               ~ left.getInt();"
+           },
+
+           "clone": {
+               "file": "file_3.java",
+               "start_line": "767",
+               "end_line": "777",
+               "source_code": "\t\t\t\t\tcase ADD:\r\n\t\t\t\t\tcase SUB:\r\n\t\t\t\t\t\treturn Math.max(left.getScale(), right.getScale());\r\n\t\t\t\t\tcase MUL:\r\n\t\t\t\t\t\treturn left.getScale() + right.getScale();\r\n\t\t\t\t\tcase DIV:\r\n\t\t\t\t\t\treturn Math.max(left.getScale()+5, right.getScale()+4);\r\n\t\t\t\t\tcase NEGATIVE:\r\n\t\t\t\t\t\treturn left.getScale();\r\n\t\t\t\t\tcase MOD:\r\n\t\t\t\t\t\treturn 0;"
+           }
+
+       },
+
+       {
+           "id": "clone_5",
+
+           "clone_type": "type-2",
+
+           "origin": {
+               "file": "file_5.java",
+               "start_line": "453",
+               "end_line": "459",
+               "source_code": "\t\t\t\treturn buf.toString();\r\n\t\t\tcase 107: // Mon dd, yyyy\r\n\t\t\t\tbuf.append( SHORT_MONTHS[ details.month ]);\r\n\t\t\t\tbuf.append(' ');\r\n\t\t\t\tformatNumber( details.day, 2, buf);\r\n\t\t\t\tbuf.append(',');\r\n\t\t\t\tbuf.append(' ');"
+           },
+
+           "clone": {
+               "file": "file_6.java",
+               "start_line": "445",
+               "end_line": "451",
+               "source_code": "\t\t\t\treturn buf.toString();\r\n\t\t\tcase 7: // Mon dd, yy\r\n\t\t\t\tbuf.append( SHORT_MONTHS[ details.month ]);\r\n\t\t\t\tbuf.append(' ');\r\n\t\t\t\tformatNumber( details.day, 2, buf);\r\n\t\t\t\tbuf.append(',');\r\n\t\t\t\tbuf.append(' ');"
+           }
+
+       },
+
+       {
+           "id": "clone_6",
+
+           "clone_type": "type-3",
+
+           "origin": {
+               "file": "file_5.java",
+               "start_line": "98",
+               "end_line": "103",
+               "source_code": "                            case Join.LEFT_JOIN:\r\n                            case Join.FULL_JOIN:\r\n                                isOuterValid = false;\r\n                                isBeforeFirst = false;\r\n                                right.nullRow();\r\n                                return true;"
+           },
+
+           "clone": {
+               "file": "file_7.java",
+               "start_line": "135",
+               "end_line": "139",
+               "source_code": "                                case Join.LEFT_JOIN:\r\n                                case Join.FULL_JOIN:\r\n                                    isOuterValid = false;\r\n                                    right.nullRow();\r\n                                    return true;"
+           }
+
+       }
+   ]
+}
