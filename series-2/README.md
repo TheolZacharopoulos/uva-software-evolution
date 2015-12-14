@@ -1,19 +1,19 @@
 # Clone Detector
 
 ## Hot to run
-- First copy the executable files to your bin folder:
+1. First copy the executable files to your bin folder:
 
 ` cp rascal* /usr/local/bin/`
 
-- Change directory to the *src* folder in order to find the *Main* module:
+2. Change directory to the *src* folder in order to find the *Main* module:
 
 `cd src`
 
-- Then run the Clone detector with the project name as argument:
+3. Then run the Clone detector with the project name as argument:
 
 `rascal Main <smallsql|hsql>`
 
-- When the detection finished, open the `index.html` file under the `Visualization` folder and select the desirable project using the drop down.
+4. When the detection finished, open the `index.html` file under the `Visualization` folder and select the desirable project using the drop down.
 
 ## Specification
 
@@ -32,17 +32,3 @@
 #### 2. Visualization
 - HTML file which visualizes the detected clones (The javascript library D3.js is used here.)
 - Supports: navigation between the clones, between the clone pairs
-
-### The Visualization (Wheel):
-1. The file detail view:
-Shows all the files grouped by folders/packages, that include clones with:
-    - clone code percentage
-    - number of clones
-    - type of clones
-
-2. The Clone pair view
-By selecting a file f, this view shows clones pair (fc) files of a selected file from the file detail view.
-
-3. Code detail view
-By selecting a code clone g, of a file, this view shows the two snippets allowing you to compare them.
-Left is the original f, and right is the clone g. This view uses code highlighting to emphasize the clones.
