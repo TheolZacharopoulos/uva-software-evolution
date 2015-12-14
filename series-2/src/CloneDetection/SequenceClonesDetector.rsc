@@ -12,6 +12,7 @@ ClonePairs detectSequenceClones(set[Declaration] ast, int minSequenceLength, str
 
     Sequences allSequences = extractSequencesFromAST(ast, minSequenceLength);
     
+    // * For k = MinimumSequenceLengthThreshold to MaximumSequenceLength
     int maximumSequenceLength = getLargestSequenceSize(allSequences);
     ClonePairs cloneSequencePairs = newClonePairs();
     
@@ -19,6 +20,8 @@ ClonePairs detectSequenceClones(set[Declaration] ast, int minSequenceLength, str
     startProgress("sequence-clones", size(sequenceLengths));
     
     for (sequenceLength <- sequenceLengths) {
+        
+        // * Place all subsequences of length (sequenceLength) into buckets according to subsequence hash
         Sequences subSequences = getSubSequences(allSequences, sequenceLength);
         SequenceBuckets sequenceBuckets = constructSequenceBuckets(subSequences, fingerprinter);
         

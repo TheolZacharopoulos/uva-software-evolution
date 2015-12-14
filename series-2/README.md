@@ -1,6 +1,6 @@
 # Clone Detector
 
-## Hot to run
+## How to run
 1. First copy the executable files to your bin folder:
 
 ` cp rascal* /usr/local/bin/`

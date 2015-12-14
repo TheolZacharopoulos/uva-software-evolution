@@ -43,7 +43,6 @@ TypedPairs detectClones(set[Declaration] asts, int minSequenceLength, int maxSeq
 private void clearCache() {
     clearParentIndex();
     clearFingerprintCache();
-    clearSequenceKeysCache();
 }
 
 private TypedPairs addCloneResults(TYPE_ONE, ClonePairs pairs, TypedPairs results) {

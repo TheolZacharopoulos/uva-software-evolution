@@ -11,10 +11,3 @@ extend Test::CloneDetection::Strategy::TypeOneTests;
 extend Test::CloneDetection::Strategy::TypeTwoTests;
 extend Test::CloneDetection::StrategyAggregateTests;
 extend Test::CloneDetection::SequenceClonesDetectorWithGapsTests;
-
-//extend Test::CloneDetection::Utils::TreeMassTests;
-//extend Test::CloneDetection::Utils::TreeSimilarityTests;
-//extend Test::CloneDetection::Utils::TreeBucketTests;
-//extend Test::CloneDetection::Utils::CloneStatementPairsTests;
-//extend Test::CloneDetection::Utils::Sequences::SequenceBucketTests;
-//extend Test::CloneDetection::Utils::Sequences::SubsequencesExtractorTests;

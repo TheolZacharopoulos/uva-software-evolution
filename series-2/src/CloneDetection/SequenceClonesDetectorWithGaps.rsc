@@ -43,5 +43,3 @@ ClonePairs detectSequenceClonesWithGaps(set[Declaration] ast, int minSequenceLen
     
     return cloneSequencePairs;
 }
-
-//private bool isOverlap(Sequence origin, Sequence clone) = getSequenceUniqueKeys(origin) & getSequenceUniqueKeys(clone) != {};
