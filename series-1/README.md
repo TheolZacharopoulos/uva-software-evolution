@@ -1,4 +1,4 @@
-# TODO
+# Metrics Calculation On Java Projects
 
 ## Calculate the metrics
 Include motivation, calculate the actual metric value, each metric gets a score based on the SIG model (--, -, o, +, ++)
